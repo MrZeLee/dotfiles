@@ -1,0 +1,5 @@
+/.config/nvim/lazy-lock.json
+/.keys/
+/.gitconfig
+.opencommit
+*.DS_Store
