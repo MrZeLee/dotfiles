@@ -1,0 +1,14 @@
+examples
+install.sh
+brew
+.gitignore
+.git
+README.md
+clean.sh
+scripts
+.gitconfig_example
+.gitconfig.bak
+.opencommit.example
+powerlevel10k
+.gitmodules
+.config/nix-darwin
