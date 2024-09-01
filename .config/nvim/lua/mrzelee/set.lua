@@ -17,7 +17,8 @@ vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 
-vim.opt.smartindent = true
+-- Keep false to indent comments
+vim.opt.smartindent = false
 
 vim.opt.wrap = false
 
