@@ -101,10 +101,12 @@ cmd - l [
 cmd - j [
     "messages" : skhd -k "ctrl - tab"
     "pdf expert" : skhd -k "alt - down"
+    "messenger" : skhd -k "alt - down"
 ]
 
 cmd - k [
     "messages" : skhd -k "ctrl + shift - tab"
     "pdf expert" : skhd -k "alt - up"
+    "messenger" : skhd -k "alt - up"
 ]
 
