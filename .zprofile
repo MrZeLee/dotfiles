@@ -10,6 +10,8 @@ else
     echo "The operating system is neither Linux nor macOS."
 fi
 
+export LC_ALL="en_US.UTF-8"
+
 # MacPorts Installer addition on 2023-05-26_at_19:45:00: adding an appropriate PATH variable for use with MacPorts.
 export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
 
