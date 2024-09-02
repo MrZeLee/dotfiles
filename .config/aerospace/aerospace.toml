@@ -223,4 +223,16 @@ run = "move-node-to-workspace Z"
 
 [[on-window-detected]]
 if.app-id = 'com.hnc.Discord'
+run = "move-node-to-workspace M"
+
+[[on-window-detected]]
+if.app-id = 'net.whatsapp.WhatsApp'
+run = "move-node-to-workspace M"
+
+[[on-window-detected]]
+if.app-id = 'com.apple.finder'
+run = "move-node-to-workspace D"
+
+[[on-window-detected]]
+if.app-id = 'com.readdle.PDFExpert-Mac'
 run = "move-node-to-workspace D"
