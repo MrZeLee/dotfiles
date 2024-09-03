@@ -53,6 +53,11 @@ fi
 echo "Running stow in $HOME/.dotfiles to symlink the dotfiles..."
 cd $HOME/.dotfiles && stow .
 
+if [ ! -d $HOME/.oh-my-zsh/themes/powerlevel10k ]
+then
+	ln -s $HOME/.dotfiles/powerlevel10k $HOME/.oh-my-zsh/custom/themes/powerlevel10k
+fi
+
 # Check if com.apple.HIToolbox.plist differs between $HOME/.dotfiles and $HOME/Library/Preferences
 if [ "$OS_TYPE" = "Darwin" ]; then
   DOTFILES_PLIST="$HOME/.dotfiles/com.apple.HIToolbox.plist"
