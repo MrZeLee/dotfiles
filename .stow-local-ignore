@@ -13,3 +13,5 @@ powerlevel10k
 .gitmodules
 .config/nix-darwin
 com.apple.HIToolbox.plist
+flake.nix
+home.nix
