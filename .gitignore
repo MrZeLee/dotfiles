@@ -3,4 +3,3 @@
 /.gitconfig
 .opencommit
 *.DS_Store
-flake.lock
