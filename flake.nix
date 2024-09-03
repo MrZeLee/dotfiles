@@ -55,7 +55,7 @@
             nmap
             nodejs_22
             pass
-            php
+            php83
             pinentry_mac
             pipx
             python312
