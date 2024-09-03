@@ -3,5 +3,5 @@
     url = https://github.com/tmux-plugins/tpm
 [submodule ".oh-my-zsh"]
 	path = .oh-my-zsh
-	url = https://github.com/MrZeLee/oh-my-zsh
+	url = https://github.com/MrZeLee/ohmyzsh
 	branch = master
