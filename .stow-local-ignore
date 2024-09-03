@@ -12,3 +12,4 @@ scripts
 powerlevel10k
 .gitmodules
 .config/nix-darwin
+com.apple.HIToolbox.plist
