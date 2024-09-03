@@ -35,10 +35,10 @@ fi
 # Check if $HOME/.dotfiles exists; if not, clone the repository
 if [ ! -d "$HOME/.dotfiles" ]; then
   echo "Directory $HOME/.dotfiles does not exist. Cloning repository..."
-  git clone https://github.com/MrZeLee/dotfiles "$HOME/.dotfiles"
+  git clone --recursive https://github.com/MrZeLee/dotfiles "$HOME/.dotfiles"
 else
   echo "Directory $HOME/.dotfiles already exists."
-  cd "$HOME/.dotfiles" && git pull
+  cd "$HOME/.dotfiles" && git pull && git submodule update --init --recursive
 fi
 
 # Check if stow is installed; if not, install it using Nix
