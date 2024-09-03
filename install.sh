@@ -69,7 +69,7 @@ fi
 
 # Run nix-darwin switch with flake if macOS
 if [ "$OS_TYPE" = "Darwin" ]; then
-  nix run nix-darwin -- switch --flake ~/.dotfiles/nix-darwin
-  darwin-rebuild switch --flake ~/.dotfiles/nix-darwin
+  nix run nix-darwin -- switch --flake ~/.dotfiles
+  darwin-rebuild switch --flake ~/.dotfiles
 fi
 
