@@ -53,6 +53,20 @@ fi
 echo "Running stow in $HOME/.dotfiles to symlink the dotfiles..."
 cd $HOME/.dotfiles && stow .
 
+# Check if com.apple.HIToolbox.plist differs between $HOME/.dotfiles and $HOME/Library/Preferences
+if [ "$OS_TYPE" = "Darwin" ]; then
+  DOTFILES_PLIST="$HOME/.dotfiles/com.apple.HIToolbox.plist"
+  PREFERENCES_PLIST="$HOME/Library/Preferences/com.apple.HIToolbox.plist"
+
+  if sudo diff "$DOTFILES_PLIST" "$PREFERENCES_PLIST" > /dev/null 2>&1; then
+    echo "No differences found between the plist files."
+  else
+    echo "Differences found between the plist files. Copying..."
+    sudo cp "$DOTFILES_PLIST" "$PREFERENCES_PLIST"
+    echo "Copied $DOTFILES_PLIST to $PREFERENCES_PLIST."
+  fi
+fi
+
 # Run nix-darwin switch with flake if macOS
 if [ "$OS_TYPE" = "Darwin" ]; then
   nix run nix-darwin -- switch --flake ~/.config/nix-darwin
