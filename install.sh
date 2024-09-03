@@ -41,6 +41,18 @@ else
   cd "$HOME/.dotfiles" && git pull
 fi
 
+# Check if stow is installed; if not, install it using Nix
+if ! command -v stow &> /dev/null; then
+  echo "Stow is not installed. Installing Stow with Nix..."
+  nix-env -iA nixpkgs.stow
+else
+  echo "Stow is already installed."
+fi
+
+# Run stow in the $HOME/.dotfiles directory
+echo "Running stow in $HOME/.dotfiles to symlink the dotfiles..."
+cd $HOME/.dotfiles && stow .
+
 # Run nix-darwin switch with flake if macOS
 if [ "$OS_TYPE" = "Darwin" ]; then
   nix run nix-darwin -- switch --flake ~/.config/nix-darwin
