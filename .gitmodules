@@ -1,6 +1,7 @@
-[submodule ".oh-my-zsh"]
-	path = .oh-my-zsh
-	url = https://github.com/MrZeLee/ohmyzsh
 [submodule "tpm"]
     path = .config/tmux/plugins/tpm
     url = https://github.com/tmux-plugins/tpm
+[submodule ".oh-my-zsh"]
+	path = .oh-my-zsh
+	url = https://github.com/MrZeLee/oh-my-zsh
+	branch = master
