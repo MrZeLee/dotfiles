@@ -241,7 +241,6 @@
         system.defaults.dock.magnification = true;
         system.defaults.dock.orientation = "bottom";
         system.defaults.dock.persistent-apps = [
-            "/System/Library/CoreServices/Finder.app"
             "/System/Applications/Launchpad.app"
             "/Applications/iTerm.app"
             "/Applications/Google Chrome.app"
