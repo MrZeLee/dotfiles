@@ -18,68 +18,68 @@
     configuration = { pkgs, ... }: {
         # List packages installed in system profile. To search by name, run:
         # $ nix-env -qaP | grep wget
-        environment.systemPackages = [
-            pkgs.vim
-            pkgs.abook
-            pkgs.ansible
-            pkgs.bat
-            pkgs.blueutil
-            pkgs.cloudflared
-            pkgs.cmake
+        environment.systemPackages = with pkgs; [
+            vim
+            abook
+            ansible
+            bat
+            blueutil
+            cloudflared
+            cmake
+            coreutils
+            curl
+            fzf
+            gcc
+            git-lfs
+            glow
+            gnuplot
+            gnupg
+            graphviz
+            kubernetes-helm
+            htop
+            isync
+            jq
+            kompose
+            kubectl
+            kubeseal
+            kubetail
+            kustomize
+            libgit2
+            mas
+            maven
+            monero
+            msmtp
+            neomutt
+            neovim
+            netcat
+            nmap
+            nodejs_22
+            pass
+            php
+            pinentry_mac
+            pipx
+            python312
+            ripgrep
+            cargo
+            rustc
+            speedtest-cli
+            stow
+            tldr
+            tmux
+            tree
+            tor
+            vim
+            watch
+            wget
+            yarn
+            yq
+            zsh
+            skhd
+            opentofu
             # pkgs.cmake-docs
-            pkgs.coreutils
-            pkgs.curl
             # pkgs.fleet-cli
-            pkgs.fzf
-            pkgs.gcc
-            pkgs.git-lfs
-            pkgs.glow
-            pkgs.gnuplot
-            pkgs.gnupg
-            pkgs.graphviz
-            pkgs.kubernetes-helm
-            pkgs.htop
-            pkgs.isync
-            pkgs.jq
-            pkgs.kompose
-            pkgs.kubectl
-            pkgs.kubeseal
-            pkgs.kubetail
-            pkgs.kustomize
-            pkgs.libgit2
-            pkgs.mas
-            pkgs.maven
-            pkgs.monero
-            pkgs.msmtp
-            pkgs.neomutt
-            pkgs.neovim
-            pkgs.netcat
-            pkgs.nmap
-            pkgs.nodejs_22
-            pkgs.pass
-            pkgs.php
-            pkgs.pinentry_mac
-            pkgs.pipx
             # pkgs.python312Packages.setuptools
-            pkgs.python312
-            pkgs.ripgrep
-            pkgs.cargo
-            pkgs.rustc
-            pkgs.speedtest-cli
-            pkgs.stow
             # pkgs.switchaudio-osx
-            pkgs.tldr
-            pkgs.tmux
-            pkgs.tree
-            pkgs.tor
-            pkgs.vim
-            pkgs.watch
-            pkgs.wget
-            pkgs.yarn
-            pkgs.yq
-            pkgs.zsh
-            pkgs.skhd
-            pkgs.opentofu
             # johanhaleby/kubetail/kubetail
         ];
 
@@ -245,6 +245,7 @@
             "/System/Applications/Launchpad.app"
             "/Applications/iTerm.app"
             "/Applications/Google Chrome.app"
+            "/Applications/Discord.app"
             "/System/Applications/Messages.app"
             "/Applications/Spotify.app"
             "/Applications/KeePassXC.app"
