@@ -38,6 +38,7 @@ if [ ! -d "$HOME/.dotfiles" ]; then
   git clone https://github.com/MrZeLee/dotfiles "$HOME/.dotfiles"
 else
   echo "Directory $HOME/.dotfiles already exists."
+  cd "$HOME/.dotfiles" && git pull
 fi
 
 # Run nix-darwin switch with flake if macOS
