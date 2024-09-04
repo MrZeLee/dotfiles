@@ -49,6 +49,12 @@ else
   echo "Stow is already installed."
 fi
 
+if [[ "$OS_TYPE" == "Linux" ]]; then
+	SED_OPTION="-i=''"
+elif [[ "$OS_TYPE" == "Darwin" ]]; then
+	SED_OPTION="-i ''"
+fi
+
 # check if file .gitconfig does not exist
 if [ ! -f .gitconfig ]; then
     # copy .gitconfig_example to .gitconfig changing the field user.name, user.email and user.signingkey asking for the user input
@@ -73,7 +79,7 @@ cd $HOME/.dotfiles && stow .
 
 if [ ! -d $HOME/.oh-my-zsh/themes/powerlevel10k ]
 then
-	ln -s $HOME/.dotfiles/powerlevel10k $HOME/.oh-my-zsh/custom/themes/powerlevel10k
+	ln -s $HOME/.dotfiles/powerlevel10k $HOME/.oh-my-zsh/custom/themes/
 fi
 
 # Check if com.apple.HIToolbox.plist differs between $HOME/.dotfiles and $HOME/Library/Preferences
@@ -96,23 +102,17 @@ if [ "$OS_TYPE" = "Darwin" ]; then
   darwin-rebuild switch --flake ~/.dotfiles
 fi
 
-npm install -g opencommit
+sudo npm install -g opencommit
 
-mkdir $HOME/.local
-mkdir $HOME/.local/bin/
+mkdir $HOME/.local 2>/dev/null
+mkdir $HOME/.local/bin/ 2>/dev/null
 ln -s $HOME/.config/tmux/scripts/tmux-sessionizer $HOME/.local/bin/
 ln -s $HOME/.config/tmux/scripts/tmux-windowizer $HOME/.local/bin/
 
-if [[ "$OS_TYPE" == "Linux" ]]; then
-	SED_OPTION="-i=''"
-elif [[ "$OS_TYPE" == "Darwin" ]]; then
-	SED_OPTION="-i ''"
-fi
-
 if [ ! -f .gnupg/gpg-agent.conf ]; then
-	cp .gnupg/gpg-agent.conf.bak .gnupg/gpg-agent.conf
+	cp $HOME/.dotfiles/.gnupg/gpg-agent.conf.bak $HOME/.dotfiles/.gnupg/gpg-agent.conf
 	PINENTRY=$(which pinentry | sed 's_/_\\/_g')
-	sed $SED_OPTION "s/<pinentry>/$PINENTRY/g" .gnupg/gpg-agent.conf
+	sed $SED_OPTION "s/<pinentry>/$PINENTRY/g" $HOME/.dotfiles/.gnupg/gpg-agent.conf
     gpg-connect-agent reloadagent /bye
 fi
 
