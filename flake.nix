@@ -15,6 +15,27 @@
 
     outputs = inputs@{ self, nix-darwin, nixpkgs, home-manager }:
     let
+
+    # ---- SYSTEM SETTINGS ---- #
+    systemSettings = {
+        system = "aarch64-darwin"; # system arch
+        hostname = "MrZeLees-MacBook-Pro";
+        profile = "personal";
+        timezone = "Europe/Lisbon";
+        locale = "en_US.UTF-8"
+    };
+
+    userSettings = rec {
+        username = "mrzelee";
+        name = "MrZeLee";
+        email = "mrzelee@mrzelee.com";
+        dotfilesDir = "~/.dotfiles";
+        term = "iterm2";
+        # font = "Intel One Mono";
+        # fontPkg = pkgs.intel-one-mono;
+        editor = "nvim";
+    };
+
     configuration = { pkgs, ... }: {
         # List packages installed in system profile. To search by name, run:
         # $ nix-env -qaP | grep wget
@@ -106,7 +127,7 @@
         system.stateVersion = 4;
 
         # The platform the configuration will be used on.
-        nixpkgs.hostPlatform = "aarch64-darwin";
+        nixpkgs.hostPlatform = systemSettings.system;
 
         # Enables touchId instead of password in terminal
         security.pam.enableSudoTouchIdAuth = true;
