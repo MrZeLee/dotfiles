@@ -52,6 +52,7 @@ fi
 # check if file .gitconfig does not exist
 if [ ! -f .gitconfig ]; then
     # copy .gitconfig_example to .gitconfig changing the field user.name, user.email and user.signingkey asking for the user input
+    cd "$HOME/.dotfiles"
     cp .gitconfig_example .gitconfig.bak
     echo "Enter your git user.name: "
     read name
