@@ -13,14 +13,14 @@
 
     };
 
-    outputs = inputs@{ self, nix-darwin, nixpkgs, home-manager }:
+    outputs = inputs@{ self, nix-darwin, nixpkgs, home-manager, ... }:
     let
 
     # ---- SYSTEM SETTINGS ---- #
     systemSettings = {
         system = "aarch64-darwin"; # system arch
         hostname = "MrZeLees-MacBook-Pro";
-        profile = "personal";
+        # profile = "personal";
         timezone = "Europe/Lisbon";
         locale = "en_US.UTF-8";
     };
@@ -41,10 +41,12 @@
         # $ nix-env -qaP | grep wget
         environment.systemPackages = with pkgs; [
             vim
+            vimv-rs
             abook
             ansible
             bat
             blueutil
+            cacert
             cloudflared
             cmake
             coreutils
@@ -56,6 +58,7 @@
             gnuplot
             gnupg
             graphviz
+            gettext
             kubernetes-helm
             htop
             isync
@@ -66,6 +69,7 @@
             kubetail
             kustomize
             libgit2
+            lynx
             mas
             maven
             monero
@@ -73,6 +77,7 @@
             neomutt
             neovim
             netcat
+            notmuch
             nmap
             nodejs_22
             pass
@@ -89,11 +94,13 @@
             tmux
             tree
             tor
+            urlscan
             vim
             watch
             wget
             yarn
             yq
+            yt-dlp
             zsh
             skhd
             opentofu
@@ -132,7 +139,7 @@
         # Enables touchId instead of password in terminal
         security.pam.enableSudoTouchIdAuth = true;
 
-        users.users.mrzelee.home = "/Users/mrzelee";
+        users.users.${userSettings.username}.home = "/Users/${userSettings.username}";
         home-manager.backupFileExtension = "backup";
         nix.configureBuildUsers = true;
         nix.useDaemon = true;
@@ -271,7 +278,7 @@
             "/Applications/KeePassXC.app"
         ];
         system.defaults.dock.persistent-others = [
-            "/Users/mrzelee/Downloads"
+            "/Users/${userSettings.username}/Downloads"
         ];
         system.defaults.dock.show-process-indicators = true;
         system.defaults.dock.tilesize = 48;
@@ -290,19 +297,19 @@
     {
         # Build darwin flake using:
         # $ darwin-rebuild build --flake .#MrZeLees-MacBook-Pro
-        darwinConfigurations."MrZeLees-MacBook-Pro" = nix-darwin.lib.darwinSystem {
+        darwinConfigurations."${systemSettings.hostname}" = nix-darwin.lib.darwinSystem {
             modules = [
                 configuration
                 home-manager.darwinModules.home-manager {
                     home-manager.useGlobalPkgs = true;
                     home-manager.useUserPackages = true;
-                    home-manager.users.mrzelee = import ./home.nix;
+                    home-manager.users.${userSettings.username} = import ./home.nix;
                 }
             ];
         };
 
         # Expose the package set, including overlays, for convenience.
-        darwinPackages = self.darwinConfigurations."MrZeLees-MacBook-Pro".pkgs;
+        darwinPackages = self.darwinConfigurations."${systemSettings.hostname}".pkgs;
     };
 }
 

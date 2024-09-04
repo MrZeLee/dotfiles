@@ -49,6 +49,23 @@ else
   echo "Stow is already installed."
 fi
 
+# check if file .gitconfig does not exist
+if [ ! -f .gitconfig ]; then
+    # copy .gitconfig_example to .gitconfig changing the field user.name, user.email and user.signingkey asking for the user input
+    cp .gitconfig_example .gitconfig.bak
+    echo "Enter your git user.name: "
+    read name
+    echo "Enter your git user.email: "
+    read email
+    echo "Enter your git user.signingkey: "
+    read signingkey
+    sed $SED_OPTION "s/<name>/$name/g" .gitconfig.bak
+    sed $SED_OPTION "s/<email>/$email/g" .gitconfig.bak
+    sed $SED_OPTION "s/<signingkey>/$signingkey/g" .gitconfig.bak
+    mv .gitconfig.bak .gitconfig
+    stow .
+fi
+
 # Run stow in the $HOME/.dotfiles directory
 echo "Running stow in $HOME/.dotfiles to symlink the dotfiles..."
 cd $HOME/.dotfiles && stow .
@@ -76,5 +93,25 @@ fi
 if [ "$OS_TYPE" = "Darwin" ]; then
   nix run nix-darwin -- switch --flake ~/.dotfiles
   darwin-rebuild switch --flake ~/.dotfiles
+fi
+
+npm install -g opencommit
+
+mkdir $HOME/.local
+mkdir $HOME/.local/bin/
+ln -s $HOME/.config/tmux/scripts/tmux-sessionizer $HOME/.local/bin/
+ln -s $HOME/.config/tmux/scripts/tmux-windowizer $HOME/.local/bin/
+
+if [[ "$OS_TYPE" == "Linux" ]]; then
+	SED_OPTION="-i=''"
+elif [[ "$OS_TYPE" == "Darwin" ]]; then
+	SED_OPTION="-i ''"
+fi
+
+if [ ! -f .gnupg/gpg-agent.conf ]; then
+	cp .gnupg/gpg-agent.conf.bak .gnupg/gpg-agent.conf
+	PINENTRY=$(which pinentry | sed 's_/_\\/_g')
+	sed $SED_OPTION "s/<pinentry>/$PINENTRY/g" .gnupg/gpg-agent.conf
+    gpg-connect-agent reloadagent /bye
 fi
 
