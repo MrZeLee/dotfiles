@@ -16,3 +16,4 @@ com.apple.HIToolbox.plist
 flake.nix
 home.nix
 flake.lock
+modules
