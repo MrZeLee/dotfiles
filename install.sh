@@ -80,7 +80,7 @@ fi
 echo "Running stow in $HOME/.dotfiles to symlink the dotfiles..."
 cd $HOME/.dotfiles && stow .
 
-if [ ! -d $HOME/.oh-my-zsh/themes/powerlevel10k ]
+if [ ! -d $HOME/.oh-my-zsh/custom/themes/powerlevel10k ]
 then
 	ln -s $HOME/.dotfiles/powerlevel10k $HOME/.oh-my-zsh/custom/themes/
 fi
