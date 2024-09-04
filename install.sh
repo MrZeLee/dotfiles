@@ -70,6 +70,9 @@ if [ ! -f .gitconfig ]; then
     sed $SED_OPTION "s/<email>/$email/g" .gitconfig.bak
     sed $SED_OPTION "s/<signingkey>/$signingkey/g" .gitconfig.bak
     mv .gitconfig.bak .gitconfig
+    if [ -f ".gitconfig.bak''" ]; then
+        rm ".gitconfig.bak''"
+    fi
     stow .
 fi
 
@@ -111,8 +114,11 @@ ln -s $HOME/.config/tmux/scripts/tmux-windowizer $HOME/.local/bin/
 
 if [ ! -f .gnupg/gpg-agent.conf ]; then
 	cp $HOME/.dotfiles/.gnupg/gpg-agent.conf.bak $HOME/.dotfiles/.gnupg/gpg-agent.conf
-	PINENTRY=$(which pinentry | sed 's_/_\\/_g')
+    PINENTRY=$((which pinentry-mac || which pinentry) | sed 's_/_\\/_g')
 	sed $SED_OPTION "s/<pinentry>/$PINENTRY/g" $HOME/.dotfiles/.gnupg/gpg-agent.conf
+    if [ -f "$HOME/.dotfiles/.gnupg/gpg-agent.conf''" ]; then
+        rm "$HOME/.dotfiles/.gnupg/gpg-agent.conf''"
+    fi
     gpg-connect-agent reloadagent /bye
 fi
 
