@@ -22,7 +22,7 @@
         hostname = "MrZeLees-MacBook-Pro";
         profile = "personal";
         timezone = "Europe/Lisbon";
-        locale = "en_US.UTF-8"
+        locale = "en_US.UTF-8";
     };
 
     userSettings = rec {
