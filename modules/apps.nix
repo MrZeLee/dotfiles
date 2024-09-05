@@ -22,7 +22,7 @@
         vim
         neovim
         git
-        just # use Justfile to simplify nix-darwin's commands 
+        tmux
     ];
     environment.variables.EDITOR = "nvim";
 

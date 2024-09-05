@@ -1,4 +1,8 @@
-{pkgs, ... }:
+{pkgs, lib, ... } @ args:
+let
+    # Access the `userSettings` from `specialArgs`
+    userSettings = args.userSettings;
+in
 {
     # list packages installed in system profile. to search by name, run:
     # $ nix-env -qap | grep wget
@@ -8,6 +12,7 @@
         ansible
         bat
         blueutil
+        brotab
         cacert
         cloudflared
         cmake
@@ -51,7 +56,6 @@
         speedtest-cli
         stow
         tldr
-        tmux
         tree
         tor
         urlscan
@@ -69,4 +73,12 @@
         # pkgs.switchaudio-osx
         # johanhaleby/kubetail/kubetail
     ];
+
+    home.activation = {
+        brotabInstall = lib.hm.dag.entryAfter ["writeBoundary"] ''
+            run ${pkgs.brotab}/bin/brotab install
+            mkdir /Users/${userSettings.username}/Library/Application\ Support/Mozilla/NativeMessagingHosts || true
+            ln -sf /Users/${userSettings.username}/.mozzila/native-messaging-hosts/brotab_mediator.json /Users/${userSettings.username}/Library/Application\ Support/Mozilla/NativeMessagingHosts/brotab_mediator.json
+        '';
+    };
 }
