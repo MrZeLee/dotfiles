@@ -29,4 +29,18 @@ in
 
     # Let Home Manager install and manage itself.
     programs.home-manager.enable = true;
+
+    # This works.
+    home.keyboard = {
+        layout = "us";
+        variant = "intl";
+    };
+
+    targets.darwin.defaults = {
+        "com.apple.desktopservices" = {
+            DSDontWriteNetworkStores = true;
+            DSDontWriteUSBStores = true;
+        };  
+    };
+
 }
