@@ -55,6 +55,13 @@
             users.users.${userSettings.username}.home = "/Users/${userSettings.username}";
             home-manager.backupFileExtension = "backup";
 
+            # Create /etc/zshrc that loads the nix-darwin environment.
+            # this is required if you want to use darwin's default shell - zsh
+            programs.zsh.enable = true;
+            environment.shells = [
+                pkgs.zsh
+            ];
+
             system = {
                 # Set Git commit hash for darwin-version.
                 configurationRevision = self.rev or self.dirtyRev or null;
@@ -77,9 +84,9 @@
             inherit specialArgs;
             modules = [
                 ./modules/apps.nix
+                configuration
                 ./modules/system.nix
                 ./modules/nix-core.nix
-                configuration
 
                 home-manager.darwinModules.home-manager {
                     home-manager.useGlobalPkgs = true;

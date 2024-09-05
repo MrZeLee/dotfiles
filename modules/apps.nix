@@ -23,6 +23,7 @@
         neovim
         git
         tmux
+        zsh
     ];
     environment.variables.EDITOR = "nvim";
 
