@@ -25,17 +25,11 @@ export XDG_CONFIG_HOME="$HOME/.config"
 alias vimv='vimv -e vim'
 # Finished adapting your PATH environment variable for use with MacPorts.
 
-
 # MacPorts Installer addition on 2023-05-26_at_19:45:00: adding an appropriate MANPATH variable for use with MacPorts.
 export MANPATH="/opt/local/share/man:$MANPATH"
 # Finished adapting your MANPATH environment variable for use with MacPorts.
 
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
 
 #PATH="\$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 #export VIM=~/.config/nvim
@@ -43,10 +37,6 @@ alias vi='nvim'
 alias vim='nvim'
 
 PATH=$PATH:/Users/$USER/.local/bin
-
-# Where should I put you?
-bindkey -s ^f "tmux-sessionizer\n"
-bindkey -s ^h "cd ~\n"
 
 # Added DBUS for vim zathura integration
 export DBUS_SESSION_BUS_ADDRESS="unix:path=$DBUS_LAUNCHD_SESSION_BUS_SOCKET"
@@ -74,6 +64,7 @@ fi
 if [ -f $(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc ]; then
 source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
 fi
+
 if command -v fzf &> /dev/null
 then
     # Set up fzf key bindings and fuzzy completion
@@ -93,3 +84,7 @@ if ! pgrep -U $UID -x "tmux" > /dev/null; then
     # Start tmux session in detached mode if not running
     tmux new-session -d -s default
 fi
+
+# Where should I put you?
+bindkey -s ^f "tmux-sessionizer\n"
+bindkey -s ^h "cd ~\n"
