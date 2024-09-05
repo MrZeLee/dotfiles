@@ -41,6 +41,13 @@
             editor = "nvim";
         };
 
+        # Set Git commit hash for darwin-version.
+        configurationRevision = self.rev or self.dirtyRev or null;
+
+        # Used for backwards compatibility, please read the changelog before changing.
+        # $ darwin-rebuild changelog
+        stateVersion = 4;
+
         configuration = { pkgs, ... }: {
             # List packages installed in system profile. To search by name, run:
             # $ nix-env -qaP | grep wget
@@ -116,33 +123,24 @@
                 # johanhaleby/kubetail/kubetail
             ];
 
-            # Auto upgrade nix package and the daemon service.
-            services.nix-daemon.enable = true;
-            # nix.package = pkgs.nix;
-
             services.skhd.enable = true;
-
-            # Necessary for using flakes on this system.
-            nix.settings.experimental-features = "nix-command flakes";
-
-            # Set Git commit hash for darwin-version.
-            system.configurationRevision = self.rev or self.dirtyRev or null;
-
-            # Used for backwards compatibility, please read the changelog before changing.
-            # $ darwin-rebuild changelog
-            system.stateVersion = 4;
-
-            # The platform the configuration will be used on.
-            nixpkgs.hostPlatform = systemSettings.system;
 
             users.users.${userSettings.username}.home = "/Users/${userSettings.username}";
             home-manager.backupFileExtension = "backup";
-            nix.configureBuildUsers = true;
-            nix.useDaemon = true;
 
+            system = {
+                # Set Git commit hash for darwin-version.
+                configurationRevision = self.rev or self.dirtyRev or null;
+
+                # Used for backwards compatibility, please read the changelog before changing.
+                # $ darwin-rebuild changelog
+                stateVersion = 4;
+            };
         };
+
         specialArgs = {
             inherit userSettings;
+            inherit systemSettings;
         };
     in
     {
@@ -153,12 +151,14 @@
             modules = [
                 ./modules/apps.nix
                 ./modules/system.nix
+                ./modules/nix-core.nix
                 configuration
 
                 home-manager.darwinModules.home-manager {
                     home-manager.useGlobalPkgs = true;
                     home-manager.useUserPackages = true;
-                    home-manager.users.${userSettings.username} = import ./home.nix;
+                    home-manager.extraSpecialArgs = specialArgs;
+                    home-manager.users.${userSettings.username} = import ./home;
                 }
             ];
         };
