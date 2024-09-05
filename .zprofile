@@ -87,7 +87,7 @@ fi
 
 # Work around to start tmux
 # Check if tmux is running, and start it in daemon mode if it is not
-if ! pgrep -x "tmux" > /dev/null; then
+if ! pgrep -U $UID -x "tmux" > /dev/null; then
     # Start tmux server in the background (daemon mode)
     tmux start-server
     # Start tmux session in detached mode if not running
