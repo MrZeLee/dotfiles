@@ -5,10 +5,10 @@ return {
     build = ":TSUpdate",
 
     config = function()
-        local configs = require('nvim-treesitter.configs')
+        local configs = require('nvim-ts-autotag')
         configs.setup {
             -- A list of parser names, or "all" (the five listed parsers should always be installed)
-            ensure_installed = { "markdown", "vimdoc", "c", "lua", "javascript", "python", "typescript", "vim", "vimdoc", "query", "rust", "java" },
+            ensure_installed = { "markdown", "markdown_inline", "vimdoc", "c", "lua", "javascript", "latex", "python", "typescript", "vim", "vimdoc", "query", "rust", "java" },
 
             -- Install parsers synchronously (only applied to `ensure_installed`)
             sync_install = false,
