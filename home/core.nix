@@ -50,6 +50,7 @@ in
         pinentry_mac
         pipx
         python312
+        python312Packages.pylatexenc
         ripgrep
         cargo
         rustc

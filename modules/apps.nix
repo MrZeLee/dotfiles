@@ -51,6 +51,7 @@
             "google-cloud-sdk"
             "google-drive"
             "iterm2"
+            "karabiner-elements"
             "keepassxc"
             "keyboardcleantool"
             "kobo"
