@@ -46,7 +46,7 @@ in
         nmap
         nodejs_22
         pass
-        php83
+        # php83
         pinentry_mac
         pipx
         python312
@@ -74,14 +74,16 @@ in
         # johanhaleby/kubetail/kubetail
     ];
 
-    home.activation = {
-        brotabInstall = lib.hm.dag.entryAfter ["writeBoundary"] ''
-            run ${pkgs.brotab}/bin/brotab install
-            chmod 666 /tmp/brotab.log || true
-            chmod 666 /tmp/brotab_mediator.log || true
-            mkdir /Users/${userSettings.username}/Library/Application\ Support/Mozilla || true
-            mkdir /Users/${userSettings.username}/Library/Application\ Support/Mozilla/NativeMessagingHosts || true
-            ln -sf /Users/${userSettings.username}/.mozilla/native-messaging-hosts/brotab_mediator.json /Users/${userSettings.username}/Library/Application\ Support/Mozilla/NativeMessagingHosts/
-        '';
+    home = {
+        activation = {
+            brotabInstall = lib.hm.dag.entryAfter ["writeBoundary"] ''
+                run ${pkgs.brotab}/bin/brotab install
+                chmod 666 /tmp/brotab.log || true
+                chmod 666 /tmp/brotab_mediator.log || true
+                mkdir /Users/${userSettings.username}/Library/Application\ Support/Mozilla || true
+                mkdir /Users/${userSettings.username}/Library/Application\ Support/Mozilla/NativeMessagingHosts || true
+                ln -sf /Users/${userSettings.username}/.mozilla/native-messaging-hosts/brotab_mediator.json /Users/${userSettings.username}/Library/Application\ Support/Mozilla/NativeMessagingHosts/
+            '';
+        };
     };
 }
