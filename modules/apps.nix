@@ -36,6 +36,7 @@
             "alfred"
             "authy"
             "bartender"
+            "betterdisplay"
             "calibre"
             "cheatsheet"
             "discord"
@@ -87,6 +88,7 @@
             "nikitabobko/tap/aerospace"
         ];
         brews = [
+            "php"
         ];
         taps = [
             "nikitabobko/tap"
@@ -99,7 +101,8 @@
             "Chrono Plus" = 946047238;
             "Focus Matrix" = 1087284172;
             "The Unarchiver" = 425424353;
-            "LG Screen Manager" = 1142051783;
+            # removed temp to test BetterScreen
+            # "LG Screen Manager" = 1142051783;
             "WireGuard" = 1451685025;
         };
         onActivation = {
