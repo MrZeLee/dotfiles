@@ -38,7 +38,7 @@ in
         lynx
         mas
         maven
-        monero
+        # monero
         msmtp
         neomutt
         netcat
@@ -58,7 +58,7 @@ in
         stow
         tldr
         tree
-        tor
+        # tor
         urlscan
         watch
         wget

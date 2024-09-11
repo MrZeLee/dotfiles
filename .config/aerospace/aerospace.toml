@@ -9,7 +9,11 @@ after-login-command = []
 # You can use it to add commands that run after AeroSpace startup.
 # 'after-startup-command' is run after 'after-login-command'
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
-after-startup-command = []
+after-startup-command = [
+    # JankyBorders has a built-in detection of already running process,
+    # so it won't be run twice on AeroSpace restart
+    'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0'
+]
 
 # Start AeroSpace at login
 start-at-login = true
@@ -21,7 +25,7 @@ enable-normalization-opposite-orientation-for-nested-containers = true
 # See: https://nikitabobko.github.io/AeroSpace/guide#layouts
 # The 'accordion-padding' specifies the size of accordion padding
 # You can set 0 to disable the padding feature
-accordion-padding = 30
+accordion-padding = 10
 
 # Possible values: tiles|accordion
 default-root-container-layout = 'tiles'
@@ -50,12 +54,12 @@ on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 #                 Monitor pattern is the same as for 'workspace-to-monitor-force-assignment'.
 #                 See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 [gaps]
-inner.horizontal = 0
-inner.vertical =   0
-outer.left =       0
-outer.bottom =     0
-outer.top =        0
-outer.right =      0
+inner.horizontal = [{monitor."^LG HDR WQHD" = 10}, {monitor."^ASUS VG279Q1A" = 10}, 0]
+inner.vertical =   [{monitor."^LG HDR WQHD" = 10}, {monitor."^ASUS VG279Q1A" = 10}, 0]
+outer.left =       [{monitor."^LG HDR WQHD" = 10}, {monitor."^ASUS VG279Q1A" = 10}, 0]
+outer.bottom =     [{monitor."^LG HDR WQHD" = 10}, {monitor."^ASUS VG279Q1A" = 10}, 0]
+outer.top =        [{monitor."^LG HDR WQHD" = 10}, {monitor."^ASUS VG279Q1A" = 10}, 0]
+outer.right =      [{monitor."^LG HDR WQHD" = 10}, {monitor."^ASUS VG279Q1A" = 10}, 0]
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -196,6 +200,11 @@ alt-shift-h = ['join-with left', 'mode main']
 alt-shift-j = ['join-with down', 'mode main']
 alt-shift-k = ['join-with up', 'mode main']
 alt-shift-l = ['join-with right', 'mode main']
+
+[workspace-to-monitor-force-assignment]
+M = ['^ASUS VG279Q1A', 'secondary', 'main']
+Z = ['^ASUS VG279Q1A', 'secondary', 'main']
+S = ['^ASUS VG279Q1A', 'secondary', 'main']
 
 [[on-window-detected]]
 if.app-id = 'com.googlecode.iterm2'

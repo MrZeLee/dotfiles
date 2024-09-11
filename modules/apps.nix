@@ -89,9 +89,18 @@
         ];
         brews = [
             "php"
+            {
+                name = "borders";
+                start_service = true;
+                restart_service = "changed";
+            }
+            "monero"
+            "tor"
         ];
         taps = [
             "nikitabobko/tap"
+            "FelixKratz/formulae"
+            "homebrew/services"
         ];
         masApps = {
             "Print to PDF" = 1639234272;
