@@ -6,6 +6,7 @@ return {
         -- refer to the configuration section below
         window = {
             backdrop = 0.5,
+            width = 180, -- width of the Zen window
         }
     }
 }

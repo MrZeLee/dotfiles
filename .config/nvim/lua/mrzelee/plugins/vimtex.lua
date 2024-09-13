@@ -17,9 +17,10 @@ return {
             --Viewer options: One may configure the viewer either by specifying a built-in
             --viewer method:
             vim.g.vimtex_view_method = 'skim'
-            vim.g.tex_flavor = 'latex'
             vim.g.vimtex_view_skim_sync = 1
             vim.g.vimtex_view_skim_activate = 0
+            -- vim.g.vimtex_view_method = 'zathura'
+            vim.g.tex_flavor = 'latex'
 
             --Or with a generic interface:
             --vim.g.vimtex_view_general_viewer = 'okular'
@@ -49,6 +50,22 @@ return {
             vim.g.maplocalleader = ","
 
             vim.g.vimtex_quickfix_open_on_warning = 0
+
+            -- Define the function and autocmd in Vimscript
+            vim.cmd([[
+            function! s:TexFocusVim() abort
+              " Replace `TERMINAL` with the name of your terminal application
+              " Example: execute "!open -a iTerm"
+              " Example: execute "!open -a Alacritty"
+              silent execute "!open -a iTerm"
+              redraw!
+            endfunction
+
+            augroup vimtex_event_focus
+              autocmd!
+              autocmd User VimtexEventViewReverse call s:TexFocusVim()
+            augroup END
+            ]])
         end,
     },
 }
