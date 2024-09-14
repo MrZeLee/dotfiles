@@ -57,6 +57,7 @@ alias t="tree -d -L 7| grep --color="never" -E '── \d\d-'"
 alias upgrade_apps='brew upgrade --cask --no-quarantine --greedy'
 alias downloads='cd ~/Downloads'
 alias cl='clear'
+alias dump_all='find . -type f | while read file; do echo "== $file =="; cat "$file"; echo ""; done'
 
 # check if bat is installed
 if command -v bat &> /dev/null
