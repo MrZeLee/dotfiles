@@ -11,13 +11,11 @@ in
         abook
         ansible
         bat
-        blueutil
         brotab
         cacert
         cloudflared
         cmake
         coreutils
-        fzf
         gcc
         git-lfs
         glow
