@@ -39,8 +39,8 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 
 #PATH="\$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 #export VIM=~/.config/nvim
-alias vi='nvim'
-alias vim='nvim'
+alias vi="nvim -c 'if filereadable(\"Session.vim\") | source Session.vim | endif'"
+alias vim="nvim -c 'if filereadable(\"Session.vim\") | source Session.vim | endif'"
 
 PATH=$PATH:/Users/$USER/.local/bin
 
