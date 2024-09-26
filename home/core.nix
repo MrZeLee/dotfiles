@@ -36,6 +36,7 @@ in
         lynx
         mas
         maven
+        moreutils
         # monero
         msmtp
         neomutt
