@@ -67,7 +67,6 @@
             "parallels-toolbox"
             "pdf-expert"
             "plex"
-            "pokemon-reborn"
             "private-internet-access"
             "qbittorrent"
             "raspberry-pi-imager"
