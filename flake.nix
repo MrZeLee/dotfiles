@@ -31,7 +31,7 @@
         };
 
         userSettings = rec {
-            username = "mrzelee";
+            username = "joseluismoura";
             name = "MrZeLee";
             email = "mrzelee123@gmail.com";
             dotfilesDir = "~/.dotfiles";
