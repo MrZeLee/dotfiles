@@ -86,6 +86,7 @@
             "vlc"
             "whatsapp"
             "wireshark"
+            "zerotier-one"
             "zoom"
             "nikitabobko/tap/aerospace"
         ];

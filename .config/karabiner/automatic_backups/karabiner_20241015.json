@@ -84,7 +84,13 @@
                                         "optional": ["any"]
                                     }
                                 },
-                                "to": [{ "mouse_key": { "vertical_wheel": -64 } }],
+                                "to": [
+                                    {
+                                        "mouse_key": {
+                                            "vertical_wheel": -64
+                                        }
+                                    }
+                                ],
                                 "type": "basic"
                             },
                             {
@@ -95,7 +101,13 @@
                                         "optional": ["any"]
                                     }
                                 },
-                                "to": [{ "mouse_key": { "vertical_wheel": 64 } }],
+                                "to": [
+                                    {
+                                        "mouse_key": {
+                                            "vertical_wheel": 64
+                                        }
+                                    }
+                                ],
                                 "type": "basic"
                             }
                         ]
@@ -106,10 +118,10 @@
                             {
                                 "conditions": [
                                     {
+                                        "type": "frontmost_application_if",
                                         "bundle_identifiers": [
                                             "^net.sourceforge.skim-app.skim$"
-                                        ],
-                                        "type": "frontmost_application_if"
+                                        ]
                                     }
                                 ],
                                 "from": {
@@ -121,8 +133,8 @@
                                 },
                                 "to": [
                                     {
-                                        "modifiers": ["left_shift", "left_command"],
-                                        "pointing_button": "button1"
+                                        "pointing_button": "button1",
+                                        "modifiers": ["left_shift", "left_command"]
                                     }
                                 ],
                                 "type": "basic"
@@ -140,20 +152,20 @@
                     },
                     "simple_modifications": [
                         {
-                            "from": { "key_code": "left_command" },
-                            "to": [{ "key_code": "left_control" }]
-                        },
-                        {
-                            "from": { "key_code": "left_control" },
-                            "to": [{ "key_code": "left_command" }]
-                        },
-                        {
                             "from": { "key_code": "right_command" },
                             "to": [{ "key_code": "right_control" }]
                         },
                         {
+                            "from": { "key_code": "left_command" },
+                            "to": [{ "key_code": "left_control" }]
+                        },
+                        {
                             "from": { "key_code": "right_control" },
                             "to": [{ "key_code": "right_command" }]
+                        },
+                        {
+                            "from": { "key_code": "left_control" },
+                            "to": [{ "key_code": "left_command" }]
                         }
                     ]
                 },
@@ -165,20 +177,20 @@
                     },
                     "simple_modifications": [
                         {
-                            "from": { "key_code": "left_command" },
-                            "to": [{ "key_code": "left_control" }]
-                        },
-                        {
                             "from": { "key_code": "left_control" },
                             "to": [{ "key_code": "left_command" }]
                         },
                         {
-                            "from": { "key_code": "right_command" },
-                            "to": [{ "key_code": "right_control" }]
-                        },
-                        {
                             "from": { "key_code": "right_control" },
                             "to": [{ "key_code": "right_command" }]
+                        },
+                        {
+                            "from": { "key_code": "left_command" },
+                            "to": [{ "key_code": "left_control" }]
+                        },
+                        {
+                            "from": { "key_code": "right_command" },
+                            "to": [{ "key_code": "right_control" }]
                         }
                     ]
                 },
@@ -201,8 +213,7 @@
                 }
             ],
             "name": "Default profile",
-            "selected": true,
-            "virtual_hid_keyboard": { "keyboard_type_v2": "iso" }
+            "selected": true
         },
         {
             "devices": [
@@ -236,3 +247,4 @@
         }
     ]
 }
+
