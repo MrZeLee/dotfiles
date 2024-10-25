@@ -112,6 +112,9 @@ export LANG=en_US.UTF-8
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+# add vim motions
+source $HOME/.zsh-vi-mode/zsh-vi-mode.plugin.zsh
+
 autoload -U +X bashcompinit && bashcompinit
 
 # Only add this if you have the plugin installed

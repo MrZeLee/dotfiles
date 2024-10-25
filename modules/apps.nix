@@ -92,6 +92,7 @@
         ];
         brews = [
             "blueutil"
+            "fleet-cli"
             "fzf"
             "php"
             {
@@ -102,6 +103,7 @@
             "mpg123"
             "monero"
             "tor"
+            "wireguard-tools"
         ];
         taps = [
             "nikitabobko/tap"
