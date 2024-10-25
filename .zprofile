@@ -99,6 +99,4 @@ if ! pgrep -U $UID -x "tmux" > /dev/null; then
     tmux new-session -d -s default
 fi
 
-# Where should I put you?
-bindkey -s ^f "tmux-sessionizer\n"
-bindkey -s ^h "cd ~\n"
+zvm_after_init_commands+=('[ -f $HOME/.bindkey.zsh ] && source $HOME/.bindkey.zsh')

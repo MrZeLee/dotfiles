@@ -72,14 +72,14 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
+ZSH_CUSTOM=$HOME/.oh-my-zsh_custom
 
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git colored-man-pages colorize pip python brew macos gpg-agent)
+plugins=(git colored-man-pages colorize pip python brew macos gpg-agent zsh-vi-mode)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -111,9 +111,6 @@ export LANG=en_US.UTF-8
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# add vim motions
-source $HOME/.zsh-vi-mode/zsh-vi-mode.plugin.zsh
 
 autoload -U +X bashcompinit && bashcompinit
 

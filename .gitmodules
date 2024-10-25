@@ -6,10 +6,10 @@
 	url = https://github.com/ohmyzsh/ohmyzsh
 	branch = master
 [submodule "powerlevel10k"]
-    path = powerlevel10k
+    path = .oh-my-zsh_custom/themes/powerlevel10k
     url = https://github.com/romkatv/powerlevel10k
     branch = master
 [submodule "zsh-vi-mode"]
-    path = .zsh-vi-mode
+    path = .oh-my-zsh_custom/plugins/zsh-vi-mode
     url = https://github.com/jeffreytse/zsh-vi-mode
     branch = master
