@@ -41,6 +41,7 @@ in
         msmtp
         neomutt
         netcat
+        neofetch-unstable
         notmuch
         nmap
         nodejs_22
