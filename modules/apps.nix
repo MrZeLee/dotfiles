@@ -33,6 +33,7 @@
         casks = [
             "adobe-acrobat-reader"
             "adobe-digital-editions"
+            "alacritty"
             "alfred"
             "authy"
             "bartender"

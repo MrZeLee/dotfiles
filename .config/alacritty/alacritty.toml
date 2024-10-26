@@ -1,0 +1,278 @@
+# Alacritty Configuration File with Descriptions
+
+# List of additional config files to import.
+# Imports are processed in order, and only fields in the importing file will override previous ones.
+import = [] # Example: ["~/.config/alacritty/base16-dark.toml"]
+
+# Working directory for the shell (uses parent directory if set to "None").
+working_directory = "None"
+
+# Automatically reload the configuration file on changes.
+# Uncomment to disable live reload.
+# live_config_reload = true
+
+# Enable IPC (Inter-process Communication) using `alacritty msg`.
+# Uncomment to disable IPC.
+# ipc_socket = true
+
+[env]
+# Environment variables set for any process spawned by Alacritty.
+# Example environment variable
+WINIT_X11_SCALE_FACTOR = "1.0" # Scale factor for X11 windows.
+TERM = "xterm-256color"
+
+[window]
+# Initial window dimensions (in columns and lines).
+# Window size will default to WM-suggested dimensions if set to zero.
+# Uncomment to use default values.
+# dimensions = { columns = 80, lines = 24 }
+
+# Initial window position (in pixels), if not set, the WM determines the placement.
+# Uncomment to use default value.
+# position = "None"
+
+# Add padding around the window content in pixels.
+# Uncomment to set padding.
+padding = { x = 10, y = 10 }
+
+# Spread additional padding evenly around the terminal content.
+# Uncomment to disable dynamic padding.
+# dynamic_padding = false
+
+# Window decorations: Full (title bar and borders), None, Transparent (macOS only), or Buttonless (macOS only).
+# Uncomment to use full decorations.
+decorations = "None"
+
+# Set the background opacity (0.0 is fully transparent, 1.0 is fully opaque).
+# Uncomment to use full opacity.
+opacity = 1.0
+
+# Request compositor to blur content behind transparent windows.
+# Only works on macOS and KDE Wayland.
+# Uncomment to disable blur.
+# blur = false
+
+# Window startup mode: Windowed, Maximized, Fullscreen, or SimpleFullscreen (macOS only).
+# Uncomment to start in windowed mode.
+startup_mode = "Windowed"
+
+# Title of the Alacritty window.
+# Uncomment to use the default title.
+title = "Alacritty"
+
+# Allow terminal applications to change the Alacritty window title.
+# Uncomment to allow dynamic title changes.
+dynamic_title = true
+
+# Window class, used for app identification on Linux/BSD.
+# General is used as app_id on Wayland.
+# Uncomment to use the default values.
+# class = { instance = "Alacritty", general = "Alacritty" }
+
+# Override system theme variant for window decorations (Linux/BSD).
+# Uncomment to use the system's default theme.
+# decorations_theme_variant = "None"
+
+# Enable resizing the window by steps (macOS and X11).
+# Uncomment to allow resizing by discrete steps.
+# resize_increments = false
+
+[scrolling]
+# Maximum number of lines in the scrollback buffer (0 disables scrollback).
+# Uncomment to use the default history size.
+history = 10000
+
+# Multiplier for the number of lines scrolled per input.
+# Uncomment to set the default multiplier.
+# multiplier = 3
+
+[font]
+# Font family and style for normal text.
+normal = { family = "MesloLGS NF", style = "Regular" }
+
+# Font family and style for bold text.
+# Uncomment to use the default bold style.
+# bold = { style = "Bold" }
+
+# Font family and style for italic text.
+# Uncomment to use the default italic style.
+# italic = { style = "Italic" }
+
+# Font family and style for bold italic text.
+# Uncomment to use the default bold italic style.
+# bold_italic = { style = "Bold Italic" }
+
+# Font size in points.
+# Uncomment to use the default font size.
+size = 12
+
+# Extra spacing around each character (x: letter spacing, y: line spacing).
+# Uncomment to use default offset.
+# offset = { x = 0, y = 0 }
+
+# Offset for positioning glyphs within cells.
+# Uncomment to use the default glyph offset.
+# glyph_offset = { x = 0, y = 0 }
+
+# Use built-in font for box drawing and legacy computing symbols.
+# Uncomment to use the default setting.
+# builtin_box_drawing = true
+
+[colors]
+# Colors used in the Alacritty terminal.
+# Color codes in hexadecimal (e.g., #ff00ff).
+
+# Primary colors
+[colors.primary]
+foreground = "#d8d8d8"
+# background = "#181818"
+background = "#000000"
+dim_foreground = "#828482" # Dimmed foreground color, automatically calculated if unset.
+
+# Cursor colors
+# cursor = { text = "CellBackground", cursor = "CellForeground" }
+
+# vi_mode_cursor color settings.
+# vi_mode_cursor = { text = "CellBackground", cursor = "CellForeground" }
+
+# Search highlight colors
+[colors.search]
+matches = { foreground = "#181818", background = "#ac4242" }
+focused_match = { foreground = "#181818", background = "#f4bf75" }
+
+# Selection colors
+# selection = { text = "CellBackground", background = "CellForeground" }
+
+# Normal colors for text.
+[colors.normal]
+black = "#181818"
+red = "#ac4242"
+green = "#90a959"
+yellow = "#f4bf75"
+blue = "#6a9fb5"
+magenta = "#aa759f"
+cyan = "#75b5aa"
+white = "#d8d8d8"
+
+# Bright color variants for text.
+[colors.bright]
+black = "#6b6b6b"
+red = "#c55555"
+green = "#aac474"
+yellow = "#feca88"
+blue = "#82b8c8"
+magenta = "#c28cb8"
+cyan = "#93d3c3"
+white = "#f8f8f8"
+
+[bell]
+# Visual bell animation (flash effect) when bell is rung.
+# Uncomment to use default animation.
+# animation = "Linear"
+
+# Duration of the bell animation (0 disables animation).
+# Uncomment to use the default duration.
+# duration = 0
+
+# Color for the visual bell animation.
+# Uncomment to use the default color.
+# color = "#ffffff"
+
+# Command executed when bell rings.
+# Uncomment to use the default setting.
+# command = "None"
+
+[selection]
+# Characters treated as word separators.
+# Uncomment to use default characters.
+# semantic_escape_chars = ",│`|:\"' ()[]{}<>\t"
+
+# Copy selected text to clipboard automatically.
+# Uncomment to disable automatic copy.
+# save_to_clipboard = false
+
+[cursor]
+# Cursor style: Block, Underline, or Beam.
+# Uncomment to use the default shape.
+# style = { shape = "Block", blinking = "Off" }
+
+# Interval for cursor blinking in milliseconds.
+# Uncomment to use the default blink interval.
+# blink_interval = 750
+
+# Timeout for cursor blinking (0 disables timeout).
+# Uncomment to use the default timeout.
+# blink_timeout = 5
+
+# Display hollow cursor when window is unfocused.
+# Uncomment to use the default hollow setting.
+# unfocused_hollow = true
+
+# Cursor thickness relative to cell width.
+# Uncomment to use default thickness.
+# thickness = 0.15
+
+[terminal]
+# Shell program and arguments.
+# Uncomment to use default shell.
+# shell = { program = "/bin/bash", args = ["-l"] }
+
+# OSC 52 clipboard handling: Disabled, OnlyCopy, OnlyPaste, or CopyPaste.
+# Uncomment to use the default setting.
+# osc52 = "OnlyCopy"
+
+[mouse]
+# Hide cursor while typing.
+# Uncomment to use default mouse behavior.
+# hide_when_typing = false
+
+# Mouse bindings.
+# bindings = [
+#     { mouse = "Right", mods = "Control", action = "Paste" }
+# ]
+
+[hints]
+# Enable terminal hints (e.g., hyperlinks).
+[[hints.enabled]]
+command = "xdg-open"
+hyperlinks = true
+post_processing = true
+persist = false
+mouse.enabled = false
+# binding = { key = "O", mods = "Control|Shift" }
+regex = "(ipfs:|ipns:|magnet:|mailto:|gemini://|gopher://|https://|http://|news:|file:|git://|ssh:|ftp://)[^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`]"
+
+[keyboard]
+# Key bindings.
+# bindings = [
+#     { key = "N", mods = "Control|Shift", action = "CreateNewWindow" }
+# ]
+
+[debug]
+# Enable render timer for frame times.
+# Uncomment to enable render timer.
+# render_timer = false
+
+# Keep log files after quitting.
+# Uncomment to use the default log retention.
+# persistent_logging = false
+
+# Logging verbosity: Off, Error, Warn, Info, Debug, Trace.
+# Uncomment to set default log level.
+# log_level = "Warn"
+
+# Renderer preference.
+# Uncomment to use the highest available renderer.
+# renderer = "None"
+
+# Log window events.
+# Uncomment to disable logging events.
+# print_events = false
+
+# Highlight window damage information.
+# Uncomment to disable damage highlighting.
+# highlight_damage = false
+
+# Use EGL as display API (Linux/BSD).
+# Uncomment to disable EGL.
+# prefer_egl = false
