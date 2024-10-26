@@ -84,6 +84,9 @@ in
                 mkdir /Users/${userSettings.username}/Library/Application\ Support/Mozilla/NativeMessagingHosts || true
                 ln -sf /Users/${userSettings.username}/.mozilla/native-messaging-hosts/brotab_mediator.json /Users/${userSettings.username}/Library/Application\ Support/Mozilla/NativeMessagingHosts/
             '';
+            npmInstall = lib.hm.dag.entryAfter ["writeBoundary"] ''
+                mkdir -p /Users/${userSettings.username}/.npm-global
+            '';
         };
     };
 }

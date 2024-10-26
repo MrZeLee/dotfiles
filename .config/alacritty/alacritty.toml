@@ -1,11 +1,3 @@
-# Alacritty Configuration File with Descriptions
-
-# List of additional config files to import.
-# Imports are processed in order, and only fields in the importing file will override previous ones.
-import = [] # Example: ["~/.config/alacritty/base16-dark.toml"]
-
-# Working directory for the shell (uses parent directory if set to "None").
-working_directory = "None"
 
 # Automatically reload the configuration file on changes.
 # Uncomment to disable live reload.
@@ -249,6 +241,16 @@ regex = "(ipfs:|ipns:|magnet:|mailto:|gemini://|gopher://|https://|http://|news:
 # ]
 
 [debug]
+
+[general]
+
+# Working directory for the shell (uses parent directory if set to "None").
+working_directory = "None"
+# Alacritty Configuration File with Descriptions
+
+# List of additional config files to import.
+# Imports are processed in order, and only fields in the importing file will override previous ones.
+import = [] # Example: ["~/.config/alacritty/base16-dark.toml"]
 # Enable render timer for frame times.
 # Uncomment to enable render timer.
 # render_timer = false
