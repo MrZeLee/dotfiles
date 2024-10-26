@@ -182,8 +182,18 @@ alt-tab = 'workspace-back-and-forth'
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor
 alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 
+alt-enter = 'mode apps'
+
 # See: https://nikitabobko.github.io/AeroSpace/commands#mode
 alt-shift-semicolon = 'mode service'
+
+[mode.apps.binding]
+esc = ['mode main']
+enter = ['exec-and-forget open -n /Applications/Alacritty.app', 'mode main']
+s = ['exec-and-forget open /Applications/Spotify.app', 'mode main']
+b = ['exec-and-forget open /Applications/Google\ Chrome.app', 'mode main']
+d = ['exec-and-forget open /Applications/Discord.app', 'mode main']
+m =['exec-and-forget open /System/Applications/Messages.app', 'mode main'] 
 
 # 'service' binding mode declaration.
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
