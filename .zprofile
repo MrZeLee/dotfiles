@@ -12,7 +12,7 @@ else
     echo "The operating system is neither Linux nor macOS."
 fi
 
-export LC_ALL="en_US.UTF-8"
+# export LC_ALL="en_US.UTF-8"
 
 # MacPorts Installer addition on 2023-05-26_at_19:45:00: adding an appropriate PATH variable for use with MacPorts.
 export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
@@ -98,7 +98,7 @@ fi
 
 # Work around to start tmux
 # Check if tmux is running, and start it in daemon mode if it is not
-if ! pgrep -U $UID -x "tmux" > /dev/null; then
+if ! (pgrep -U $UID -x "tmux" > /dev/null || pgrep -U $UID -x "tmux: server" > /dev/null) ; then
     # Start tmux server in the background (daemon mode)
     tmux start-server
     # Start tmux session in detached mode if not running
