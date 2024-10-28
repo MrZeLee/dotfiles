@@ -1,9 +1,11 @@
 # Get OS type using uname
 OS_TYPE=$(uname)
 
+if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
 # Check if the OS is Linux or macOS
 if [[ "$OS_TYPE" == "Linux" ]]; then
-	eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+	test -e "/home/linuxbrew/.linuxbrew/bin/brew" && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 elif [[ "$OS_TYPE" == "Darwin" ]]; then
 	eval "$(/opt/homebrew/bin/brew shellenv)"
 else
@@ -74,11 +76,13 @@ then
     alias cat='bat'
 fi
 
-if [ -f $(brew --prefix)/share/google-cloud-sdk/path.zsh.inc ]; then
-source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
-fi
-if [ -f $(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc ]; then
-source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
+if type "brew" > /dev/null; then
+	if [ -f $(brew --prefix)/share/google-cloud-sdk/path.zsh.inc ]; then
+	source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
+	fi
+	if [ -f $(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc ]; then
+	source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
+	fi
 fi
 
 if command -v fzf &> /dev/null

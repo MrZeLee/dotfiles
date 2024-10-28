@@ -44,6 +44,9 @@ return {
             handlers = {
                 function (server_name)
                     -- print("setting up", server_name)
+                    if server_name == "tsserver" then
+                        server_name = "ts_ls"
+                    end
                     require("lspconfig")[server_name].setup {}
                 end,
             }
@@ -61,7 +64,7 @@ return {
             },
         }
 
-        lspconfig.tsserver.setup {}
+        lspconfig.ts_ls.setup {}
         lspconfig.ansiblels.setup {}
         lspconfig.rust_analyzer.setup {}
 
