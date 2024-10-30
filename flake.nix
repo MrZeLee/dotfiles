@@ -21,21 +21,21 @@
         ...
     }: let
 
+        macospkgs = import nixpkgs { system = "aarch64-darwin"; };
+
         # ---- SYSTEM SETTINGS ---- #
-        systemSettings = {
-            system = "aarch64-darwin"; # system arch
-            hostname = "MrZeLees-MacBook-Pro";
-            # profile = "personal";
+        systemSettingsFn = { system }@attrs: attrs // {
+            hostname = builtins.getEnv "HOSTNAME";
             timezone = "Europe/Lisbon";
             locale = "en_US.UTF-8";
         };
 
         userSettings = rec {
-            username = "mrzelee";
+            username = builtins.getEnv "USER";
             name = "MrZeLee";
             email = "mrzelee123@gmail.com";
             dotfilesDir = "~/.dotfiles";
-            term = "iterm2";
+            # term = "iterm2";
             # font = "Intel One Mono";
             # fontPkg = pkgs.intel-one-mono;
             editor = "nvim";
@@ -48,61 +48,44 @@
         # $ darwin-rebuild changelog
         stateVersion = 4;
 
-        configuration = { pkgs, ... }: {
-
-            services.skhd.enable = true;
-
-            users.users.${userSettings.username}.home = "/Users/${userSettings.username}";
-            home-manager.backupFileExtension = "backup";
-
-            # Create /etc/zshrc that loads the nix-darwin environment.
-            # this is required if you want to use darwin's default shell - zsh
-            # programs.zsh = {
-            #     enable = true;
-            #     enableCompletion = false;
-            #     enableGlobalCompInit = false;
-            # };
-            environment.shells = [
-                pkgs.zsh
-            ];
-
-            system = {
-                # Set Git commit hash for darwin-version.
-                configurationRevision = self.rev or self.dirtyRev or null;
-
-                # Used for backwards compatibility, please read the changelog before changing.
-                # $ darwin-rebuild changelog
-                stateVersion = 4;
-            };
-        };
-
-        specialArgs = {
-            inherit userSettings;
-            inherit systemSettings;
-        };
     in
     {
         # Build darwin flake using:
         # $ darwin-rebuild build --flake .#MrZeLees-MacBook-Pro
-        darwinConfigurations."${systemSettings.hostname}" = nix-darwin.lib.darwinSystem {
-            inherit specialArgs;
-            modules = [
-                ./modules/apps.nix
-                configuration
-                ./modules/system.nix
-                ./modules/nix-core.nix
+        darwinConfigurations = {
+            "macos" = let
+                specialArgs = {
+                    inherit userSettings;
+                    systemSettings = systemSettingsFn { system = "aarch64-darwin"; };
+                };
+            in nix-darwin.lib.darwinSystem {
 
-                home-manager.darwinModules.home-manager {
-                    home-manager.useGlobalPkgs = true;
-                    home-manager.useUserPackages = true;
-                    home-manager.extraSpecialArgs = specialArgs;
-                    home-manager.users.${userSettings.username} = import ./home;
-                }
-            ];
+                inherit specialArgs;
+
+                modules = [
+                    ./modules/apps.nix
+                    ./modules/system.nix
+                    ./modules/nix-core.nix
+                    {
+                        services.skhd.enable = true;
+                        users.users.${userSettings.username}.home = "/Users/${userSettings.username}";
+                        environment.shells = [ macospkgs.zsh ];
+                        system.configurationRevision = configurationRevision;
+                        system.stateVersion = stateVersion;
+                    }
+
+                    home-manager.darwinModules.home-manager {
+                        home-manager.useGlobalPkgs = true;
+                        home-manager.useUserPackages = true;
+                        home-manager.extraSpecialArgs = specialArgs;
+                        home-manager.users.${userSettings.username} = import ./home;
+                    }
+                ];
+            };
         };
 
         # Expose the package set, including overlays, for convenience.
-        darwinPackages = self.darwinConfigurations."${systemSettings.hostname}".pkgs;
+        darwinPackages = macospkgs;
     };
 }
 

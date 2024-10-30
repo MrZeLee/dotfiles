@@ -1,5 +1,12 @@
 # dotfiles
 
+## Nix install flake
+
+```
+darwin-rebuild switch --flake .#macos --impure
+```
+ the --impure is used to get access to ENV variables
+
 ## Neovim
 
 Dependencies:

@@ -80,8 +80,8 @@ in
                 run ${pkgs.brotab}/bin/brotab install
                 chmod 666 /tmp/brotab.log || true
                 chmod 666 /tmp/brotab_mediator.log || true
-                mkdir /Users/${userSettings.username}/Library/Application\ Support/Mozilla || true
-                mkdir /Users/${userSettings.username}/Library/Application\ Support/Mozilla/NativeMessagingHosts || true
+                mkdir -p /Users/${userSettings.username}/Library/Application\ Support/Mozilla || true
+                mkdir -p /Users/${userSettings.username}/Library/Application\ Support/Mozilla/NativeMessagingHosts || true
                 ln -sf /Users/${userSettings.username}/.mozilla/native-messaging-hosts/brotab_mediator.json /Users/${userSettings.username}/Library/Application\ Support/Mozilla/NativeMessagingHosts/
             '';
             npmInstall = lib.hm.dag.entryAfter ["writeBoundary"] ''
