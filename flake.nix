@@ -11,6 +11,9 @@
         home-manager.url = "github:nix-community/home-manager/master";
         home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+        # Add the mvd repository from GitHub
+        mvd.url = "github:MrZeLee/mvd";
+
     };
 
     outputs = inputs@{
@@ -18,6 +21,7 @@
         nix-darwin,
         nixpkgs,
         home-manager,
+        mvd,
         ...
     }: let
 
@@ -57,6 +61,7 @@
                 specialArgs = {
                     inherit userSettings;
                     systemSettings = systemSettingsFn { system = "aarch64-darwin"; };
+                    mvdPackage = macospkgs.callPackage (mvd + "/default.nix") {};
                 };
             in nix-darwin.lib.darwinSystem {
 

@@ -1,4 +1,4 @@
-{pkgs, lib, ... } @ args:
+{pkgs, lib, mvdPackage, ... } @ args:
 let
     # Access the `userSettings` from `specialArgs`
     userSettings = args.userSettings;
@@ -39,6 +39,7 @@ in
         moreutils
         # monero
         msmtp
+        mvdPackage
         neomutt
         netcat
         neofetch

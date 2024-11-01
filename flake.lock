@@ -21,6 +21,24 @@
         "type": "github"
       }
     },
+    "mvd": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1730477138,
+        "narHash": "sha256-EqWsl3a4ShSf0pTDdblRnfvHf4dkfFB8XCMEw33N0ts=",
+        "owner": "MrZeLee",
+        "repo": "mvd",
+        "rev": "9cdfd2f22a4492a22c7f2df878b8b8fad1f94001",
+        "type": "github"
+      },
+      "original": {
+        "owner": "MrZeLee",
+        "repo": "mvd",
+        "type": "github"
+      }
+    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
@@ -43,6 +61,21 @@
     },
     "nixpkgs": {
       "locked": {
+        "lastModified": 1730477042,
+        "narHash": "sha256-FANHs8mWffETBei7dlPNsk/RjzMIobS0Q2IxrJN8biU=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "9cbbfa116008bad9ed00b7c9d7b12c7ee378fe89",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
         "lastModified": 1729818716,
         "narHash": "sha256-XRfkUsxLzFkMn3Tpstio1gNOIQ+2PZPCKbifJ2IXxlw=",
         "owner": "NixOS",
@@ -60,8 +93,9 @@
     "root": {
       "inputs": {
         "home-manager": "home-manager",
+        "mvd": "mvd",
         "nix-darwin": "nix-darwin",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs_2"
       }
     }
   },
