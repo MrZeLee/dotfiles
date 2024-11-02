@@ -111,7 +111,7 @@ in
             };
         };
 
-        keyboard = {
+       keyboard = {
             enableKeyMapping = true;
             remapCapsLockToEscape = true;
         };

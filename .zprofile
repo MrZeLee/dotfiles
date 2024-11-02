@@ -5,9 +5,9 @@ if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc
 
 # Check if the OS is Linux or macOS
 if [[ "$OS_TYPE" == "Linux" ]]; then
-	test -e "/home/linuxbrew/.linuxbrew/bin/brew" && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    test -e "/home/linuxbrew/.linuxbrew/bin/brew" && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 elif [[ "$OS_TYPE" == "Darwin" ]]; then
-	eval "$(/opt/homebrew/bin/brew shellenv)"
+    eval "$(/opt/homebrew/bin/brew shellenv)"
 else
     echo "The operating system is neither Linux nor macOS."
 fi
@@ -77,12 +77,12 @@ then
 fi
 
 if type "brew" > /dev/null; then
-	if [ -f $(brew --prefix)/share/google-cloud-sdk/path.zsh.inc ]; then
-	source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
-	fi
-	if [ -f $(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc ]; then
-	source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
-	fi
+    if [ -f $(brew --prefix)/share/google-cloud-sdk/path.zsh.inc ]; then
+        source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
+    fi
+    if [ -f $(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc ]; then
+        source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
+    fi
 fi
 
 if command -v fzf &> /dev/null

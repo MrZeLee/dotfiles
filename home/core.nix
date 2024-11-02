@@ -23,12 +23,13 @@ in
         gnupg
         graphviz
         gettext
-        kubernetes-helm
+        home-manager
         htop
         isync
         jq
         kompose
         kubectl
+        kubernetes-helm
         kubeseal
         kubetail
         kustomize
