@@ -25,7 +25,12 @@
         ...
     }: let
 
-        macospkgs = import nixpkgs { system = "aarch64-darwin"; };
+        # Automatically select the system based on current machine
+        system = builtins.currentSystem;
+
+        pkgs = import nixpkgs { inherit system; };
+
+        # macospkgs = import nixpkgs { system = "aarch64-darwin"; };
 
         # ---- SYSTEM SETTINGS ---- #
         systemSettingsFn = { system }@attrs: attrs // {
@@ -39,10 +44,10 @@
             name = "MrZeLee";
             email = "mrzelee123@gmail.com";
             dotfilesDir = "~/.dotfiles";
-            # term = "iterm2";
+            term = "alacritty";
+            editor = "nvim";
             # font = "Hack";
             # fontPkg = macospkgs.nerdfonts;
-            editor = "nvim";
         };
 
         # Set Git commit hash for darwin-version.
@@ -60,8 +65,8 @@
             "macos" = let
                 specialArgs = {
                     inherit userSettings;
-                    systemSettings = systemSettingsFn { system = "aarch64-darwin"; };
-                    mvdPackage = macospkgs.callPackage (mvd + "/default.nix") {};
+                    systemSettings = systemSettingsFn { system = system; };
+                    mvdPackage = pkgs.callPackage (mvd + "/default.nix") {};
                 };
             in nix-darwin.lib.darwinSystem {
 
@@ -74,7 +79,7 @@
                     {
                         services.skhd.enable = true;
                         users.users.${userSettings.username}.home = "/Users/${userSettings.username}";
-                        environment.shells = [ macospkgs.zsh ];
+                        environment.shells = [ pkgs.zsh ];
                         system.configurationRevision = configurationRevision;
                         system.stateVersion = stateVersion;
                         # Add trusted-users setting here
@@ -95,7 +100,7 @@
         };
 
         # Expose the package set, including overlays, for convenience.
-        darwinPackages = macospkgs;
+        darwinPackages = pkgs;
     };
 }
 

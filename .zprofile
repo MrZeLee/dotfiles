@@ -25,6 +25,9 @@ export PATH="$HOME/.npm-global/bin:$PATH"
 
 export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/Users/$USER/.nix-profile/bin:/etc/profiles/per-user/$USER/bin:/run/current-system/sw/bin:/nix/var/nix/profiles/default/bin:$PATH"
 
+# Added to enable lib in Cargo
+export LIBRARY_PATH="$HOME/.nix-profile/lib:$LIBRARY_PATH"
+
 # Adding latexmk
 # TODO install latexmk after installing mactex using 'tlmgr install latexmk'
 export PATH="/Library/TeX/texbin:$PATH"

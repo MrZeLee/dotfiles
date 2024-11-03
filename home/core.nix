@@ -34,6 +34,7 @@ in
         kubetail
         kustomize
         libgit2
+        libiconv
         lynx
         mas
         maven
