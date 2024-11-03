@@ -39,8 +39,6 @@ alias vimv='vimv -e vim'
 export MANPATH="/opt/local/share/man:$MANPATH"
 # Finished adapting your MANPATH environment variable for use with MacPorts.
 
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
 #PATH="\$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 #export VIM=~/.config/nvim
 alias vi="nvim -c 'if filereadable(\"Session.vim\") | source Session.vim | endif'"

@@ -1,7 +1,13 @@
 # dotfiles
 
-## Nix install flake
+## GPG
 
+when gpg has problems commiting try this:
+```
+gpg-connect-agent reloadagent /bye
+```
+
+## Nix install flake
 ```
 darwin-rebuild switch --flake .#macos --impure
 ```

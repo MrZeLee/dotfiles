@@ -27,6 +27,12 @@
     ];
     environment.variables.EDITOR = "nvim";
 
+    fonts = {
+        packages = [
+            (pkgs.nerdfonts.override { fonts = ["Hack"]; }) # Only install Hack Nerd Font
+        ];
+    };
+
     # Homebrew needs to be installed on its own!
     homebrew = {
         enable = true;
@@ -45,13 +51,12 @@
             "drawio"
             "dropzone"
             "firefox"
-            "font-hack-nerd-font"
-            "font-source-code-pro"
+            # "font-source-code-pro"
             "github"
             "google-chrome"
             "google-cloud-sdk"
             "google-drive"
-            "iterm2"
+            # "iterm2"
             "karabiner-elements"
             "keepassxc"
             "keyboardcleantool"

@@ -80,7 +80,7 @@ history = 10000
 
 [font]
 # Font family and style for normal text.
-normal = { family = "MesloLGS NF", style = "Regular" }
+normal = { family = "Hack Nerd Font", style = "Regular" }
 
 # Font family and style for bold text.
 # Uncomment to use the default bold style.

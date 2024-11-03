@@ -40,8 +40,8 @@
             email = "mrzelee123@gmail.com";
             dotfilesDir = "~/.dotfiles";
             # term = "iterm2";
-            # font = "Intel One Mono";
-            # fontPkg = pkgs.intel-one-mono;
+            # font = "Hack";
+            # fontPkg = macospkgs.nerdfonts;
             editor = "nvim";
         };
 
@@ -77,6 +77,11 @@
                         environment.shells = [ macospkgs.zsh ];
                         system.configurationRevision = configurationRevision;
                         system.stateVersion = stateVersion;
+                        # Add trusted-users setting here
+                        nix.settings = {
+                            download-buffer-size = "500M";
+                            trusted-users = [ "root" "${userSettings.username}" ];
+                        };
                     }
 
                     home-manager.darwinModules.home-manager {
