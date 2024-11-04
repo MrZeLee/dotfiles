@@ -1,11 +1,19 @@
 *
 
-!aerospace
-!alacritty
-!git
-!karabiner
-!nix
-!nvim
-!skhd
-!tmux
+!aerospace/
+!aerospace/**
+!alacritty/
+!alacritty/**
+!git/
+!git/**
+!karabiner/
+!karabiner/**
+!nix/
+!nix/**
+!nvim/
+!nvim/**
+!skhd/
+!skhd/**
+!tmux/
+!tmux/**
 !.gitignore

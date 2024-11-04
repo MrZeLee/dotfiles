@@ -1,6 +1,8 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
+vim.g.netrw_banner = 0 -- Hide the netrw banner on top
+
 --vim.opt.clipboard = "unnamed"
 
 vim.opt.cursorline = true

@@ -10,7 +10,31 @@ return {
     },
 
     config = function()
-        require('telescope').setup({})
+        require('telescope').setup({
+            defaults = {
+                -- Path display settings
+                path_display = {
+                    "filename", -- Show filename first
+                    shorten = { len = 3, exclude = { 1, -1 } }, -- Optionally shorten long paths
+                },
+                mappings = {
+                    -- General mappings for Telescope
+                    n = {
+                        ["<esc>"] = require("telescope.actions").close,
+                    },
+                },
+            },
+            pickers = {
+                buffers = {
+                    mappings = {
+                        n = {
+                            -- Map "d" to delete buffer in the buffers picker
+                            ["d"] = require("telescope.actions").delete_buffer,
+                        },
+                    },
+                },
+            },
+        })
 
         local builtin = require('telescope.builtin')
         vim.keymap.set('n', '<leader>pf', builtin.find_files, {})
