@@ -100,5 +100,8 @@ _fzf_complete_pass() {
 if api_key=$(pass show api-key/anthropic 2>/dev/null); then
     export ANTHROPIC_API_KEY="$api_key"
 fi
+if api_key=$(pass show api-key/oco 2>/dev/null); then
+    export OCO_API_KEY="$api_key"
+fi
 
 zvm_after_init_commands+=('[ -f $HOME/.bindkey.zsh ] && source $HOME/.bindkey.zsh')
