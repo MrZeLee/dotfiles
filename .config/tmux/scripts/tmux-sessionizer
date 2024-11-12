@@ -13,7 +13,7 @@ else
 
     doc_dirs=$(find ~/Documents -mindepth 1 -maxdepth 1 -type d 2> /dev/null)
     # Find all directories within Google Drive that match the pattern
-    # TODO review way to not show mrzelee and email in dotfiles, but don't create to much overhead
+    # TODO review way to not show user and email in dotfiles, but don't create to much overhead
 
     # Directory to search
     base_directory="/Users/$USER/Library/CloudStorage"
