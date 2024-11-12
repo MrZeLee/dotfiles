@@ -55,26 +55,26 @@ elif [[ "$OS_TYPE" == "Darwin" ]]; then
 	SED_OPTION="-i ''"
 fi
 
-# check if file .gitconfig does not exist
-if [ ! -f .gitconfig ]; then
-    # copy .gitconfig_example to .gitconfig changing the field user.name, user.email and user.signingkey asking for the user input
-    cd "$HOME/.dotfiles"
-    cp .gitconfig_example .gitconfig.bak
-    echo "Enter your git user.name: "
-    read name
-    echo "Enter your git user.email: "
-    read email
-    echo "Enter your git user.signingkey: "
-    read signingkey
-    sed $SED_OPTION "s/<name>/$name/g" .gitconfig.bak
-    sed $SED_OPTION "s/<email>/$email/g" .gitconfig.bak
-    sed $SED_OPTION "s/<signingkey>/$signingkey/g" .gitconfig.bak
-    mv .gitconfig.bak .gitconfig
-    if [ -f ".gitconfig.bak''" ]; then
-        rm ".gitconfig.bak''"
-    fi
-    stow .
-fi
+# # check if file .gitconfig does not exist
+# if [ ! -f .gitconfig ]; then
+#     # copy .gitconfig_example to .gitconfig changing the field user.name, user.email and user.signingkey asking for the user input
+#     cd "$HOME/.dotfiles"
+#     cp .gitconfig_example .gitconfig.bak
+#     echo "Enter your git user.name: "
+#     read name
+#     echo "Enter your git user.email: "
+#     read email
+#     echo "Enter your git user.signingkey: "
+#     read signingkey
+#     sed $SED_OPTION "s/<name>/$name/g" .gitconfig.bak
+#     sed $SED_OPTION "s/<email>/$email/g" .gitconfig.bak
+#     sed $SED_OPTION "s/<signingkey>/$signingkey/g" .gitconfig.bak
+#     mv .gitconfig.bak .gitconfig
+#     if [ -f ".gitconfig.bak''" ]; then
+#         rm ".gitconfig.bak''"
+#     fi
+#     stow .
+# fi
 
 # Check if com.apple.HIToolbox.plist differs between $HOME/.dotfiles and $HOME/Library/Preferences
 if [ "$OS_TYPE" = "Darwin" ]; then

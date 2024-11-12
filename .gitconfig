@@ -4,8 +4,8 @@
 	process = git-lfs filter-process
 	required = true
 [user]
-	name = <name>
-	email = <email>
-	signingkey = <signingkey>
+	name = MrZeLee
+	email = mrzelee404@gmail.com
+	signingkey = BA821035CA0D67B353D1D4429D3433B849AC5CD1
 [commit]
 	gpgsign = true
