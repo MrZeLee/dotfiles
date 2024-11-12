@@ -13,3 +13,7 @@
     path = .oh-my-zsh_custom/plugins/zsh-vi-mode
     url = https://github.com/jeffreytse/zsh-vi-mode
     branch = master
+[submodule ".password-store"]
+    path = .password-store
+    url = https://github.com/MrZeLee/pwd-store
+    branch = master

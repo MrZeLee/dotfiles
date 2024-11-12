@@ -43,4 +43,10 @@ vim.api.nvim_create_autocmd('FileType', {
     group = vim.api.nvim_create_augroup('netrw_mappings', { clear = true })
 })
 
-return {}
+return {
+    'prichrd/netrw.nvim',
+    opts = {},
+    config = function ()
+        require("netrw").setup({})
+    end
+}

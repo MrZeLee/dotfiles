@@ -77,26 +77,6 @@ then
     alias cat='bat'
 fi
 
-if type "brew" > /dev/null; then
-    if [ -f $(brew --prefix)/share/google-cloud-sdk/path.zsh.inc ]; then
-        source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
-    fi
-    if [ -f $(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc ]; then
-        source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
-    fi
-fi
-
-if command -v fzf &> /dev/null
-then
-    # Set up fzf key bindings and fuzzy completion
-    source <(fzf --zsh)
-fi
-
-if kubectl -v brew &> /dev/null
-then
-    source <(kubectl completion zsh)
-fi
-
 # Work around to start tmux
 # Check if tmux is running, and start it in daemon mode if it is not
 if ! (pgrep -U $UID -x "tmux" > /dev/null || pgrep -U $UID -x "tmux: server" > /dev/null) ; then
@@ -104,6 +84,21 @@ if ! (pgrep -U $UID -x "tmux" > /dev/null || pgrep -U $UID -x "tmux: server" > /
     tmux start-server
     # Start tmux session in detached mode if not running
     tmux new-session -d -s default
+fi
+
+_fzf_complete_pass() {
+  _fzf_complete +m -- "$@" < <(
+    local prefix
+    prefix="${PASSWORD_STORE_DIR:-$HOME/.password-store}"
+    command find -L "$prefix" \
+      -name "*.gpg" -type f | \
+      sed -e "s#${prefix}/\{0,1\}##" -e 's#\.gpg##' -e 's#\\#\\\\#' | sort
+  )
+}
+
+# Check if the `pass` command successfully retrieves the API key
+if api_key=$(pass show api-key/anthropic 2>/dev/null); then
+    export ANTHROPIC_API_KEY="$api_key"
 fi
 
 zvm_after_init_commands+=('[ -f $HOME/.bindkey.zsh ] && source $HOME/.bindkey.zsh')

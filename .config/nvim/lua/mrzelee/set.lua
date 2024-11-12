@@ -2,6 +2,7 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
 vim.g.netrw_banner = 0 -- Hide the netrw banner on top
+-- vim.g.netrw_liststyle = 3
 
 --vim.opt.clipboard = "unnamed"
 

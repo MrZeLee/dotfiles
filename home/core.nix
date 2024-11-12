@@ -48,6 +48,7 @@ in
         notmuch
         nmap
         nodejs_22
+        # ollama
         pass
         # php83
         pinentry_mac
