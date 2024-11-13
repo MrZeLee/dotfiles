@@ -6,8 +6,10 @@ if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc
 # Check if the OS is Linux or macOS
 if [[ "$OS_TYPE" == "Linux" ]]; then
     test -e "/home/linuxbrew/.linuxbrew/bin/brew" && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    export PINENTRY_PROGRAM="$(which pinentry)"
 elif [[ "$OS_TYPE" == "Darwin" ]]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
+    export PINENTRY_PROGRAM="$(which pinentry-mac)"
 else
     echo "The operating system is neither Linux nor macOS."
 fi
