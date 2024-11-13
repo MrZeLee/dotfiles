@@ -96,7 +96,7 @@ normal = { family = "Hack Nerd Font", style = "Regular" }
 
 # Font size in points.
 # Uncomment to use the default font size.
-size = 14
+size = 16
 
 # Extra spacing around each character (x: letter spacing, y: line spacing).
 # Uncomment to use default offset.

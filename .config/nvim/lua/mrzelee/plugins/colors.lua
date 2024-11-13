@@ -18,10 +18,14 @@ return {
         priority = 1000,
         config = function()
             require('rose-pine').setup({
+                enable = {
+                    terminal = true,
+                    legacy_highlights = false,
+                },
                 styles = {
                     transparency = true,
                 },
-                -- dim_inactive_windows = true,
+                dim_inactive_windows = false,
                 highlight_groups = {
                     -- Normal = { bg = "..." },
                     -- Comment = { fg = "foam" },
@@ -36,7 +40,7 @@ return {
                 },
             })
             ColorMyPencils()
-            vim.cmd "highlight CopilotSuggestion ctermfg=8 guifg=#c2a57a"
+            -- vim.cmd "highlight CopilotSuggestion ctermfg=8 guifg=#c2a57a"
         end
     },
 }

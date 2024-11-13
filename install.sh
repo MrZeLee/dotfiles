@@ -55,27 +55,6 @@ elif [[ "$OS_TYPE" == "Darwin" ]]; then
 	SED_OPTION="-i ''"
 fi
 
-# # check if file .gitconfig does not exist
-# if [ ! -f .gitconfig ]; then
-#     # copy .gitconfig_example to .gitconfig changing the field user.name, user.email and user.signingkey asking for the user input
-#     cd "$HOME/.dotfiles"
-#     cp .gitconfig_example .gitconfig.bak
-#     echo "Enter your git user.name: "
-#     read name
-#     echo "Enter your git user.email: "
-#     read email
-#     echo "Enter your git user.signingkey: "
-#     read signingkey
-#     sed $SED_OPTION "s/<name>/$name/g" .gitconfig.bak
-#     sed $SED_OPTION "s/<email>/$email/g" .gitconfig.bak
-#     sed $SED_OPTION "s/<signingkey>/$signingkey/g" .gitconfig.bak
-#     mv .gitconfig.bak .gitconfig
-#     if [ -f ".gitconfig.bak''" ]; then
-#         rm ".gitconfig.bak''"
-#     fi
-#     stow .
-# fi
-
 # Check if com.apple.HIToolbox.plist differs between $HOME/.dotfiles and $HOME/Library/Preferences
 if [ "$OS_TYPE" = "Darwin" ]; then
   DOTFILES_PLIST="$HOME/.dotfiles/com.apple.HIToolbox.plist"
@@ -102,14 +81,4 @@ mkdir $HOME/.local 2>/dev/null
 mkdir $HOME/.local/bin/ 2>/dev/null
 ln -s $HOME/.config/tmux/scripts/tmux-sessionizer $HOME/.local/bin/
 ln -s $HOME/.config/tmux/scripts/tmux-windowizer $HOME/.local/bin/
-
-if [ ! -f .gnupg/gpg-agent.conf ]; then
-	cp $HOME/.dotfiles/.gnupg/gpg-agent.conf.bak $HOME/.dotfiles/.gnupg/gpg-agent.conf
-    PINENTRY=$((which pinentry-mac || which pinentry) | sed 's_/_\\/_g')
-	sed $SED_OPTION "s/<pinentry>/$PINENTRY/g" $HOME/.dotfiles/.gnupg/gpg-agent.conf
-    if [ -f "$HOME/.dotfiles/.gnupg/gpg-agent.conf''" ]; then
-        rm "$HOME/.dotfiles/.gnupg/gpg-agent.conf''"
-    fi
-    gpg-connect-agent reloadagent /bye
-fi
 
