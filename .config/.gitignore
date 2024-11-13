@@ -12,8 +12,6 @@
 !nix/**
 !nvim/
 !nvim/**
-!skhd/
-!skhd/**
 !tmux/
 !tmux/**
 !.gitignore

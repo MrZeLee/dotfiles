@@ -81,12 +81,12 @@ fi
 
 # Work around to start tmux
 # Check if tmux is running, and start it in daemon mode if it is not
-if ! (pgrep -U $UID -x "tmux" > /dev/null || pgrep -U $UID -x "tmux: server" > /dev/null) ; then
-    # Start tmux server in the background (daemon mode)
-    tmux start-server
-    # Start tmux session in detached mode if not running
-    tmux new-session -d -s default
-fi
+# if ! (pgrep -U $UID -x "tmux" > /dev/null || pgrep -U $UID -x "tmux: server" > /dev/null) ; then
+#     # Start tmux server in the background (daemon mode)
+#     tmux start-server
+#     # Start tmux session in detached mode if not running
+#     tmux new-session -d -s default
+# fi
 
 _fzf_complete_pass() {
   _fzf_complete +m -- "$@" < <(

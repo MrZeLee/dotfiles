@@ -69,7 +69,6 @@ in
         yarn
         yq
         yt-dlp
-        skhd
         opentofu
         # pkgs.cmake-docs
         # pkgs.fleet-cli

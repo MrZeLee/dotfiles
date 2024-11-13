@@ -77,7 +77,6 @@
                     ./modules/system.nix
                     ./modules/nix-core.nix
                     {
-                        services.skhd.enable = true;
                         users.users.${userSettings.username}.home = "/Users/${userSettings.username}";
                         environment.shells = [ pkgs.zsh ];
                         system.configurationRevision = configurationRevision;
