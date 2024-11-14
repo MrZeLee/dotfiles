@@ -6,6 +6,7 @@ IFS=$'\n' all_wins=$(aerospace list-windows --all --format '%{window-id}|%{app-n
 IFS=$'\n' all_ws=$(aerospace list-workspaces --all --format '%{workspace}|%{monitor-id}')
 
 chrome_pip=$(printf '%s\n' $all_wins | grep -i 'Picture in Picture')
+facetime=$(printf '%s\n' $all_wins | grep -i 'FaceTime||')
 target_mon=$(printf '%s\n' $all_ws | grep -i "$ws" | cut -d'|' -f2 | xargs)
 
 move_win() {
@@ -15,7 +16,7 @@ move_win() {
 
   local win_mon=$(printf $win | cut -d'|' -f4 | xargs)
   local win_id=$(printf $win | cut -d'|' -f1 | xargs)
-  local win_app=$(printf $win | cut -d'|' -f2 | xargs)
+  # local win_app=$(printf $win | cut -d'|' -f2 | xargs)
   local win_ws=$(printf $win | cut -d'|' -f5 | xargs)
 
   [[ $target_mon != $win_mon ]] && return 0
@@ -25,3 +26,4 @@ move_win() {
 }
 
 move_win "${chrome_pip}"
+move_win "${facetime}"
