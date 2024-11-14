@@ -1,5 +1,21 @@
 # Where should I put you?
-bindkey -s ^f "tmux-sessionizer\n"
+#
+# Define a zle function to run the command
+tmux_sessionizer() {
+    if [[ -z "$TMUX" ]]; then
+        tmux new-session -n "sessionizer" -A -s asd <>$TTY "tmux-sessionizer"
+    else
+        tmux new-window -n "sessionizer" "tmux-sessionizer"
+    fi
+    zle reset-prompt
+}
+
+# Create a widget for the function
+zle -N tmux_sessionizer
+
+# Bind Ctrl-f to the new widget
+bindkey '^f' tmux_sessionizer
+
 bindkey -s ^h "cd ~\n"
 
 function zvm_vi_yank() {

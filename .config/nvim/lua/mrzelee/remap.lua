@@ -58,7 +58,7 @@ Map("v", "K", ":m '<-2<CR>gv=gv")
 vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
 vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 
-vim.keymap.set({"n","t","i"}, "<C-f>", "<cmd>silent !tmux neww bash -c 'tmux-sessionizer'<CR>")
+vim.keymap.set({"n","t","i"}, "<C-f>", "<cmd>silent !tmux neww -n 'sessionizer' bash -c 'tmux-sessionizer'<CR>")
 
 -- Map("n", "<leader>pn", "<cmd>bnext<CR>") -- next buffer
 -- Map("n", "<leader>pp", "<cmd>bprevious<CR>") -- previous buffer
