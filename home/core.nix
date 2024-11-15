@@ -62,6 +62,7 @@ in
         stow
         tldr
         tree
+        tree-sitter
         # tor
         urlscan
         watch

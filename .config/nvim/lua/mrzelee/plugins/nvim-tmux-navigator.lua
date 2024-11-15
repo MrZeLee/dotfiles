@@ -7,7 +7,7 @@ return {
 
         nvim_tmux_nav.setup {
             disable_when_zoomed = false, -- defaults to false
-            tmux_navigator_no_wrap = true -- defaults to false
+            no_wrap = true -- defaults to false
         }
 
         vim.keymap.set({'n','t'}, "<C-h>", nvim_tmux_nav.NvimTmuxNavigateLeft)

@@ -2,12 +2,14 @@
 
 ws=${1:-$AEROSPACE_FOCUSED_WORKSPACE}
 
+echo $ws >> /Users/joseluismoura/aerospace.log
+
 IFS=$'\n' all_wins=$(aerospace list-windows --all --format '%{window-id}|%{app-name}|%{window-title}|%{monitor-id}|%{workspace}')
 IFS=$'\n' all_ws=$(aerospace list-workspaces --all --format '%{workspace}|%{monitor-id}')
 
 chrome_pip=$(printf '%s\n' $all_wins | grep -i 'Picture in Picture')
 facetime=$(printf '%s\n' $all_wins | grep -i 'FaceTime||')
-target_mon=$(printf '%s\n' $all_ws | grep -i "$ws" | cut -d'|' -f2 | xargs)
+target_mon=$(printf '%s\n' $all_ws | grep -i "$ws|" | cut -d'|' -f2)
 
 move_win() {
   local win="$1"
@@ -22,7 +24,7 @@ move_win() {
   [[ $target_mon != $win_mon ]] && return 0
   [[ $ws == $win_ws ]] && return 0
 
-  aerospace move-node-to-workspace --window-id $win_id $ws
+  aerospace move-node-to-workspace --window-id $win_id "$ws"
 }
 
 move_win "${chrome_pip}"
