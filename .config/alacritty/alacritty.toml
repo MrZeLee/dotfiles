@@ -96,7 +96,7 @@ normal = { family = "Hack Nerd Font", style = "Regular" }
 
 # Font size in points.
 # Uncomment to use the default font size.
-size = 16
+size = 14
 
 # Extra spacing around each character (x: letter spacing, y: line spacing).
 # Uncomment to use default offset.
@@ -111,7 +111,8 @@ size = 16
 # builtin_box_drawing = true
 
 [colors.primary]
-background = "#000000"
+background = "#1e1e2e"
+# background = "#000000"
 foreground = "#cdd6f4"
 dim_foreground = "#7f849c"
 bright_foreground = "#cdd6f4"
