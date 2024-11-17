@@ -17,7 +17,3 @@
     path = .password-store
     url = https://github.com/MrZeLee/pwd-store
     branch = main
-[submodule "nvim"]
-	path = .config/nvim
-	url = https://github.com/MrZeLee/nvim
-	branch = main
