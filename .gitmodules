@@ -16,4 +16,8 @@
 [submodule ".password-store"]
     path = .password-store
     url = https://github.com/MrZeLee/pwd-store
-    branch = master
+    branch = main
+[submodule "nvim"]
+	path = .config/nvim
+	url = https://github.com/MrZeLee/nvim
+	branch = main
