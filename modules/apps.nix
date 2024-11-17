@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, pkgs-unstable, ... }: {
 
     ##########################################################################
     # 
@@ -17,13 +17,13 @@
     # But on macOS, it's less stable than homebrew.
     #
     # Related Discussion: https://discourse.nixos.org/t/darwin-again/29331
-    environment.systemPackages = with pkgs; [
-        curl
-        vim
-        neovim
-        git
-        tmux
-        zsh
+    environment.systemPackages = [
+        pkgs.curl
+        pkgs-unstable.vim
+        pkgs-unstable.neovim
+        pkgs.git
+        pkgs.tmux
+        pkgs.zsh
     ];
     environment.variables.EDITOR = "nvim";
 

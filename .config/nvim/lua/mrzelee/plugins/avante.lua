@@ -19,7 +19,6 @@ return {
             timeout = 30000, -- Timeout in milliseconds
             temperature = 0,
             max_tokens = 8192,
-            ["local"] = false,
         },
         openai = {
             endpoint = "https://api.openai.com/v1",
@@ -27,7 +26,6 @@ return {
             timeout = 30000, -- Timeout in milliseconds
             temperature = 0,
             max_tokens = 4096,
-            ["local"] = false,
         },
         ---@type {[string]: AvanteProvider}
         vendors = {
@@ -39,7 +37,6 @@ return {
                 timeout = 30000, -- Timeout in milliseconds
                 temperature = 0,
                 max_tokens = 8192,
-                ["local"] = false,
                 parse_curl_args = function(opts, prompt_opts)
                     local base, body_opts = require("avante.providers").parse_config(opts)
 
@@ -78,7 +75,6 @@ return {
             },
             ---@type AvanteProvider
             ["ollama"] = {
-                ['local'] = true,
                 endpoint = "http://localhost:11434/v1",
                 model = "codellama:7b",
                 parse_curl_args = function(opts, code_opts)
@@ -112,7 +108,7 @@ return {
         "MunifTanjim/nui.nvim",
         --- The below dependencies are optional,
         "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-        "zbirenbaum/copilot.lua", -- for providers='copilot'
+        "zbirenbaum/copilot.lua",      -- for providers='copilot'
         {
             -- support for image pasting
             "HakonHarnes/img-clip.nvim",

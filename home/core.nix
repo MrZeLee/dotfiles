@@ -71,11 +71,8 @@ in
         yq
         yt-dlp
         opentofu
-        # pkgs.cmake-docs
-        # pkgs.fleet-cli
-        # pkgs.python312packages.setuptools
-        # pkgs.switchaudio-osx
-        # johanhaleby/kubetail/kubetail
+        #used for neovim
+        pngpaste
     ];
 
     home = {
