@@ -2,10 +2,14 @@ return {
 
     'nvim-treesitter/nvim-treesitter',
     tag = 'v0.9.3',
+    -- build = function ()
+    --     require("nvim-treesitter.install").update({ with_sync = true })()
+    -- end,
     build = ":TSUpdate",
 
     config = function()
-        require('nvim-treesitter.configs').setup {
+        local configs = require("nvim-treesitter.configs")
+        configs.setup {
             -- A list of parser names, or "all" (the five listed parsers should always be installed)
             ensure_installed = { "comment", "markdown", "markdown_inline", "vimdoc", "c", "lua", "javascript", "latex", "python", "typescript", "vim", "query", "rust", "java", "nix", "yaml" },
 
