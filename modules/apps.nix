@@ -101,12 +101,6 @@
             "blueutil"
             "fleet-cli"
             "fzf"
-            "php"
-            {
-                name = "borders";
-                start_service = true;
-                restart_service = "changed";
-            }
             "mpg123"
             "monero"
             "tor"
