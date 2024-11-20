@@ -4,6 +4,8 @@
 !aerospace/**
 !alacritty/
 !alacritty/**
+!wezterm/
+!wezterm/**
 !git/
 !git/**
 !karabiner/

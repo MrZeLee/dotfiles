@@ -80,7 +80,7 @@ in
                 orientation = "bottom";
                 persistent-apps = [
                     "/System/Applications/Launchpad.app"
-                    "/Applications/Alacritty.app"
+                    "/Applications/WezTerm.app"
                     "/Applications/Google Chrome.app"
                     "/Applications/Discord.app"
                     "/System/Applications/Messages.app"

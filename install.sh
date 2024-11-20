@@ -75,8 +75,6 @@ if [ "$OS_TYPE" = "Darwin" ]; then
   darwin-rebuild switch --flake ~/.dotfiles
 fi
 
-sudo npm install -g opencommit
-
 mkdir $HOME/.local 2>/dev/null
 mkdir $HOME/.local/bin/ 2>/dev/null
 ln -s $HOME/.config/tmux/scripts/tmux-sessionizer $HOME/.local/bin/

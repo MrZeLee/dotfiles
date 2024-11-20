@@ -191,7 +191,7 @@ alt-shift-semicolon = 'mode service'
 
 [mode.apps.binding]
 esc = ['mode main']
-enter = ['exec-and-forget open -n /Applications/Alacritty.app', 'mode main']
+enter = ['exec-and-forget open -n /Applications/WezTerm.app', 'mode main']
 s = ['exec-and-forget open /Applications/Spotify.app', 'mode main']
 b = ['exec-and-forget open /Applications/Google\ Chrome.app', 'mode main']
 d = ['exec-and-forget open /Applications/Discord.app', 'mode main']
@@ -227,8 +227,8 @@ if.app-id = 'org.alacritty'
 run = "move-node-to-workspace T"
 
 [[on-window-detected]]
-if.app-id = 'com.google.Chrome'
-run = "move-node-to-workspace B"
+if.app-id = 'com.github.wez.wezterm'
+run = "move-node-to-workspace T"
 
 [[on-window-detected]]
 if.app-id = 'com.facebook.archon.developerID'
@@ -261,3 +261,27 @@ run = "move-node-to-workspace D"
 [[on-window-detected]]
 if.app-id = 'com.readdle.PDFExpert-Mac'
 run = "move-node-to-workspace D"
+
+[[on-window-detected]]
+if.app-id = 'com.google.Chrome'
+check-further-callbacks = true
+run = "move-node-to-workspace B"
+
+[[on-window-detected]]
+if.window-title-regex-substring = 'Picture in Picture'
+run = "layout floating"
+
+[[on-window-detected]]
+if.app-id = 'org.mozilla.firefox'
+check-further-callbacks = true
+run = "move-node-to-workspace B"
+
+[[on-window-detected]]
+if.window-title-regex-substring = 'Picture-in-Picture'
+run = "layout floating"
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Facetime'
+if.window-title-regex-substring = ''
+run = "layout floating"
+

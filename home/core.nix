@@ -16,8 +16,6 @@ in
     cloudflared
     cmake
     coreutils
-    git-lfs
-    tig
     glow
     gnuplot
     gnupg
@@ -26,7 +24,6 @@ in
     home-manager
     htop
     isync
-    jq
     kompose
     kubectl
     kubernetes-helm
@@ -66,6 +63,11 @@ in
 
     jankyborders
 
+    # Git
+    opencommit
+    git-lfs
+    tig
+
     # Neovim
     ## img-clip
     pngpaste
@@ -97,6 +99,19 @@ in
     ## Telescope
     ripgrep
     fd
+
+    # Yazi
+    yazi
+    ## dependencies
+    ffmpegthumbnailer
+    p7zip
+    jq
+    poppler
+    fd
+    ripgrep
+    fzf
+    zoxide
+    imagemagick
   ];
 
   launchd = {

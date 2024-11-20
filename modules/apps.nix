@@ -19,8 +19,8 @@
     # Related Discussion: https://discourse.nixos.org/t/darwin-again/29331
     environment.systemPackages = [
         pkgs.curl
-        pkgs-unstable.vim
-        pkgs-unstable.neovim
+        pkgs.vim
+        pkgs.neovim
         pkgs.git
         pkgs.tmux
         pkgs.zsh
@@ -91,6 +91,7 @@
             "typora"
             "visual-studio-code"
             "vlc"
+            "wezterm"
             "whatsapp"
             "wireshark"
             "zerotier-one"
@@ -100,7 +101,7 @@
         brews = [
             "blueutil"
             "fleet-cli"
-            "fzf"
+            # "fzf"
             "mpg123"
             "monero"
             "tor"
