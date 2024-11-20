@@ -62,6 +62,7 @@ in
     opentofu
 
     jankyborders
+    eza
 
     # Git
     opencommit

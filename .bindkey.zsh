@@ -43,3 +43,12 @@ if kubectl -v brew &> /dev/null
 then
     source <(kubectl completion zsh)
 fi
+
+if command -v eza &> /dev/null
+then
+  alias ls="exa --icons --grid --classify --colour=auto --sort=type --group-directories-first --header --modified --created --git --binary --group"
+  alias la="ls -a"
+  alias ll="ls -al"
+fi
+
+
