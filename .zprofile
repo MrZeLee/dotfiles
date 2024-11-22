@@ -73,7 +73,7 @@ alias findershow='defaults write com.apple.finder CreateDesktop -bool true; kill
 alias passg='pass generate'
 alias passc='pass edit'
 
-alias ga='git commit --ammend'
+alias ga='git commit --amend'
 
 alias dump_all='find . -type d -name .git -prune -o -type f -print | while read file; do echo "== $file =="; cat "$file"; echo ""; done'
 function dump_files() {
