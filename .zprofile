@@ -36,15 +36,15 @@ export PATH="/Library/TeX/texbin:$PATH"
 # Added to enable lib in Cargo
 export LIBRARY_PATH="$HOME/.nix-profile/lib:$LIBRARY_PATH"
 
+# MacPorts Installer addition on 2023-05-26_at_19:45:00: adding an appropriate MANPATH variable for use with MacPorts.
+export MANPATH="/opt/local/share/man:$MANPATH"
+# Finished adapting your MANPATH environment variable for use with MacPorts.
+
 # TMUX
 export XDG_CONFIG_HOME="$HOME/.config"
 
 alias vimv='vimv -e vim'
 # Finished adapting your PATH environment variable for use with MacPorts.
-
-# MacPorts Installer addition on 2023-05-26_at_19:45:00: adding an appropriate MANPATH variable for use with MacPorts.
-export MANPATH="/opt/local/share/man:$MANPATH"
-# Finished adapting your MANPATH environment variable for use with MacPorts.
 
 #PATH="\$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 #export VIM=~/.config/nvim
@@ -72,6 +72,8 @@ alias findershow='defaults write com.apple.finder CreateDesktop -bool true; kill
 
 alias passg='pass generate'
 alias passc='pass edit'
+
+alias ga='git commit --ammend'
 
 alias dump_all='find . -type d -name .git -prune -o -type f -print | while read file; do echo "== $file =="; cat "$file"; echo ""; done'
 function dump_files() {
@@ -103,5 +105,3 @@ fi
 if api_key=$(pass show api-key/oco 2>/dev/null); then
     export OCO_API_KEY="$api_key"
 fi
-
-zvm_after_init_commands+=('[ -f $HOME/.bindkey.zsh ] && source $HOME/.bindkey.zsh')

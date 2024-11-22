@@ -55,3 +55,10 @@ if [ -f $HOME/.config/tmux/plugins/tmux-git-autofetch/git-autofetch.tmux ]; then
     tmux-git-autofetch() {($HOME/.config/tmux/plugins/tmux-git-autofetch/git-autofetch.tmux --current &)}
     add-zsh-hook chpwd tmux-git-autofetch
 fi
+
+if command -v direnv &> /dev/null
+then
+  source <(direnv hook zsh)
+fi
+
+zvm_after_init_commands+=('[ -f $HOME/.bindkey.zsh ] && source $HOME/.bindkey.zsh')

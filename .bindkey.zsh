@@ -2,12 +2,12 @@
 #
 # Define a zle function to run the command
 tmux_sessionizer() {
-    if [[ -z "$TMUX" ]]; then
-        tmux new-session -n "sessionizer" -A -s asd <>$TTY "tmux-sessionizer"
-    else
-        tmux new-window -n "sessionizer" "tmux-sessionizer"
-    fi
-    zle reset-prompt
+  if [[ -z "$TMUX" ]]; then
+    tmux new-session -n "sessionizer" -A -s asd <>$TTY "tmux-sessionizer"
+  else
+    tmux new-window -n "sessionizer" "tmux-sessionizer"
+  fi
+  zle reset-prompt
 }
 
 # Create a widget for the function
@@ -25,23 +25,23 @@ function zvm_vi_yank() {
 }
 
 if type "brew" > /dev/null; then
-    if [ -f $(brew --prefix)/share/google-cloud-sdk/path.zsh.inc ]; then
-        source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
-    fi
-    if [ -f $(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc ]; then
-        source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
-    fi
+  if [ -f $(brew --prefix)/share/google-cloud-sdk/path.zsh.inc ]; then
+    source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
+  fi
+  if [ -f $(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc ]; then
+    source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
+  fi
 fi
 
 if command -v fzf &> /dev/null
 then
-    # Set up fzf key bindings and fuzzy completion
-    source <(fzf --zsh)
+  # Set up fzf key bindings and fuzzy completion
+  source <(fzf --zsh)
 fi
 
 if kubectl -v brew &> /dev/null
 then
-    source <(kubectl completion zsh)
+  source <(kubectl completion zsh)
 fi
 
 if command -v eza &> /dev/null
