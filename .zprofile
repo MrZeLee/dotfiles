@@ -16,29 +16,36 @@ fi
 
 export GPG_TTY=$(tty)
 
-# MacPorts Installer addition on 2023-05-26_at_19:45:00: adding an appropriate PATH variable for use with MacPorts.
-export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
+if [ -z "$TMUX" ]; then
 
-export PATH="$HOME/.cargo/bin:$PATH"
+  # MacPorts Installer addition on 2023-05-26_at_19:45:00: adding an appropriate PATH variable for use with MacPorts.
+  export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
 
-export PATH="$HOME/.local/bin:$PATH"
+  export PATH="$HOME/.cargo/bin:$PATH"
 
-export PATH="$HOME/.npm-global/bin:$PATH"
+  export PATH="$HOME/.local/bin:$PATH"
 
-export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/Users/$USER/.nix-profile/bin:/etc/profiles/per-user/$USER/bin:/run/current-system/sw/bin:/nix/var/nix/profiles/default/bin:$PATH"
+  export PATH="$HOME/.npm-global/bin:$PATH"
 
-export PATH=$PATH:/Users/$USER/.local/bin
+  export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/Users/$USER/.nix-profile/bin:/etc/profiles/per-user/$USER/bin:/run/current-system/sw/bin:/nix/var/nix/profiles/default/bin:$PATH"
 
-# Adding latexmk
-# TODO install latexmk after installing mactex using 'tlmgr install latexmk'
-export PATH="/Library/TeX/texbin:$PATH"
+  export PATH="$PATH:/Users/$USER/.local/bin"
 
-# Added to enable lib in Cargo
-export LIBRARY_PATH="$HOME/.nix-profile/lib:$LIBRARY_PATH"
+  if [ -d /Applications/Docker.app/Contents/Resources/bin ]; then
+    export PATH="$PATH:/Applications/Docker.app/Contents/Resources/bin"
+  fi
 
-# MacPorts Installer addition on 2023-05-26_at_19:45:00: adding an appropriate MANPATH variable for use with MacPorts.
-export MANPATH="/opt/local/share/man:$MANPATH"
-# Finished adapting your MANPATH environment variable for use with MacPorts.
+  # Adding latexmk
+  # TODO install latexmk after installing mactex using 'tlmgr install latexmk'
+  export PATH="/Library/TeX/texbin:$PATH"
+
+  # Added to enable lib in Cargo
+  export LIBRARY_PATH="$HOME/.nix-profile/lib:$LIBRARY_PATH"
+
+  # MacPorts Installer addition on 2023-05-26_at_19:45:00: adding an appropriate MANPATH variable for use with MacPorts.
+  export MANPATH="/opt/local/share/man:$MANPATH"
+  # Finished adapting your MANPATH environment variable for use with MacPorts.
+fi
 
 # TMUX
 export XDG_CONFIG_HOME="$HOME/.config"

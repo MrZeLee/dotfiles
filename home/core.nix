@@ -137,6 +137,24 @@ in
           StandardOutPath = "/tmp/borders/borders.out.log";
         };
       };
+      tmux = {
+        enable = true;
+        config = {
+          Label = "com.example.tmux";
+          EnvironmentVariables = {
+            LANG = "en_US.UTF-8";
+            PATH = "${pkgs.tmux}/bin:/usr/bin:/bin:/usr/sbin:/sbin";
+          };
+          KeepAlive = true;
+          ProcessType = "Interactive";
+          ProgramArguments = [
+            "${pkgs.tmux}/bin/tmux"
+          ];
+          RunAtLoad = true;
+          StandardErrorPath = "/tmp/tmux.err.log";
+          StandardOutPath = "/tmp/tmux.out.log";
+        };
+      };
     };
   };
 
