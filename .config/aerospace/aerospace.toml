@@ -134,7 +134,7 @@ alt-d = 'workspace D'
 alt-m = 'workspace M'
 # alt-n = 'workspace N'
 # alt-o = 'workspace O'
-# alt-p = 'workspace P'
+alt-p = 'workspace P'
 # alt-q = 'workspace Q'
 # alt-r = 'workspace R'
 alt-s = 'workspace S'
@@ -167,7 +167,7 @@ alt-shift-d = 'move-node-to-workspace D'
 alt-shift-m = 'move-node-to-workspace M'
 # alt-shift-n = 'move-node-to-workspace N'
 # alt-shift-o = 'move-node-to-workspace O'
-# alt-shift-p = 'move-node-to-workspace P'
+alt-shift-p = 'move-node-to-workspace P'
 # alt-shift-q = 'move-node-to-workspace Q'
 # alt-shift-r = 'move-node-to-workspace R'
 alt-shift-s = 'move-node-to-workspace S'
@@ -193,9 +193,10 @@ alt-shift-semicolon = 'mode service'
 esc = ['mode main']
 enter = ['exec-and-forget open -n /Applications/WezTerm.app', 'mode main']
 s = ['exec-and-forget open /Applications/Spotify.app', 'mode main']
-b = ['exec-and-forget open /Applications/Google\ Chrome.app', 'mode main']
+b = ['exec-and-forget open /Applications/Firefox.app', 'mode main']
 d = ['exec-and-forget open /Applications/Discord.app', 'mode main']
-m =['exec-and-forget open /System/Applications/Messages.app', 'mode main'] 
+m = ['exec-and-forget open /System/Applications/Messages.app', 'mode main']
+o = ['exec-and-forget open /System/Applications/Opera.app', 'mode main']
 
 # 'service' binding mode declaration.
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -284,4 +285,8 @@ run = "layout floating"
 if.app-name-regex-substring = 'Facetime'
 if.window-title-regex-substring = ''
 run = "layout floating"
+
+[[on-window-detected]]
+if.app-id = 'com.operasoftware.Opera'
+run = "move-node-to-workspace P"
 

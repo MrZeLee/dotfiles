@@ -18,6 +18,9 @@ setopt HIST_IGNORE_SPACE
 # allow comments in the shell
 setopt INTERACTIVE_COMMENTS
 
+bindkey "^[[A" history-beginning-search-backward
+bindkey "^[[B" history-beginning-search-forward
+
 # Download zimfw plugin manager if missing.
 if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
   curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh \
@@ -50,15 +53,15 @@ else
   export EDITOR='nvim'
 fi
 
+if command -v direnv &> /dev/null
+then
+  source <(direnv hook zsh)
+fi
+
 # Only add this if you have the plugin installed
 if [ -f $HOME/.config/tmux/plugins/tmux-git-autofetch/git-autofetch.tmux ]; then
     tmux-git-autofetch() {($HOME/.config/tmux/plugins/tmux-git-autofetch/git-autofetch.tmux --current &)}
     add-zsh-hook chpwd tmux-git-autofetch
-fi
-
-if command -v direnv &> /dev/null
-then
-  source <(direnv hook zsh)
 fi
 
 zvm_after_init_commands+=('[ -f $HOME/.bindkey.zsh ] && source $HOME/.bindkey.zsh')
