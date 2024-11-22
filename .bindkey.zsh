@@ -50,5 +50,3 @@ then
   alias la="ls -a"
   alias ll="ls -al"
 fi
-
-

@@ -14,7 +14,7 @@ else
     echo "The operating system is neither Linux nor macOS."
 fi
 
-# export LC_ALL="en_US.UTF-8"
+export GPG_TTY=$(tty)
 
 # MacPorts Installer addition on 2023-05-26_at_19:45:00: adding an appropriate PATH variable for use with MacPorts.
 export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
@@ -27,12 +27,14 @@ export PATH="$HOME/.npm-global/bin:$PATH"
 
 export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/Users/$USER/.nix-profile/bin:/etc/profiles/per-user/$USER/bin:/run/current-system/sw/bin:/nix/var/nix/profiles/default/bin:$PATH"
 
-# Added to enable lib in Cargo
-export LIBRARY_PATH="$HOME/.nix-profile/lib:$LIBRARY_PATH"
+export PATH=$PATH:/Users/$USER/.local/bin
 
 # Adding latexmk
 # TODO install latexmk after installing mactex using 'tlmgr install latexmk'
 export PATH="/Library/TeX/texbin:$PATH"
+
+# Added to enable lib in Cargo
+export LIBRARY_PATH="$HOME/.nix-profile/lib:$LIBRARY_PATH"
 
 # TMUX
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -49,24 +51,29 @@ export MANPATH="/opt/local/share/man:$MANPATH"
 alias vi="nvim -c 'if filereadable(\"Session.vim\") | source Session.vim | endif'"
 alias vim="nvim -c 'if filereadable(\"Session.vim\") | source Session.vim | endif'"
 
-PATH=$PATH:/Users/$USER/.local/bin
-
 # Added DBUS for vim zathura integration
 export DBUS_SESSION_BUS_ADDRESS="unix:path=$DBUS_LAUNCHD_SESSION_BUS_SOCKET"
 
 alias h='cd ~'
 alias o='fzf -m | xargs -I % open %'
 alias f='fzf | xargs -I % open -R %'
+alias cl='clear'
+
 alias ta='tmux attach'
+
 alias c='dir=$(fzf | xargs -I {} dirname "{}") && cd "$dir"'
 alias t="tree -d -L 7| grep --color="never" -E '── \d\d-'"
-#alias c='echo `fzf | xargs -I % dirname "%"`'
-alias upgrade_apps='brew upgrade --cask --no-quarantine --greedy'
-alias downloads='cd ~/Downloads'
-alias cl='clear'
-# alias dump_all='find . -type f | while read file; do echo "== $file =="; cat "$file"; echo ""; done'
-alias dump_all='find . -type d -name .git -prune -o -type f -print | while read file; do echo "== $file =="; cat "$file"; echo ""; done'
 
+alias upgrade_apps='brew upgrade --cask --no-quarantine --greedy'
+
+alias flushdns='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder'
+alias finderhide='defaults write com.apple.finder CreateDesktop -bool false; killall Finder'
+alias findershow='defaults write com.apple.finder CreateDesktop -bool true; killall Finder'
+
+alias passg='pass generate'
+alias passc='pass edit'
+
+alias dump_all='find . -type d -name .git -prune -o -type f -print | while read file; do echo "== $file =="; cat "$file"; echo ""; done'
 function dump_files() {
     for file in "$@"; do
         [[ -f "$file" ]] && echo "== $file ==" && /bin/cat "$file" && echo ""
@@ -78,15 +85,6 @@ if command -v bat &> /dev/null
 then
     alias cat='bat'
 fi
-
-# Work around to start tmux
-# Check if tmux is running, and start it in daemon mode if it is not
-# if ! (pgrep -U $UID -x "tmux" > /dev/null || pgrep -U $UID -x "tmux: server" > /dev/null) ; then
-#     # Start tmux server in the background (daemon mode)
-#     tmux start-server
-#     # Start tmux session in detached mode if not running
-#     tmux new-session -d -s default
-# fi
 
 _fzf_complete_pass() {
   _fzf_complete +m -- "$@" < <(

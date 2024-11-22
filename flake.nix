@@ -84,8 +84,17 @@
               ./modules/system.nix
               ./modules/nix-core.nix
               {
-                users.users.${userSettings.username}.home = "/Users/${userSettings.username}";
-                environment.shells = [ pkgs.zsh ];
+                users.users.${userSettings.username} = {
+                  home = "/Users/${userSettings.username}";
+                  # Set the default shell explicitly
+                  shell = "${pkgs.zsh}/bin/zsh";
+                };
+
+                # Disable zsh configuration from being automatically managed
+                programs.zsh = {
+                  enable = false; # Keep Zsh enabled
+                };
+
                 system.configurationRevision = configurationRevision;
                 system.stateVersion = stateVersion;
                 # Add trusted-users setting here

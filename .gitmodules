@@ -1,18 +1,6 @@
 [submodule "tpm"]
     path = .config/tmux/plugins/tpm
     url = https://github.com/tmux-plugins/tpm
-[submodule ".oh-my-zsh"]
-	path = .oh-my-zsh
-	url = https://github.com/ohmyzsh/ohmyzsh
-	branch = master
-[submodule "powerlevel10k"]
-    path = .oh-my-zsh_custom/themes/powerlevel10k
-    url = https://github.com/romkatv/powerlevel10k
-    branch = master
-[submodule "zsh-vi-mode"]
-    path = .oh-my-zsh_custom/plugins/zsh-vi-mode
-    url = https://github.com/jeffreytse/zsh-vi-mode
-    branch = master
 [submodule ".password-store"]
     path = .password-store
     url = https://github.com/MrZeLee/pwd-store
