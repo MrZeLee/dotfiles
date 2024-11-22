@@ -81,7 +81,7 @@ in
                 persistent-apps = [
                     "/System/Applications/Launchpad.app"
                     "/Applications/WezTerm.app"
-                    "/Applications/Google Chrome.app"
+                    "/Applications/Firefox.app"
                     "/Applications/Discord.app"
                     "/System/Applications/Messages.app"
                     "/Applications/Spotify.app"

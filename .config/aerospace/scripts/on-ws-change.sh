@@ -23,6 +23,6 @@ move_win() {
   aerospace move-node-to-workspace --window-id $win_id "$ws"
 }
 
-move_win "Picture-in-Picture" &
-move_win "Picture in Picture" &
-move_win "FaceTime||" &
+move_win "|Picture-in-Picture|" &
+move_win "|Picture in Picture|" &
+# move_win "FaceTime||" &
