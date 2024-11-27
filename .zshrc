@@ -7,16 +7,16 @@ ZIM_HOME=~/.zim
 HISTFILE=~/.zsh_history
 HISTSIZE=999999999
 SAVEHIST=$HISTSIZE
-# all instances share the same history
-setopt SHARE_HISTORY
-# history expansion goes into the editor buffer first
-setopt HIST_VERIFY
-# don't show dupes in history search
-setopt HIST_FIND_NO_DUPS
-# don't history commands beginning in space (consistent with bash)
-setopt HIST_IGNORE_SPACE
-# allow comments in the shell
-setopt INTERACTIVE_COMMENTS
+
+setopt SHARE_HISTORY            # all instances share the same history
+setopt HIST_VERIFY              # history expansion goes into the editor buffer first
+setopt HIST_FIND_NO_DUPS        # don't show dupes in history search
+setopt HIST_IGNORE_SPACE        # don't history commands beginning in space (consistent with bash)
+setopt INTERACTIVE_COMMENTS     # allow comments in the shell
+setopt APPEND_HISTORY           # Append new history to the file, instead of overwriting it.
+setopt INC_APPEND_HISTORY       # Add commands to the history file as they are executed.
+setopt HIST_IGNORE_DUPS         # Avoid duplicate entries in the history file.
+setopt EXTENDED_HISTORY         # Save timestamps in the history file.
 
 bindkey "^[[A" history-beginning-search-backward
 bindkey "^[[B" history-beginning-search-forward

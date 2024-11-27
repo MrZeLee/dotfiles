@@ -30,6 +30,7 @@ in
     kubeseal
     kubetail
     kustomize
+    lazygit
     libgit2
     libiconv
     lynx
