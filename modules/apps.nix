@@ -58,6 +58,7 @@
       "google-cloud-sdk"
       "google-drive"
       # "iterm2"
+      "iina"
       "karabiner-elements"
       "keepassxc"
       "keyboardcleantool"
@@ -126,6 +127,7 @@
       "WireGuard" = 1451685025;
     };
     onActivation = {
+      autoUpdate = true;
       cleanup = "uninstall";
       upgrade = true;
     };

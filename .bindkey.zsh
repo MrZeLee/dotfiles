@@ -44,6 +44,16 @@ then
   source <(kubectl completion zsh)
 fi
 
+if command -v helm &> /dev/null
+then
+  source <(helm completion zsh)
+fi
+
+if command -v fleet &> /dev/null
+then
+  source <(fleet completion zsh)
+fi
+
 if command -v eza &> /dev/null
 then
   alias ls="exa --icons --classify --colour=auto --sort=type --group-directories-first --header --modified --created --git --binary --group"

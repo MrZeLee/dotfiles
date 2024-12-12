@@ -59,7 +59,6 @@ in
     watch
     yarn
     yq
-    yt-dlp
     opentofu
 
     jankyborders
@@ -114,6 +113,22 @@ in
     fzf
     zoxide
     imagemagick
+
+    #Ani-cli
+    ani-cli
+    ## dependencies
+    gnugrep
+    gnused
+    curl
+    mpv
+    #iina - installed with homebrew
+    aria2
+    yt-dlp
+    ffmpeg_6-full
+    fzf
+    ani-skip
+    gnupatch
+
   ];
 
   launchd = {
