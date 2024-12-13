@@ -129,6 +129,9 @@ in
     ani-skip
     gnupatch
 
+    #Go-wall - to create wallpapers
+    gowall
+
   ];
 
   launchd = {

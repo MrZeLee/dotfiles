@@ -73,7 +73,7 @@ in
                 autohide-delay = 0.0;
                 autohide-time-modifier = 0.0;
                 expose-animation-duration = 0.0;
-                expose-group-by-app = false;
+                expose-group-apps = false;
                 largesize = 64;
                 launchanim = false;
                 magnification = true;

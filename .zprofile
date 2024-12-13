@@ -95,6 +95,8 @@ then
     alias cat='bat'
 fi
 
+wallpaper () { automator -i "${1}" ~/.Workflows/SetWallpaper.workflow }
+
 _fzf_complete_pass() {
   _fzf_complete +m -- "$@" < <(
     local prefix
