@@ -6,6 +6,6 @@ return {
         --require('undotree').setup({})
 
         -- Configurations
-        vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
+        vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle, {desc="acess undotree"})
     end
 }

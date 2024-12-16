@@ -27,7 +27,7 @@ vim.keymap.set("n", "<leader>pV", function()
             vim.cmd(num .. 'bdelete!')
         end
     end
-end)
+end, {desc="remove buffer when going back to netrw"})
 
 
 vim.api.nvim_create_autocmd('FileType', {

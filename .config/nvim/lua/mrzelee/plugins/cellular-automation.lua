@@ -2,7 +2,7 @@ return {
     "Eandrju/cellular-automaton.nvim",
     enabled = true,
     config = function()
-        vim.keymap.set("n", "<leader>mir", "<cmd>CellularAutomaton make_it_rain<CR>")
+        vim.keymap.set("n", "<leader>mir", "<cmd>CellularAutomaton make_it_rain<CR>", {desc="CellularAutomaton Make it Rain"})
 
         require("cellular-automaton").register_animation({
             fps = 50,

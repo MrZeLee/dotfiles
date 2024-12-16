@@ -186,6 +186,8 @@ alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 
 alt-enter = 'mode apps'
 
+alt-semicolon = ['exec-and-forget osascript $HOME/.config/aerospace/scripts/minimize_pip.scpt']
+
 # See: https://nikitabobko.github.io/AeroSpace/commands#mode
 alt-shift-semicolon = 'mode service'
 
