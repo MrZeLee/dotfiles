@@ -96,6 +96,8 @@ then
 fi
 
 wallpaper () { automator -i "${1}" ~/.Workflows/SetWallpaper.workflow }
+wttr () { curl wttr.in/$1 }
+cheat() { curl cheat.sh/$1 }
 
 _fzf_complete_pass() {
   _fzf_complete +m -- "$@" < <(

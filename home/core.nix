@@ -13,9 +13,15 @@ in
     bat
     brotab
     cacert
+    cht-sh
     cloudflared
+    croc #Easily and securely send things from one computer to another.
     cmake
     coreutils
+    ddgr #DuckDuckGo from the terminal.
+    # elinks
+    gh
+    gh-dash
     glow
     gnuplot
     gnupg
@@ -24,6 +30,7 @@ in
     home-manager
     htop
     isync
+    k9s #Kubernetes CLI and TUI To Manage Your Clusters In Style!
     kompose
     kubectl
     kubernetes-helm
@@ -50,6 +57,7 @@ in
     # php83
     pinentry_mac
     python312Packages.pylatexenc
+    python312Packages.virtualenv
     speedtest-cli
     stow
     tldr
@@ -180,6 +188,11 @@ in
 
   home = {
     activation = {
+      prepareStow = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        mkdir -p /Users/${userSettings.username}/.config
+        cd /Users/${userSettings.username}/.dotfiles
+        run ${pkgs.stow}/bin/stow -d /Users/${userSettings.username}/.dotfiles -t /Users/${userSettings.username} --restow .
+      '';
       brotabInstall = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         run ${pkgs.brotab}/bin/brotab install
         chmod 666 /tmp/brotab.log || true
