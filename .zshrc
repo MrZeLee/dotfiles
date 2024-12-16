@@ -44,6 +44,11 @@ cursor_mode() {
     zle-line-init() {
         echo -ne $cursor_beam
     }
+    # Restore cursor to default on exit
+    reset_cursor() {
+        echo -ne '\e[0 q'
+    }
+    trap reset_cursor EXIT
 
     zle -N zle-keymap-select
     zle -N zle-line-init
