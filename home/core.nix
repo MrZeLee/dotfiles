@@ -2,6 +2,29 @@
 let
   # Access the `userSettings` from `specialArgs`
   userSettings = args.userSettings;
+  koji = pkgs.rustPlatform.buildRustPackage rec {
+    pname = "koji";
+    version = "3.0.0";
+
+    src = pkgs.fetchFromGitHub {
+      owner = "cococonscious";
+      repo = "koji";
+      rev = "v${version}";
+      sha256 = "sha256-v2TptHCnVFJ9DLxki7GP815sosCnDStAzZw7B4g/3mk="; # Replace with actual hash
+    };
+
+    cargoHash = "sha256-posT6wp33Tj2bisuYsoh/CK9swS+OVju5vgpj4bTrYs="; # Replace with actual cargo hash
+
+    nativeBuildInputs = with pkgs; [ pkg-config cmake ];
+    buildInputs = with pkgs; [ libgit2 openssl ];
+
+    meta = with pkgs.lib; {
+      description = "A tool to help create conventional git commits";
+      homepage = "https://github.com/koji/koji";
+      license = licenses.mit;
+      platforms = platforms.unix;
+    };
+  };
 in
 {
   # list packages installed in system profile. to search by name, run:
@@ -104,7 +127,7 @@ in
     tree-sitter
     ### nodejs_22
     ### git
-    gcc
+    # gcc ## using clang
     ## Telescope
     ripgrep
     fd
@@ -140,7 +163,14 @@ in
     #Go-wall - to create wallpapers
     gowall
 
-  ];
+    #cargo
+    cargo
+    ## dependencies
+    pkg-config
+    libgit2
+    clang
+    openssl
+  ] ++ [ koji ];
 
   launchd = {
     enable = true;
