@@ -1,0 +1,20 @@
+ZIM_CONFIG_FILE=~/.config/zsh/zimrc
+
+zmodule git-info
+zmodule prompt-pwd
+# zmodule minimal
+
+# zmodule https://git.zx2c4.com/password-store.git --fpath src --use git
+zmodule ohmyzsh/ohmyzsh --fpath plugins/pass
+zmodule ohmyzsh/ohmyzsh --root plugins/git-auto-fetch --source git-auto-fetch.plugin.zsh
+
+zmodule chubin/cheat.sh --on-pull "mv share/zsh.txt share/_cht.zsh || true" --fpath share
+
+zmodule zsh-users/zsh-completions --fpath src
+zmodule completion
+zmodule zsh-users/zsh-syntax-highlighting
+zmodule zsh-users/zsh-autosuggestions
+
+zmodule romkatv/powerlevel10k
+# zmodule jeffreytse/zsh-vi-mode
+zmodule qoomon/zsh-lazyload

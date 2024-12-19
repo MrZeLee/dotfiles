@@ -16,4 +16,6 @@
 !nvim/**
 !tmux/
 !tmux/**
+!zsh/
+!zsh/**
 !.gitignore
