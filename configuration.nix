@@ -46,6 +46,28 @@
   services.xserver.displayManager.gdm.autoSuspend = false;
   services.xserver.desktopManager.gnome.enable = true;
 
+  # Set Mouse accelaration Profile
+  services.libinput.mouse.accelProfile = "flat";
+
+  # Remaps keyboard keys
+  services.evremap = {
+    enable = true;
+    settings = {
+      device_name = "ASUSTeK ROG FALCHION";
+      dual_role = [
+                    {
+                      hold = [
+                        "KEY_ESC"
+                      ];
+                      input = "KEY_CAPSLOCK";
+                      tap = [
+                        "KEY_ESC"
+                      ];
+                    }
+                  ];
+    };
+  };
+
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
@@ -90,7 +112,7 @@
   users.users.josel = {
     isNormalUser = true;
     description = "MrZeLee";
-    extraGroups = [ "networkmanager" "wheel" "video" "render"];
+    extraGroups = [ "networkmanager" "wheel" "video" "render" "input" "uinput" ];
     shell = pkgs.zsh;
     useDefaultShell = false;
     packages = with pkgs; [
@@ -241,7 +263,7 @@
     ] ++ [
       pkgs.wezterm
       pkgs.steam
-      pkgs.discord
+      pkgs.webcord
     ];
   };
 
