@@ -51,5 +51,8 @@ return {
   enable_wayland = true, -- Use Wayland if available
   use_fancy_tab_bar = false,
   enable_tab_bar = false,
+
+  front_end = "WebGpu",
+  enable_wayland = true,
   -- dynamic_title = true,
 }
