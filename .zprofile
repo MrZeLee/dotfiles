@@ -156,10 +156,10 @@ _fzf_complete_pass() {
   )
 }
 
-# # Check if the `pass` command successfully retrieves the API key
-# if api_key=$(pass show api-key/anthropic 2>/dev/null); then
-#     export ANTHROPIC_API_KEY="$api_key"
-# fi
-# if api_key=$(pass show api-key/oco 2>/dev/null); then
-#     export OCO_API_KEY="$api_key"
-# fi
+# Check if the `pass` command successfully retrieves the API key
+if api_key=$(pass show api-key/anthropic 2>/dev/null); then
+    export ANTHROPIC_API_KEY="$api_key"
+fi
+if api_key=$(pass show api-key/oco 2>/dev/null); then
+    export OCO_API_KEY="$api_key"
+fi

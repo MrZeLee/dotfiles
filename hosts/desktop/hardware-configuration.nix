@@ -20,6 +20,8 @@
     };
   };
 
+  # Kernel parameters for PCIe stability
+  boot.kernelParams = [ "pcie_aspm=off" "pci=nomsi" ];
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
@@ -55,8 +57,15 @@
     enable = true;
   };
 
+  nixpkgs.config.nvidia.acceptLicense = true;
+
   # Load nvidia driver for Xorg and Wayland
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" "modesetting" ];
+
+  # Udev rule for NVIDIA device nodes
+  # services.udev.extraRules = ''
+  #   KERNEL=="nvidia*", MODE="0666"
+  # '';
 
   hardware.nvidia = {
 
@@ -89,4 +98,5 @@
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
+  hardware.nvidia-container-toolkit.enable = true;
 }

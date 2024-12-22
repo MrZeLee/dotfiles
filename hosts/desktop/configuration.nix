@@ -49,6 +49,9 @@
   # Set Mouse accelaration Profile
   services.libinput.mouse.accelProfile = "flat";
 
+  # Disable powermanagement
+  powerManagement.enable = false;
+
   # Remaps keyboard keys
   services.evremap = {
     enable = true;
@@ -140,7 +143,7 @@
       graphviz
       gettext
       home-manager
-      htop
+      (btop.override { cudaSupport = true; })
       isync
       k9s #Kubernetes CLI and TUI To Manage Your Clusters In Style!
       kompose
@@ -283,6 +286,8 @@
     neovim
     zsh
     pinentry-all
+    pciutils
+    mesa-demos
   ];
 
   environment.variables.EDITOR = "nvim";
