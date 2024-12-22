@@ -8,7 +8,70 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./mrzelee.nix
     ];
+
+  # Bootloader.
+  boot.loader = {
+    efi.canTouchEfiVariables = true;
+    # systemd-boot.enable = true;
+    grub = {
+      enable = true;
+      devices = [ "nodev" ];
+      efiSupport = true;
+      useOSProber = true;
+    };
+  };
+
+  boot.kernelParams = [ "pcie_aspm=off" "pci=nomsi" ];
+
+  # Enable OpenGL
+  hardware.graphics = {
+    enable = true;
+  };
+
+  nixpkgs.config.nvidia.acceptLicense = true;
+
+  # Load nvidia driver for Xorg and Wayland
+  services.xserver.videoDrivers = [ "nvidia" "modesetting" ];
+
+  # Udev rule for NVIDIA device nodes
+  # services.udev.extraRules = ''
+  #   KERNEL=="nvidia*", MODE="0666"
+  # '';
+
+  hardware.nvidia = {
+
+    # Modesetting is required.
+    modesetting.enable = true;
+
+    # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
+    # Enable this if you have graphical corruption issues or application crashes after waking
+    # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead 
+    # of just the bare essentials.
+    powerManagement.enable = false;
+
+    # Fine-grained power management. Turns off GPU when not in use.
+    # Experimental and only works on modern Nvidia GPUs (Turing or newer).
+    powerManagement.finegrained = false;
+
+    # Use the NVidia open source kernel module (not to be confused with the
+    # independent third-party "nouveau" open source driver).
+    # Support is limited to the Turing and later architectures. Full list of 
+    # supported GPUs is at: 
+    # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus 
+    # Only available from driver 515.43.04+
+    # Currently alpha-quality/buggy, so false is currently the recommended setting.
+    open = false;
+
+    # Enable the Nvidia settings menu,
+	# accessible via `nvidia-settings`.
+    nvidiaSettings = true;
+
+    # Optionally, you may need to select the appropriate driver version for your specific GPU.
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+  };
+  hardware.nvidia-container-toolkit.enable = true;
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -101,204 +164,6 @@
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
-
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-  };
-
-  programs.zsh.enable = true;
-  programs.zsh.enableGlobalCompInit = false;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.josel = {
-    isNormalUser = true;
-    description = "MrZeLee";
-    extraGroups = [ "networkmanager" "wheel" "video" "render" "input" "uinput" ];
-    shell = pkgs.zsh;
-    useDefaultShell = false;
-    packages = with pkgs; [
-      lshw
-      # thunderbird
-      keepassxc
-      vimv-rs
-      abook
-      ansible
-      bat
-      brotab
-      cacert
-      cht-sh
-      cloudflared
-      croc #Easily and securely send things from one computer to another.
-      cmake
-      coreutils
-      ddgr #DuckDuckGo from the terminal.
-      # elinks
-      gh
-      gh-dash
-      glow
-      gnuplot
-      gnupg
-      graphviz
-      gettext
-      home-manager
-      (btop.override { cudaSupport = true; })
-      isync
-      k9s #Kubernetes CLI and TUI To Manage Your Clusters In Style!
-      kompose
-      kubectl
-      kubernetes-helm
-      kubeseal
-      kubetail
-      kustomize
-      lazygit
-      libgit2
-      libiconv
-      lynx
-      maven
-      moreutils
-      # monero
-      msmtp
-      # mvdPackage
-      neomutt
-      netcat
-      neofetch
-      notmuch
-      nmap
-      # ollama
-      pass
-      # php83
-      python312Packages.pylatexenc
-      python312Packages.virtualenv
-      speedtest-cli
-      stow
-      tldr
-      tree
-      # tor
-      urlscan
-      watch
-      yarn
-      yq
-      opentofu
-
-      eza
-
-      # Git
-      opencommit
-      git-lfs
-      tig
-
-      # Neovim
-      wl-clipboard
-      ## img-clip
-      # pngpaste # For MacOs
-      ## Mason Core
-      unzip
-      wget
-      curl
-      gzip
-      gnutar
-      ### bash
-      ### sh
-      ## Mason Languages
-      go
-      php83
-      php83Packages.composer
-      lua51Packages.lua
-      lua51Packages.luarocks
-      julia_19-bin
-      python312
-      python312Packages.pip
-      pipx
-      rustc
-      cargo
-      nodejs_23
-      zulu23
-      texliveMedium
-      ## Treesitter
-      tree-sitter
-      ### nodejs_22
-      ### git
-      # gcc ## using clang
-      ## Telescope
-      ripgrep
-      fd
-
-      # Yazi
-      yazi
-      ## dependencies
-      ffmpegthumbnailer
-      p7zip
-      jq
-      poppler
-      fd
-      ripgrep
-      fzf
-      zoxide
-      imagemagick
-
-      #Ani-cli
-      ani-cli
-      ## dependencies
-      gnugrep
-      gnused
-      curl
-      mpv
-      #iina - installed with homebrew
-      aria2
-      yt-dlp
-      ffmpeg_6-full
-      fzf
-      ani-skip
-      gnupatch
-
-      #Go-wall - to create wallpapers
-      gowall
-
-      #cargo
-      cargo
-      ## dependencies
-      pkg-config
-      libgit2
-      clang
-      openssl
-    ] ++ [
-      pkgs.wezterm
-      pkgs.steam
-      pkgs.webcord
-    ];
-  };
-
-  # Install firefox.
-  programs.firefox.enable = true;
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    tmux
-    git
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    wget
-    neovim
-    zsh
-    pinentry-all
-    pciutils
-    mesa-demos
-  ];
-
-  environment.variables.EDITOR = "nvim";
-  environment.shells = [ pkgs.zsh pkgs.bash ];
-
-  fonts = {
-    packages = [
-      (pkgs.nerdfonts.override { fonts = [ "Hack" ]; }) # Only install Hack Nerd Font
-    ];
-  };
-
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
