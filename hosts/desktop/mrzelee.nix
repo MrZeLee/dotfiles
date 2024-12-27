@@ -11,10 +11,12 @@
   programs.zsh.enableGlobalCompInit = false;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.josel = {
+  users.users.mrzelee = {
     isNormalUser = true;
     description = "MrZeLee";
     extraGroups = [ "networkmanager" "wheel" "video" "render" "input" "uinput" ];
+    home = "/home/mrzelee";
+    createHome = true;
     shell = pkgs.zsh;
     useDefaultShell = false;
     packages = with pkgs; [

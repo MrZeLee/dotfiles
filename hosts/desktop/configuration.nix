@@ -23,7 +23,34 @@
     };
   };
 
-  boot.kernelParams = [ "pcie_aspm=off" "pci=nomsi" ];
+  boot.kernelParams = [
+    # General Performance Optimization
+    "intel_pstate=active" # Ensures the Intel-specific CPU frequency scaling driver is used for better performance
+    "iommu=pt" # Enables IOMMU in pass-through mode, reducing virtualization overhead and ensuring optimal PCIe device performance.
+
+    # NVMe and Storage
+    "nvme_core.default_ps_max_latency_us=0" # Disables NVMe power-saving modes that can cause latency issues.
+    "ahci.mobile_lpm_policy=1" # Reduces power management aggressiveness for SATA AHCI, which may prevent disk disconnects.
+
+    # Intel CPU Features
+    "nosmt=off" # Ensure hyper-threading (SMT) is enabled unless explicitly disabled for security.
+    "intel_iommu=on" # Enables Intel's IOMMU for better PCIe device handling, particularly useful for virtualization or PCIe passthrough.
+    "idle=nomwait" # Prevents the CPU from entering deep C-states that might cause compatibility issues on some motherboards.
+
+    # PCI and Interrupt Handling
+    "pcie_aspm=off"
+    ## "pci=nomsi"
+    "noaer"
+
+    # ACPI and Power Management
+    "acpi=force"
+    "acpi_enforce_resources=lax"
+    "turbostat=1"
+
+    # disable the boot lines
+    "quiet"
+    "splash"
+  ];
 
   # Enable OpenGL
   hardware.graphics = {
@@ -108,6 +135,25 @@
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.displayManager.gdm.autoSuspend = false;
   services.xserver.desktopManager.gnome.enable = true;
+
+  environment.gnome.excludePackages = (with pkgs; [
+    gnome-calendar #calendar
+    gnome-calculator
+    gnome-clocks
+    gnome-maps
+    gnome-photos
+    gnome-tour
+    gnome-music
+    gnome-weather
+    epiphany # web browser
+    geary # email reader
+    gnome-characters
+    yelp # Help view
+    gnome-contacts
+    gnome-initial-setup
+  ]);
+
+  programs.dconf.enable = true;
 
   # Set Mouse accelaration Profile
   services.libinput.mouse.accelProfile = "flat";
