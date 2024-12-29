@@ -166,6 +166,11 @@
       openssl
     ] ++ [
       pkgs.wezterm
+      ## Help Wezterm
+      pkgs.mesa
+      pkgs.vulkan-loader
+      pkgs.vulkan-tools
+
       pkgs.steam
       pkgs.webcord
     ];
