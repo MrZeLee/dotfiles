@@ -1,7 +1,7 @@
 [submodule "tpm"]
     path = .config/tmux/plugins/tpm
-    url = https://github.com/tmux-plugins/tpm
+    url = git@github.com:tmux-plugins/tpm
 [submodule ".password-store"]
     path = .password-store
-    url = https://github.com/MrZeLee/pwd-store
+    url = git@github.com:MrZeLee/pwd-store
     branch = main
