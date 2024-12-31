@@ -1,5 +1,21 @@
 { config, pkgs, ... }:
 
+let
+  customWezterm = pkgs.callPackage ./custom-wezterm.nix {
+    inherit (pkgs) stdenv rustPlatform lib fetchFromGitHub ncurses perl pkg-config
+      python3 fontconfig installShellFiles openssl libGL libxkbcommon wayland zlib
+      CoreGraphics Cocoa Foundation System libiconv UserNotifications nixosTests
+      runCommand vulkan-loader;
+
+    # Correct X11-related library paths
+    libxcb = pkgs.xorg.libxcb;
+    libX11 = pkgs.xorg.libX11;
+    xcbutil = pkgs.xorg.xcbutil;
+    xcbutilimage = pkgs.xorg.xcbutilimage;
+    xcbutilkeysyms = pkgs.xorg.xcbutilkeysyms;
+    xcbutilwm = pkgs.xorg.xcbutilwm;
+  };
+in
 {
   programs.steam = {
     enable = true;
@@ -165,7 +181,7 @@
       clang
       openssl
     ] ++ [
-      pkgs.wezterm
+      customWezterm
       ## Help Wezterm
       pkgs.mesa
       pkgs.vulkan-loader
