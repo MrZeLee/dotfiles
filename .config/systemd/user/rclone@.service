@@ -1,0 +1,40 @@
+# User service for Rclone mounting
+#
+# Place in ~/.config/systemd/user/
+# File must include the '@' (ex rclone@.service)
+# As your normal user, run 
+#   systemctl --user daemon-reload
+# You can now start/enable each remote by using rclone@<remote>
+#   systemctl --user enable --now rclone@dropbox
+
+[Unit]
+Description=rclone: Remote FUSE filesystem for cloud storage config %i
+Documentation=man:rclone(1)
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=300
+StartLimitBurst=0
+
+[Service]
+Type=notify
+ExecStartPre=/bin/sh -c 'mkdir -p %h/%i'
+ExecStart= \
+/bin/sh -c 'rclone mount\
+--config=%h/.config/rclone/rclone.conf\
+--dir-cache-time 48h\
+--attr-timeout 48h\
+--vfs-cache-max-age 48h\
+--vfs-cache-max-size 10G\
+--vfs-cache-mode minimal\
+--log-level INFO\
+--log-file /tmp/rclone-%i.log\
+--umask 022\
+%i: %h/%i'
+ExecStop=/bin/sh -c 'fusermount -u %h/%i'
+
+Restart=always
+RestartSec=10s
+
+[Install]
+WantedBy=default.target
+

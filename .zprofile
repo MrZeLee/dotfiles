@@ -17,74 +17,41 @@ export GPG_TTY=$(tty)
 
 if [ -z "$TMUX" ]; then
 
-  # MacPorts Installer addition on 2023-05-26_at_19:45:00: adding an appropriate PATH variable for use with MacPorts.
-  if [ -d /opt/local/bin ]; then
-    export PATH="$PATH:/opt/local/bin"
-  fi
+  # Function to add a directory to an environment variable if it isn't already included
+  add_to_env_var() {
+    local env_var_name=$1
+    local dir=$2
+    local current_value
+    eval "current_value=\$$env_var_name"
 
-  if [ -d /opt/local/sbin ]; then
-    export PATH="$PATH:/opt/local/sbin"
-  fi
+    case ":$current_value:" in
+      *":$dir:"*) ;;
+      *) eval "export $env_var_name=\"$current_value:$dir\"" ;;
+    esac
+  }
 
-  if [ -d /$HOME/.cargo/bin ]; then
-    export PATH="$PATH:$HOME/.cargo/bin"
-  fi
+  # Adding directories to PATH
+  [ -d /opt/local/bin ] && add_to_env_var PATH "/opt/local/bin"
+  [ -d /opt/local/sbin ] && add_to_env_var PATH "/opt/local/sbin"
+  [ -d "$HOME/.cargo/bin" ] && add_to_env_var PATH "$HOME/.cargo/bin"
+  [ -d "$HOME/.npm-global/bin" ] && add_to_env_var PATH "$HOME/.npm-global/bin"
+  [ -d /opt/homebrew/bin ] && add_to_env_var PATH "/opt/homebrew/bin"
+  [ -d /opt/homebrew/sbin ] && add_to_env_var PATH "/opt/homebrew/sbin"
+  [ -d "$HOME/.nix-profile/bin" ] && add_to_env_var PATH "$HOME/.nix-profile/bin"
+  [ -d "/etc/profiles/per-user/$USER/bin" ] && add_to_env_var PATH "/etc/profiles/per-user/$USER/bin"
+  [ -d /run/current-system/sw/bin ] && add_to_env_var PATH "/run/current-system/sw/bin"
+  [ -d /nix/var/nix/profiles/default/bin ] && add_to_env_var PATH "/nix/var/nix/profiles/default/bin"
+  [ -d "$HOME/.local/bin" ] && add_to_env_var PATH "$HOME/.local/bin"
+  [ -d "$HOME/.config/tmux/scripts" ] && add_to_env_var PATH "$HOME/.config/tmux/scripts"
+  [ -d /Applications/Docker.app/Contents/Resources/bin ] && add_to_env_var PATH "/Applications/Docker.app/Contents/Resources/bin"
+  [ -d /Library/TeX/texbin ] && add_to_env_var PATH "/Library/TeX/texbin"
 
-  if [ -d $HOME/.npm-global/bin ]; then
-    export PATH="$PATH:$HOME/.npm-global/bin"
-  fi
+  # Adding directories to LIBRARY_PATH
+  [ -d "$HOME/.nix-profile/lib" ] && add_to_env_var LIBRARY_PATH "$HOME/.nix-profile/lib"
 
-  if [ -d /opt/homebrew/bin ]; then
-    export PATH="$PATH:/opt/homebrew/bin"
-  fi
-  if [ -d /opt/homebrew/sbin ]; then
-    export PATH="$PATH:/opt/homebrew/sbin"
-  fi
+  # Adding directories to MANPATH
+  [ -d /opt/local/share/man ] && add_to_env_var MANPATH "/opt/local/share/man"
 
-  if [ -d $HOME/.nix-profile/bin ]; then
-    export PATH="$PATH:$HOME/.nix-profile/bin"
-  fi
-
-  if [ -d /etc/profiles/per-user/$USER/bin ]; then
-    export PATH="$PATH:/etc/profiles/per-user/$USER/bin"
-  fi
-
-  if [ -d /run/current-system/sw/bin ]; then
-    export PATH="$PATH:/run/current-system/sw/bin"
-  fi
-
-  if [ -d /nix/var/nix/profiles/default/bin ]; then
-    export PATH="$PATH:/nix/var/nix/profiles/default/bin"
-  fi
-
-  if [ -d $HOME/.local/bin ]; then
-    export PATH="$PATH:$HOME/.local/bin"
-  fi
-
-  if [ -d $HOME/.config/tmux/scripts ]; then
-    export PATH="$PATH:$HOME/.config/tmux/scripts"
-  fi
-
-  if [ -d /Applications/Docker.app/Contents/Resources/bin ]; then
-    export PATH="$PATH:/Applications/Docker.app/Contents/Resources/bin"
-  fi
-
-  # Adding latexmk
-  # TODO install latexmk after installing mactex using 'tlmgr install latexmk'
-  if [ -d /Library/TeX/texbin ]; then
-    export PATH="$PATH:/Library/TeX/texbin"
-  fi
-
-  # Added to enable lib in Cargo
-  if [ -d $HOME/.nix-profile/lib ]; then
-    export LIBRARY_PATH="$LIBRARY_PATH:$HOME/.nix-profile/lib"
-  fi
-
-  # MacPorts Installer addition on 2023-05-26_at_19:45:00: adding an appropriate MANPATH variable for use with MacPorts.
-  if [ -d /opt/local/share/man ]; then
-    export MANPATH="$MANPATH:/opt/local/share/man"
-  fi
-  # Finished adapting your MANPATH environment variable for use with MacPorts.
 fi
 
 # TMUX

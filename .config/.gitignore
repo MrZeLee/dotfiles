@@ -18,4 +18,6 @@
 !tmux/**
 !zsh/
 !zsh/**
+!systemd/
+!systemd/**
 !.gitignore
