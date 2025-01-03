@@ -92,7 +92,8 @@
 
                 # Disable zsh configuration from being automatically managed
                 programs.zsh = {
-                  enable = false; # Keep Zsh enabled
+                  enable = true; # Keep Zsh enabled
+                  enableGlobalCompInit = false;
                 };
 
                 system.configurationRevision = configurationRevision;
