@@ -1,5 +1,8 @@
 zstyle ':zim:zmodule' use 'degit'
 
+DEDUPE_PATH="$(printf %s "$PATH" | awk -v RS=: '{ if (!arr[$0]++) {printf("%s%s",!ln++?"":":",$0)}}')"
+export PATH=$DEDUPE_PATH
+
 ZIM_CONFIG_FILE=~/.config/zsh/zimrc
 ZIM_HOME=~/.zim
 
@@ -103,6 +106,83 @@ fi
 if [ -f $HOME/.config/tmux/plugins/tmux-git-autofetch/git-autofetch.tmux ]; then
     tmux-git-autofetch() {($HOME/.config/tmux/plugins/tmux-git-autofetch/git-autofetch.tmux --current &)}
     add-zsh-hook chpwd tmux-git-autofetch
+fi
+
+# TMUX
+export XDG_CONFIG_HOME="$HOME/.config"
+
+alias vimv='vimv -e vim'
+# Finished adapting your PATH environment variable for use with MacPorts.
+
+#PATH="\$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+#export VIM=~/.config/nvim
+alias vi="nvim -c 'if filereadable(\"Session.vim\") | source Session.vim | endif'"
+alias vim="nvim -c 'if filereadable(\"Session.vim\") | source Session.vim | endif'"
+
+# # Added DBUS for vim zathura integration
+# # Creates problems in the nixos login
+# export DBUS_SESSION_BUS_ADDRESS="unix:path=$DBUS_LAUNCHD_SESSION_BUS_SOCKET"
+
+alias h='cd ~'
+alias o='fzf -m | xargs -I % open %'
+alias f='fzf | xargs -I % open -R %'
+alias cl='clear'
+
+alias ta='tmux attach'
+
+alias c='dir=$(fzf | xargs -I {} dirname "{}") && cd "$dir"'
+alias t="tree -d -L 7| grep --color="never" -E '── \d\d-'"
+
+if command -v brew &> /dev/null; then
+  alias upgrade_apps='brew upgrade --cask --no-quarantine --greedy'
+fi
+
+if [[ "$OS_TYPE" == "Darwin" ]]; then
+  alias flushdns='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder'
+  alias finderhide='defaults write com.apple.finder CreateDesktop -bool false; killall Finder'
+  alias findershow='defaults write com.apple.finder CreateDesktop -bool true; killall Finder'
+fi
+
+alias passg='pass generate'
+alias passc='pass edit'
+
+alias ga='git commit --amend'
+
+alias dump_all='find . -type d -name .git -prune -o -type f -print | while read file; do echo "== $file =="; cat "$file"; echo ""; done'
+function dump_files() {
+    for file in "$@"; do
+        [[ -f "$file" ]] && echo "== $file ==" && /bin/cat "$file" && echo ""
+    done
+}
+
+# check if bat is installed
+if command -v bat &> /dev/null; then
+    alias cat='bat'
+fi
+
+if command -v automator &> /dev/null; then
+  wallpaper () { automator -i "${1}" ~/.Workflows/SetWallpaper.workflow }
+fi
+
+wttr () { curl wttr.in/$1 }
+cheat() { curl cheat.sh/$1 }
+
+_fzf_complete_pass() {
+  _fzf_complete +m -- "$@" < <(
+    local prefix
+    prefix="${PASSWORD_STORE_DIR:-$HOME/.password-store}"
+    command find -L "$prefix" \
+      -name "*.gpg" -type f | \
+      sed -e "s#${prefix}/\{0,1\}##" -e 's#\.gpg##' -e 's#\\#\\\\#' | sort
+  )
+}
+
+# Check if the `pass` command successfully retrieves the API key
+if api_key=$(pass show api-key/anthropic 2>/dev/null); then
+    export ANTHROPIC_API_KEY="$api_key"
+fi
+if api_key=$(pass show api-key/oco 2>/dev/null); then
+    export OCO_API_KEY="$api_key"
 fi
 
 [ -f $HOME/.bindkey.zsh ] && source $HOME/.bindkey.zsh

@@ -15,7 +15,7 @@ end
 
 return {
   -- Spawn a fish shell in login mode
-  default_prog = { '/run/current-system/sw/bin/zsh', '--login' },
+  default_prog = { '/run/current-system/sw/bin/zsh' },
 
   -- Environment variables
   set_environment_variables = {
