@@ -3,6 +3,9 @@ zstyle ':zim:zmodule' use 'degit'
 DEDUPE_PATH="$(printf %s "$PATH" | awk -v RS=: '{ if (!arr[$0]++) {printf("%s%s",!ln++?"":":",$0)}}')"
 export PATH=$DEDUPE_PATH
 
+bindkey '^A' beginning-of-line
+bindkey '^E' end-of-line
+
 ZIM_CONFIG_FILE=~/.config/zsh/zimrc
 ZIM_HOME=~/.zim
 
