@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   customWezterm = pkgs.callPackage ./custom-wezterm.nix {
@@ -88,6 +88,7 @@ in
       # php83
       python312Packages.pylatexenc
       python312Packages.virtualenv
+      rclone
       speedtest-cli
       stow
       tldr
@@ -181,7 +182,8 @@ in
       clang
       openssl
     ] ++ [
-      customWezterm
+      # customWezterm
+      pkgs.wezterm
       ## Help Wezterm
       pkgs.mesa
       pkgs.vulkan-loader

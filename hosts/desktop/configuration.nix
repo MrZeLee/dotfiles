@@ -3,10 +3,13 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-
+# let
+#   home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/release-24.11.tar.gz";
+# in
 {
   imports =
     [ # Include the results of the hardware scan.
+      # (import "${home-manager}/nixos")
       ./hardware-configuration.nix
       ./mrzelee.nix
     ];
@@ -42,7 +45,8 @@
     "pci=realloc"
     "pcie_ports=native"
     ## "pci=nomsi"
-    "noaer"
+    "pci=nommconf"
+    "pci=noaer"
 
     # ACPI and Power Management
     "acpi=force"
@@ -52,6 +56,8 @@
     # disable the boot lines
     "quiet"
     "splash"
+
+    "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
   ];
 
   # Enable OpenGL
@@ -71,12 +77,20 @@
   #   KERNEL=="nvidia*", MODE="0666"
   # '';
 
+  programs.hyprland.enable = true; # enable Hyprland
+
+  # Additional NVIDIA Packages
+  environment.systemPackages = with pkgs; [
+    egl-wayland # For EGL and Wayland compatibility
+    kitty # required for the default Hyprland config
+  ];
+
   hardware.nvidia = {
 
     # Modesetting is required.
     modesetting.enable = true;
 
-    # prime.nvidiaBusId = "PCI:1:0:0";
+    prime.nvidiaBusId = "PCI:1:0:0";
 
     # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
     # Enable this if you have graphical corruption issues or application crashes after waking
@@ -95,7 +109,7 @@
     # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus 
     # Only available from driver 515.43.04+
     # Currently alpha-quality/buggy, so false is currently the recommended setting.
-    open = true;
+    open = false;
 
     # Enable the Nvidia settings menu,
 	# accessible via `nvidia-settings`.
@@ -135,12 +149,23 @@
   };
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  services.xserver = {
+    enable = true;
 
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.displayManager.gdm.autoSuspend = false;
-  services.xserver.desktopManager.gnome.enable = true;
+    # Enable the GNOME Desktop Environment.
+    displayManager.gdm = {
+      enable = true;
+      autoSuspend = false;
+    };
+
+    desktopManager.gnome.enable = true;
+
+  # Configure keymap in X11
+    xkb = {
+      layout = "us";
+      variant = "alt-intl";
+    };
+  };
 
   environment.gnome.excludePackages = (with pkgs; [
     gnome-calendar #calendar
@@ -186,14 +211,8 @@
     };
   };
 
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "alt-intl";
-  };
-
   # Configure console keymap
-  console.keyMap = "dvorak";
+  console.keyMap = "us";
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
