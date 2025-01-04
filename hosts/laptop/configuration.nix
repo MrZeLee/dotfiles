@@ -14,6 +14,8 @@
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.systemd-boot.configurationLimit = 2; # Keep only the last two configurations
+
 
     boot.kernelParams = [
     # General Performance Optimization
@@ -24,8 +26,6 @@
     "quiet"
     "splash"
   ];
-
-  nixpkgs.config.allowUnfree = true;
 
   # Enable OpenGL
   hardware.graphics = {
@@ -42,6 +42,16 @@
   # services.udev.extraRules = ''
   #   KERNEL=="nvidia*", MODE="0666"
   # '';
+
+  programs.hyprland = {
+    enable = true; # enable Hyprland
+  };
+
+  # Additional NVIDIA Packages
+  environment.systemPackages = with pkgs; [
+    egl-wayland # For EGL and Wayland compatibility
+    kitty # required for the default Hyprland config
+  ];
 
   hardware.nvidia = {
 
@@ -76,7 +86,7 @@
   };
   hardware.nvidia-container-toolkit.enable = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "nixos-laptop"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -105,12 +115,24 @@
   };
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  services.xserver = {
+    enable = true;
 
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.displayManager.gdm.autoSuspend = false;
-  services.xserver.desktopManager.gnome.enable = true;
+    # Enable the GNOME Desktop Environment.
+    displayManager.gdm = {
+      enable = true;
+      autoSuspend = false;
+    };
+
+    desktopManager.gnome.enable = true;
+
+  # Configure keymap in X11
+    xkb = {
+      layout = "us";
+      variant = "alt-intl";
+      options = "caps:escape,terminate:ctrl_alt_bksp";
+    };
+  };
 
   environment.gnome.excludePackages = (with pkgs; [
     gnome-calendar #calendar
@@ -156,14 +178,9 @@
     };
   };
 
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "alt-intl";
-  };
-
   # Configure console keymap
-  console.keyMap = "dvorak";
+  # console.keyMap = "us";
+  console.useXkbConfig = true;
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
