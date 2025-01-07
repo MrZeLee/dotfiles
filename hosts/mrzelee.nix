@@ -21,7 +21,9 @@ in
     enable = true;
     remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+    gamescopeSession.enable = true;
   };
+
 
   programs.zsh.enable = true;
   programs.zsh.enableGlobalCompInit = false;
@@ -109,6 +111,8 @@ in
 
       # Neovim
       wl-clipboard
+      ## LSP
+      lua-language-server
       ## img-clip
       # pngpaste # For MacOs
       ## Mason Core
@@ -138,7 +142,7 @@ in
       tree-sitter
       ### nodejs_22
       ### git
-      # gcc ## using clang
+      gcc
       ## Telescope
       ripgrep
       fd
@@ -179,19 +183,21 @@ in
       ## dependencies
       pkg-config
       libgit2
-      clang
+      # clang
       openssl
     ] ++ [
-      # customWezterm
-      pkgs.wezterm
+      customWezterm
+      # pkgs.wezterm
       ## Help Wezterm
       pkgs.mesa
       pkgs.vulkan-loader
       pkgs.vulkan-tools
 
       pkgs.steam
-      pkgs.webcord
+      pkgs.vesktop
     ];
+
+    openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC2gO7UAKfjRE2uApIneVTMLCpZxL3QkTPTcipAzm3IjTlrjvzvzyXs0+Y0QEFEK9CImH/ZYMBVzb3yJM9o/KeDThbuzfGWP4q18ZVUHvtsPdrNNu/AxUIqhsw+462SGwdju13TnlgXmPfg8bVYHVnJBwXtW/5lZ8lIEZpDHTv2lU3wvOgn3YRVjd8FdfDVGBiad1O6JQEZY7v9BDrg8ynugK4pyt2EViZvaTwQMuZC3EPuDtdrzhCm1oSWPFnA6KEb7musy+0/zR/aV2ewg4Ouy8E69aWiuSV8DPzgVFKT7sj5zEOH8Ouq0AzElQl8XQoJLPHSHFM4qeQE3pAvokFoJAc+I9Wi1ht/PSvZxdiCSAVXT2L9X4G7IN4i4BWaDaEwIFYv9tmxN+DkC6sWWNXNmMSmOJVdisT7GLhvRY70CZgOChg0DBWrcVAynrh6HpRfjQGKi7huHoPxey4YG15+ByKiM25Vi3nRBYwrstsLdVS4SAuoIS4dV8XJ9JVSrFX/fdWRxcjKMcFDgqwzClQ6rmQdqCHkZeTV9CqnehntP3AvVM6xM5bXK4TppJVxE6iJpSBUc01fe0qJLplztYlBeqMZmjdEa/nPjZZMQFE/0TNURI7oCFAGzMgHnxzbLnmSTNjZMi4YpA2BdXREkUh6Cm9UiXAiCjsRoGDaVR0fRw== josel@DESKTOP-JOSE" ];
   };
 
   # Install firefox.
@@ -212,6 +218,8 @@ in
     pinentry-all
     pciutils
     mesa-demos
+    #gaming
+    mangohud protonup-qt lutris bottles heroic
   ];
 
   environment.variables.EDITOR = "nvim";
