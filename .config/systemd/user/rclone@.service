@@ -25,7 +25,7 @@ ExecStart= \
 --attr-timeout 48h\
 --vfs-cache-max-age 48h\
 --vfs-cache-max-size 10G\
---vfs-cache-mode minimal\
+--vfs-cache-mode writes\
 --log-level INFO\
 --log-file /tmp/rclone-%i.log\
 --umask 022\

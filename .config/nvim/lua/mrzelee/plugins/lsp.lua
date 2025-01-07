@@ -26,20 +26,55 @@ return {
     },
 
     config = function()
+        local function is_nixos()
+            -- Check if the OS is NixOS by inspecting /etc/os-release
+            local f = io.popen("grep '^ID=' /etc/os-release")
+            if not f then return false end
+            local os_id = f:read("*a") or ""
+            f:close()
+            return os_id:match("ID=nixos") ~= nil
+        end
+
+        -- Define different LSP servers for NixOS and other systems
+        local ensure_installed = is_nixos() and {
+            "rust_analyzer",
+            "ts_ls",
+            "ansiblels",
+            "jdtls",
+            "rnix",
+        } or {
+            "lua_ls",
+            "rust_analyzer",
+            "ts_ls",
+            "ansiblels",
+            "jdtls",
+            "rnix",
+        }
+
         require("mason").setup()
         require("mason-lspconfig").setup({
-            ensure_installed = {
-                "lua_ls",
-                "rust_analyzer",
-                "ts_ls",
-                "ansiblels",
-                "jdtls",
-                "rnix",
-            },
+            ensure_installed = ensure_installed,
             handlers = {
                 function(server_name)
-                    -- print("setting up", server_name)
-                    require("lspconfig")[server_name].setup {}
+                    if is_nixos() then
+                        -- NixOS-specific setup
+                        if server_name == "lua_ls" then
+                            require("lspconfig").lua_ls.setup {
+                                cmd = { "lua-language-server" }, -- Ensure Nix-installed binary is used
+                            }
+                        -- elseif server_name == "sss" then
+                        --     -- Custom setup for "sss" on NixOS
+                        --     require("lspconfig").sss.setup {
+                        --         cmd = { "path/to/sss" }, -- Adjust for NixOS-specific path
+                        --     }
+                        else
+                            -- Default setup for other servers on NixOS
+                            require("lspconfig")[server_name].setup {}
+                        end
+                    else
+                        -- Default setup for all servers on non-NixOS systems
+                        require("lspconfig")[server_name].setup {}
+                    end
                 end,
             }
         })

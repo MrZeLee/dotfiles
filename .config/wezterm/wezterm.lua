@@ -1,17 +1,17 @@
 local wezterm = require 'wezterm'
 
-local xcursor_size = nil
-local xcursor_theme = nil
+-- local xcursor_size = nil
+-- local xcursor_theme = nil
 
-local success, stdout, stderr = wezterm.run_child_process({"gsettings", "get", "org.gnome.desktop.interface", "cursor-theme"})
-if success then
-  xcursor_theme = stdout:gsub("'(.+)'\n", "%1")
-end
-
-local success, stdout, stderr = wezterm.run_child_process({"gsettings", "get", "org.gnome.desktop.interface", "cursor-size"})
-if success then
-  xcursor_size = tonumber(stdout)
-end
+-- local success, stdout, stderr = wezterm.run_child_process({"gsettings", "get", "org.gnome.desktop.interface", "cursor-theme"})
+-- if success then
+--   xcursor_theme = stdout:gsub("'(.+)'\n", "%1")
+-- end
+-- 
+-- local success, stdout, stderr = wezterm.run_child_process({"gsettings", "get", "org.gnome.desktop.interface", "cursor-size"})
+-- if success then
+--   xcursor_size = tonumber(stdout)
+-- end
 
 return {
   -- Spawn a fish shell in login mode
@@ -19,7 +19,7 @@ return {
 
   -- Environment variables
   set_environment_variables = {
-    WINIT_X11_SCALE_FACTOR = "1.0",
+    -- WINIT_X11_SCALE_FACTOR = "1.0",
     TERM = "xterm-256color",
   },
 
@@ -30,7 +30,7 @@ return {
     top = 10,
     bottom = 10,
   },
-  window_decorations = "RESIZE",
+  window_decorations = "NONE",
   window_background_opacity = 1.0,
   initial_rows = 24,
   initial_cols = 80,
@@ -61,7 +61,6 @@ return {
 
   -- IPC and dynamic title
   automatically_reload_config = true,
-  enable_wayland = true, -- Use Wayland if available
   use_fancy_tab_bar = false,
   enable_tab_bar = false,
 
@@ -69,6 +68,6 @@ return {
   enable_wayland = true,
   -- dynamic_title = true,
 
-  xcursor_theme = xcursor_theme,
-  xcursor_size = xcursor_size,
+  -- xcursor_theme = xcursor_theme,
+  -- xcursor_size = xcursor_size,
 }
