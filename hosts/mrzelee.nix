@@ -21,9 +21,8 @@ in
     enable = true;
     remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-    gamescopeSession.enable = true;
+    # gamescopeSession.enable = true;
   };
-
 
   programs.zsh.enable = true;
   programs.zsh.enableGlobalCompInit = false;
@@ -38,76 +37,38 @@ in
     shell = pkgs.zsh;
     useDefaultShell = false;
     packages = with pkgs; [
-      lshw
       # thunderbird
-      keepassxc
-      vimv-rs
-      abook
-      ansible
-      bat
-      brotab
-      cacert
-      cht-sh
-      cloudflared
-      croc #Easily and securely send things from one computer to another.
-      cmake
-      coreutils
+      abook ansible
+      bat brotab (btop.override { cudaSupport = true; })
+      # croc - easy send files to another computer
+      cacert cht-sh cloudflared croc
+      cmake coreutils
       ddgr #DuckDuckGo from the terminal.
-      # elinks
-      gh
-      gh-dash
-      glow
-      gnuplot
-      gnupg
-      graphviz
-      gettext
+      eza #Better ls
+      gh gh-dash glow gnuplot gnupg graphviz gettext
       home-manager
-      (btop.override { cudaSupport = true; })
       isync
       k9s #Kubernetes CLI and TUI To Manage Your Clusters In Style!
-      kompose
-      kubectl
-      kubernetes-helm
-      kubeseal
-      kubetail
-      kustomize
-      lazygit
-      libgit2
-      libiconv
-      lynx
-      maven
-      moreutils
+      keepassxc kompose kubectl kubernetes-helm kubeseal kubetail kustomize
+      lazygit libgit2 libiconv lynx lshw
       # monero
-      msmtp
+      msmtp maven moreutils
       # mvdPackage
-      neomutt
-      netcat
-      neofetch
-      notmuch
-      nmap
-      # ollama
-      pass
+      neomutt netcat neofetch notmuch nmap
+      opentofu # ollama
       # php83
-      python312Packages.pylatexenc
-      python312Packages.virtualenv
+      pass python312Packages.pylatexenc python312Packages.virtualenv
       rclone
-      speedtest-cli
-      stow
-      tldr
-      tree
-      # tor
+      speedtest-cli stow
+      tldr tree # tor
       urlscan
+      vimv-rs
       watch
-      yarn
-      yq
-      opentofu
+      yarn yq
 
-      eza
 
       # Git
-      opencommit
-      git-lfs
-      tig
+      opencommit git-lfs tig
 
       # Neovim
       wl-clipboard
@@ -116,64 +77,23 @@ in
       ## img-clip
       # pngpaste # For MacOs
       ## Mason Core
-      unzip
-      wget
-      curl
-      gzip
-      gnutar
-      ### bash
-      ### sh
+      unzip wget curl gzip gnutar # bash sh
       ## Mason Languages
-      go
-      php83
-      php83Packages.composer
-      lua51Packages.lua
-      lua51Packages.luarocks
-      julia_19-bin
-      python312
-      python312Packages.pip
-      pipx
-      rustc
-      cargo
-      nodejs_23
-      zulu23
-      texliveMedium
+      go php83 php83Packages.composer lua51Packages.lua lua51Packages.luarocks julia_19-bin python312 python312Packages.pip pipx rustc cargo nodejs_23 zulu23 texliveMedium
       ## Treesitter
-      tree-sitter
-      ### nodejs_22
-      ### git
-      gcc
+      tree-sitter gcc # nodejs_22 git
       ## Telescope
-      ripgrep
-      fd
+      ripgrep fd
 
       # Yazi
       yazi
       ## dependencies
-      ffmpegthumbnailer
-      p7zip
-      jq
-      poppler
-      fd
-      ripgrep
-      fzf
-      zoxide
-      imagemagick
+      ffmpegthumbnailer p7zip jq poppler fd ripgrep fzf zoxide imagemagick
 
       #Ani-cli
       ani-cli
       ## dependencies
-      gnugrep
-      gnused
-      curl
-      mpv
-      #iina - installed with homebrew
-      aria2
-      yt-dlp
-      ffmpeg_6-full
-      fzf
-      ani-skip
-      gnupatch
+      gnugrep gnused curl mpv aria2 yt-dlp ffmpeg_6-full fzf ani-skip gnupatch #iina - installed with homebrew
 
       #Go-wall - to create wallpapers
       gowall
@@ -181,10 +101,7 @@ in
       #cargo
       cargo
       ## dependencies
-      pkg-config
-      libgit2
-      # clang
-      openssl
+      pkg-config libgit2 openssl # clang
     ] ++ [
       customWezterm
       # pkgs.wezterm
@@ -201,7 +118,20 @@ in
   };
 
   # Install firefox.
-  programs.firefox.enable = true;
+  programs.firefox = {
+    enable = true;
+    preferencesStatus = "default";
+    preferences = {
+      "browser.preferences.defaultPerformanceSettings.enabled" = false;
+      "browser.translations.automaticallyPopup" = false;
+      "signon.rememberSignons" = false;
+      "privacy.globalprivacycontrol.enabled" = true;
+      "privacy.donottrackheader.enabled" = true;
+      "datareporting.healthreport.uploadEnabled" = false;
+      "browser.crashReports.unsubmittedCheck.autoSubmit2" = false;
+      "network.trr.mode" = 3;
+    };
+  };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -219,7 +149,7 @@ in
     pciutils
     mesa-demos
     #gaming
-    mangohud protonup-qt lutris bottles heroic
+    mangohud # protonup-qt lutris bottles heroic
   ];
 
   environment.variables.EDITOR = "nvim";

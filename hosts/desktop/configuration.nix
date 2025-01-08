@@ -100,22 +100,23 @@
   # Additional NVIDIA Packages
   environment.systemPackages = with pkgs; [
     egl-wayland # For EGL and Wayland compatibility
-    kitty # required for the default Hyprland config
     waybar # for hyprland
     hyprpaper # Wallpaper manager for hyprland
     rofi-wayland # menu to launch apps
     nautilus # file manager
     gnumake
-    hyprlandPlugins.csgo-vulkan-fix
+    # hyprlandPlugins.csgo-vulkan-fix
   ];
 
   environment.sessionVariables = {
-    HYPRLAND_CSGO_VULKAN_FIX = "${pkgs.hyprlandPlugins.csgo-vulkan-fix}";
+    # HYPRLAND_CSGO_VULKAN_FIX = "${pkgs.hyprlandPlugins.csgo-vulkan-fix}";
+    LIBVA_DRIVER_NAME = "nvidia";
+    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
   };
 
   xdg.portal = {
     enable = true;
-    # extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
 
   # Enable the X11 windowing system.
@@ -130,6 +131,9 @@
       autoSuspend = false;
     };
   };
+  
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.gdm.enableGnomeKeyring = true;
 
   # services.displayManager.sddm = {
   #   enable = true;

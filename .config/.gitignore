@@ -8,6 +8,8 @@
 !wezterm/**
 !git/
 !git/**
+!hypr/
+!hypr/**
 !karabiner/
 !karabiner/**
 !nix/
