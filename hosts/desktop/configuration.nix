@@ -75,8 +75,25 @@
         comment = "Hyprland compositor managed by UWSM";
         binPath = lib.mkForce "${pkgs.hyprland}/bin/Hyprland";
       };
+	#      sway = {
+	#        prettyName = "Sway";
+	# comment = "Sway compositor managed by UWSM";
+	# binPath = lib.mkForce "${pkgs.sway}/bin/sway --unsupported-gpu";
+	#      };
     };
   };
+
+  # enable Sway window manager
+  programs.sway = {
+    enable = true;
+    wrapperFeatures.gtk = true;
+    xwayland.enable = true;
+    extraPackages = with pkgs; [ brightnessctl grim pulseaudio swayidle swaylock rofi ];
+    extraOptions = [ "--unsupported-gpu" ];
+  };
+
+  # Override sessionPackages to prevent Sway from being added
+  # services.displayManager.sessionPackages = lib.mkForce [];
 
   programs.hyprland = {
     enable = true; # enable Hyprland
@@ -105,17 +122,24 @@
     rofi-wayland # menu to launch apps
     nautilus # file manager
     gnumake
+    grim # screenshot functionality
+    slurp # screenshot functionality
+    wl-clipboard # wl-copy and wl-paste for copy/paste from stdin / stdout
+    mako # notification system developed by swaywm maintainer
     # hyprlandPlugins.csgo-vulkan-fix
   ];
 
   environment.sessionVariables = {
     # HYPRLAND_CSGO_VULKAN_FIX = "${pkgs.hyprlandPlugins.csgo-vulkan-fix}";
-    LIBVA_DRIVER_NAME = "nvidia";
-    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+    # SWAY = "${pkgs.sway}";
+    # LIBVA_DRIVER_NAME = "nvidia";
+    # __GLX_VENDOR_LIBRARY_NAME = "nvidia";
   };
 
   xdg.portal = {
     enable = true;
+    # try to enable without messing keyring
+    # wlr.enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
 
@@ -283,7 +307,7 @@
 
   services.sshd.enable = true;
   # And expose via SSH
-  programs.ssh.startAgent = true;
+  # programs.ssh.startAgent = true;
 
   # Enable the OpenSSH daemon.
   services.openssh = {

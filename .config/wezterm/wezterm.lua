@@ -14,6 +14,9 @@ local wezterm = require 'wezterm'
 -- end
 
 return {
+
+  mux_enable_ssh_agent = false,
+
   -- Spawn a fish shell in login mode
   default_prog = { '/run/current-system/sw/bin/zsh' },
 
