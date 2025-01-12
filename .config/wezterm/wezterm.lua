@@ -18,7 +18,7 @@ return {
   mux_enable_ssh_agent = false,
 
   -- Spawn a fish shell in login mode
-  default_prog = { '/run/current-system/sw/bin/zsh' },
+  default_prog = { '/run/current-system/sw/bin/zsh', '-l' },
 
   -- Environment variables
   set_environment_variables = {
