@@ -17,19 +17,19 @@ StartLimitBurst=0
 
 [Service]
 Type=notify
-Environment="PATH=/etc/profiles/per-user/%u/bin:/run/current-system/sw/bin:/bin:/usr/bin"
+Environment="PATH=/run/wrappers/bin:/etc/profiles/per-user/%u/bin:/run/current-system/sw/bin:/bin:/usr/bin"
 ExecStartPre=/bin/sh -c 'mkdir -p %h/%i'
 ExecStart= \
-/bin/sh -c 'rclone mount\
---config=%h/.config/rclone/rclone.conf\
---dir-cache-time 48h\
---attr-timeout 48h\
---vfs-cache-max-age 48h\
---vfs-cache-max-size 10G\
---vfs-cache-mode writes\
---log-level INFO\
---log-file /tmp/rclone-%i.log\
---umask 022\
+/bin/sh -c 'rclone mount \
+--config=%h/.config/rclone/rclone.conf \
+--dir-cache-time 48h \
+--attr-timeout 48h \
+--vfs-cache-max-age 48h \
+--vfs-cache-max-size 10G \
+--vfs-cache-mode writes \
+--log-level INFO \
+--log-file /tmp/rclone-%i.log \
+--umask 022 \
 %i: %h/%i'
 ExecStop=/bin/sh -c 'fusermount -u %h/%i'
 

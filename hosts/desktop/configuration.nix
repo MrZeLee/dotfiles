@@ -92,14 +92,11 @@
     extraOptions = [ "--unsupported-gpu" ];
   };
 
-  # Override sessionPackages to prevent Sway from being added
-  # services.displayManager.sessionPackages = lib.mkForce [];
-
-  programs.hyprland = {
-    enable = true; # enable Hyprland
-    withUWSM = true; # recommended for most users
-    xwayland.enable = true; # Xwayland can be disabled.
-  };
+  # programs.hyprland = {
+  #   enable = true; # enable Hyprland
+  #   withUWSM = true; # recommended for most users
+  #   xwayland.enable = true; # Xwayland can be disabled.
+  # };
 
   programs.hyprlock.enable = true;
   security.pam.services.hyprlock = {};
@@ -138,8 +135,6 @@
 
   xdg.portal = {
     enable = true;
-    # try to enable without messing keyring
-    # wlr.enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
 
@@ -157,10 +152,10 @@
   };
   
   services.gnome.gnome-keyring.enable = true;
-  security.pam.services.gdm.enableGnomeKeyring = true;
-
-  # services.displayManager.sddm = {
-  #   enable = true;
+  # systemd.user.services."dbus-org.freedesktop.secrets".serviceConfig = {
+  #   ExecStart = lib.mkForce [
+  #     "/run/wrappers/bin/gnome-keyring-daemon --start --foreground --components=secrets,ssh"
+  #   ];
   # };
 
   hardware.nvidia = {
@@ -251,24 +246,24 @@
   # Disable powermanagement
   powerManagement.enable = false;
 
-  # Remaps keyboard keys
-  services.evremap = {
-    enable = true;
-    settings = {
-      device_name = "ASUSTeK ROG FALCHION";
-      dual_role = [
-                    {
-                      hold = [
-                        "KEY_ESC"
-                      ];
-                      input = "KEY_CAPSLOCK";
-                      tap = [
-                        "KEY_ESC"
-                      ];
-                    }
-                  ];
-    };
-  };
+  # # Remaps keyboard keys
+  # services.evremap = {
+  #   enable = true;
+  #   settings = {
+  #     device_name = "ASUSTeK ROG FALCHION";
+  #     dual_role = [
+  #                   {
+  #                     hold = [
+  #                       "KEY_ESC"
+  #                     ];
+  #                     input = "KEY_CAPSLOCK";
+  #                     tap = [
+  #                       "KEY_ESC"
+  #                     ];
+  #                   }
+  #                 ];
+  #   };
+  # };
 
   # Configure console keymap
   console.keyMap = "us";
