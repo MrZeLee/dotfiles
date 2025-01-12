@@ -12,6 +12,8 @@
 !hypr/**
 !karabiner/
 !karabiner/**
+!mako/
+!mako/**
 !nix/
 !nix/**
 !nvim/
