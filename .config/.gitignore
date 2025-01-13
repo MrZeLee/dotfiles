@@ -18,6 +18,8 @@
 !nix/**
 !nvim/
 !nvim/**
+!sway/
+!sway/**
 !tmux/
 !tmux/**
 !zsh/

@@ -15,7 +15,8 @@ local wezterm = require 'wezterm'
 
 return {
 
-  mux_enable_ssh_agent = false,
+  -- macos version does not have this already
+  -- mux_enable_ssh_agent = false,
 
   -- Spawn a fish shell in login mode
   default_prog = { '/run/current-system/sw/bin/zsh', '-l' },
@@ -33,7 +34,8 @@ return {
     top = 10,
     bottom = 10,
   },
-  window_decorations = "NONE",
+  -- Seting up macos with RESIZE, if NONE windows do not respond well to aerospace
+  window_decorations = "RESIZE",
   window_background_opacity = 1.0,
   initial_rows = 24,
   initial_cols = 80,
