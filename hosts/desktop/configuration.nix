@@ -70,11 +70,11 @@
   programs.uwsm = {
     enable = true;
     waylandCompositors = {
-      hyprland = {
-        prettyName = "Hyprland";
-        comment = "Hyprland compositor managed by UWSM";
-        binPath = lib.mkForce "${pkgs.hyprland}/bin/Hyprland";
-      };
+      # hyprland = {
+      #   prettyName = "Hyprland";
+      #   comment = "Hyprland compositor managed by UWSM";
+      #   binPath = lib.mkForce "${pkgs.hyprland}/bin/Hyprland";
+      # };
 	#      sway = {
 	#        prettyName = "Sway";
 	# comment = "Sway compositor managed by UWSM";
@@ -82,6 +82,12 @@
 	#      };
     };
   };
+
+  # programs.hyprland = {
+  #   enable = true; # enable Hyprland
+  #   withUWSM = true; # recommended for most users
+  #   xwayland.enable = true; # Xwayland can be disabled.
+  # };
 
   # enable Sway window manager
   programs.sway = {
@@ -91,12 +97,6 @@
     extraPackages = with pkgs; [ brightnessctl grim pulseaudio swayidle swaylock rofi ];
     extraOptions = [ "--unsupported-gpu" ];
   };
-
-  # programs.hyprland = {
-  #   enable = true; # enable Hyprland
-  #   withUWSM = true; # recommended for most users
-  #   xwayland.enable = true; # Xwayland can be disabled.
-  # };
 
   programs.hyprlock.enable = true;
   security.pam.services.hyprlock = {};
@@ -135,7 +135,7 @@
 
   xdg.portal = {
     enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    extraPortals = [ pkgs.gnome-keyring pkgs.xdg-desktop-portal-gtk ];
   };
 
   # Enable the X11 windowing system.
@@ -149,15 +149,13 @@
       wayland = true;
       autoSuspend = false;
     };
+    xkb = {
+      layout = "us";
+      variant = "intl";
+      model = "pc105";
+    };
   };
   
-  services.gnome.gnome-keyring.enable = true;
-  # systemd.user.services."dbus-org.freedesktop.secrets".serviceConfig = {
-  #   ExecStart = lib.mkForce [
-  #     "/run/wrappers/bin/gnome-keyring-daemon --start --foreground --components=secrets,ssh"
-  #   ];
-  # };
-
   hardware.nvidia = {
 
     # Modesetting is required.
@@ -207,18 +205,21 @@
   time.timeZone = "Europe/Lisbon";
 
   # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.defaultLocale = "pt_PT.UTF-8";
 
   i18n.extraLocaleSettings = {
-    LC_ADDRESS = "pt_PT.UTF-8";
+    LC_MESSAGES = "en_US.UTF-8";
     LC_IDENTIFICATION = "pt_PT.UTF-8";
-    LC_MEASUREMENT = "pt_PT.UTF-8";
-    LC_MONETARY = "pt_PT.UTF-8";
-    LC_NAME = "pt_PT.UTF-8";
-    LC_NUMERIC = "pt_PT.UTF-8";
-    LC_PAPER = "pt_PT.UTF-8";
-    LC_TELEPHONE = "pt_PT.UTF-8";
+    LC_CTYPE = "pt_PT.UTF-8";
+    LC_COLLATE = "pt_PT.UTF-8";
     LC_TIME = "pt_PT.UTF-8";
+    LC_NUMERIC = "pt_PT.UTF-8";
+    LC_MONETARY = "pt_PT.UTF-8";
+    LC_PAPER = "pt_PT.UTF-8";
+    LC_MEASUREMENT = "pt_PT.UTF-8";
+    LC_NAME = "pt_PT.UTF-8";
+    LC_ADDRESS = "pt_PT.UTF-8";
+    LC_TELEPHONE = "pt_PT.UTF-8";
   };
 
   environment.gnome.excludePackages = (with pkgs; [

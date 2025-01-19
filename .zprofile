@@ -6,9 +6,7 @@ if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc
 # Check if the OS is Linux or macOS
 if [[ "$OS_TYPE" == "Linux" ]]; then
     export PINENTRY_PROGRAM="$(which pinentry)"
-    # eval $(/run/wrappers/bin/gnome-keyring-daemon --start --daemonize)
-    # eval $(gnome-keyring-daemon --components=pkcs11,secrets,ssh)
-    eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh 2>/dev/null);
+    # eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh 2>/dev/null);
     export SSH_AUTH_SOCK;
 elif [[ "$OS_TYPE" == "Darwin" ]]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"

@@ -13,17 +13,19 @@ local wezterm = require 'wezterm'
 --   xcursor_size = tonumber(stdout)
 -- end
 
-return {
+-- Determine the OS
+local target_triple = wezterm.target_triple
+local is_linux = target_triple:find("linux") ~= nil
+local is_macos = target_triple:find("darwin") ~= nil
+-- local is_windows = target_triple:find("windows") ~= nil
 
-  -- macos version does not have this already
-  -- mux_enable_ssh_agent = false,
-
-  -- Spawn a fish shell in login mode
-  default_prog = { '/run/current-system/sw/bin/zsh', '-l' },
+-- Base configuration
+local config = {
+  -- Spawn a zsh shell in login mode
+  default_prog = { '/run/current-system/sw/bin/zsh' },
 
   -- Environment variables
   set_environment_variables = {
-    -- WINIT_X11_SCALE_FACTOR = "1.0",
     TERM = "xterm-256color",
   },
 
@@ -34,7 +36,6 @@ return {
     top = 10,
     bottom = 10,
   },
-  -- Seting up macos with RESIZE, if NONE windows do not respond well to aerospace
   window_decorations = "RESIZE",
   window_background_opacity = 1.0,
   initial_rows = 24,
@@ -53,7 +54,7 @@ return {
   font = wezterm.font_with_fallback {
     "Hack Nerd Font",
   },
-  font_size = 12.0,
+  font_size = 12.0, -- Default for Linux
   line_height = 1.0,
 
   -- Cursor settings
@@ -71,8 +72,14 @@ return {
 
   front_end = "WebGpu",
   enable_wayland = true,
-  -- dynamic_title = true,
-
-  -- xcursor_theme = xcursor_theme,
-  -- xcursor_size = xcursor_size,
 }
+
+-- OS-specific configurations
+if is_linux then
+  config.font_size = 12.0
+  config.mux_enable_ssh_agent = false
+elseif is_macos then
+  config.font_size = 14.0
+end
+
+return config

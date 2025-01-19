@@ -17,12 +17,17 @@ let
   };
 in
 {
+  virtualisation.waydroid.enable = true;
+
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
     # gamescopeSession.enable = true;
   };
+
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.login.enableGnomeKeyring = true;
 
   programs.zsh.enable = true;
   programs.zsh.enableGlobalCompInit = false;
