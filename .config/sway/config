@@ -63,9 +63,10 @@ default_border pixel
 # Read `man 5 sway-input` for more information about this section.
 
 input "type:keyboard" {
-    xkb_layout us
-    xkb_variant intl
+    xkb_layout us_intl_dead_grave_and_dead_tilde_LSGT
+    # xkb_variant intl
     xkb_options caps:escape
+    xkb_model pc105
 }
 
 focus_follows_mouse no

@@ -53,7 +53,7 @@ return {
   font = wezterm.font_with_fallback {
     "Hack Nerd Font",
   },
-  font_size = 14.0,
+  font_size = 12.0,
   line_height = 1.0,
 
   -- Cursor settings

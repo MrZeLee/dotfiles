@@ -26,4 +26,6 @@
 !zsh/**
 !systemd/
 !systemd/**
+!xkb/
+!xkb/**
 !.gitignore
