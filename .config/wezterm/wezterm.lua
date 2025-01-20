@@ -76,6 +76,7 @@ local config = {
 
 -- OS-specific configurations
 if is_linux then
+  config.window_decorations = "NONE"
   config.font_size = 12.0
   config.mux_enable_ssh_agent = false
 elseif is_macos then

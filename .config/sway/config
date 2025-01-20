@@ -16,7 +16,7 @@ set $down j
 set $up k
 set $right l
 # Your preferred terminal emulator
-set $term wezterm --config 'window_decorations="NONE"' --config 'mux_enable_ssh_agent = false'
+set $term wezterm
 # Your preferred application launcher
 # set $menu wmenu-run
 set $menu rofi -show-icons -show drun
@@ -39,10 +39,10 @@ default_border pixel
 #
 # Example configuration:
 #
-# exec swayidle -w \
-#          timeout 300 'swaylock -f -c 000000' \
-#          timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
-#          before-sleep 'swaylock -f -c 000000'
+exec swayidle -w \
+         timeout 300 'swaylock -f -c 000000' \
+         timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
+         before-sleep 'swaylock -f -c 000000'
 #
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
@@ -126,29 +126,38 @@ mouse_warping container
 # Workspaces:
 #
     # Switch to workspace
-    bindsym $mod+1 workspace number 1
-    bindsym $mod+2 workspace number 2
-    bindsym $mod+3 workspace number 3
-    bindsym $mod+T workspace T
-    bindsym $mod+E workspace E
-    bindsym $mod+M workspace M
-    bindsym $mod+S workspace S
-    bindsym $mod+D workspace D
-    bindsym $mod+Z workspace Z
+    bindsym $mod+1 workspace number 7:1
+    bindsym $mod+2 workspace number 8:2
+    bindsym $mod+3 workspace number 9:3
+    bindsym $mod+T workspace 1:T
+    bindsym $mod+E workspace 2:E
+    bindsym $mod+M workspace 3:M
+    bindsym $mod+S workspace 4:S
+    bindsym $mod+D workspace 5:D
+    bindsym $mod+Z workspace 6:Z
     # bindsym $mod+0 workspace number 10
     # Move focused container to workspace
-    bindsym $mod+Shift+1 move container to workspace number 1
-    bindsym $mod+Shift+2 move container to workspace number 2
-    bindsym $mod+Shift+3 move container to workspace number 3
-    bindsym $mod+Shift+T move container to workspace T
-    bindsym $mod+Shift+E move container to workspace E
-    bindsym $mod+Shift+M move container to workspace M
-    bindsym $mod+Shift+S move container to workspace S
-    bindsym $mod+Shift+D move container to workspace D
-    bindsym $mod+Shift+Z move container to workspace Z
+    bindsym $mod+Shift+1 move container to workspace number 7:1
+    bindsym $mod+Shift+2 move container to workspace number 8:2
+    bindsym $mod+Shift+3 move container to workspace number 9:3
+    bindsym $mod+Shift+T move container to workspace 1:T
+    bindsym $mod+Shift+E move container to workspace 2:E
+    bindsym $mod+Shift+M move container to workspace 3:M
+    bindsym $mod+Shift+S move container to workspace 4:S
+    bindsym $mod+Shift+D move container to workspace 5:D
+    bindsym $mod+Shift+Z move container to workspace 6:Z
     # bindsym $mod+Shift+0 move container to workspace number 10
     # Note: workspaces can have any name you want, not just numbers.
     # We just use 1-10 as the default.
+
+    assign [app_id="org.wezfurlong.wezterm"] 1:T
+    assign [app_id="firefox"] 2:E
+    assign [class="vesktop"] 3:M
+    assign [class="Spotify"] 4:S
+    assign [app_id="org.gnome.Nautilus"] 5:D
+    assign [app_id="org.keepassxc.KeePassXC"] 6:Z
+    for_window [app_id="firefox" title="Picture-in-Picture"] floating enable, resize set width 30ppt height 30ppt, move position 70ppt 0px, sticky enable
+    for_window [app_id=".*"] focus
 #
 # Layout stuff:
 #
@@ -220,7 +229,7 @@ mode "resize" {
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
-bindsym $mod+r mode "resize"
+bindsym $mod+Shift+r mode "resize"
 #
 # Utilities:
 #
@@ -240,6 +249,7 @@ bindsym $mod+r mode "resize"
 #
 # Read `man 5 sway-bar` for more information about this section.
 bar {
+    strip_workspace_numbers yes
     position top
 
     # When the status_command prints a new line to stdout, swaybar updates.

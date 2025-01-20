@@ -125,6 +125,8 @@ fi
 # TMUX
 export XDG_CONFIG_HOME="$HOME/.config"
 
+alias rclone_config='rclone config reconnect GDrive: --auto-confirm'
+
 alias vimv='vimv -e vim'
 # Finished adapting your PATH environment variable for use with MacPorts.
 
