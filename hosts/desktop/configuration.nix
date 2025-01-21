@@ -67,25 +67,25 @@
   #   KERNEL=="nvidia*", MODE="0666"
   # '';
 
-  programs.uwsm = {
-   enable = true;
-   # waylandCompositors = {
-   #  hyprland = {
-   #   prettyName = "Hyprland";
-   #   comment = "Hyprland compositor managed by UWSM";
-   #   binPath = lib.mkForce "${pkgs.hyprland}/bin/Hyprland";
-   #  };
-   #  # sway = {
-   #  #  prettyName = "Sway";
-   #  #  comment = "Sway compositor managed by UWSM";
-   #  #  binPath = lib.mkForce "${pkgs.sway}/bin/sway --unsupported-gpu";
-   #  # };
-   # };
-  };
+  # programs.uwsm = {
+  #  enable = true;
+  #  # waylandCompositors = {
+  #  #  hyprland = {
+  #  #   prettyName = "Hyprland";
+  #  #   comment = "Hyprland compositor managed by UWSM";
+  #  #   binPath = lib.mkForce "${pkgs.hyprland}/bin/Hyprland";
+  #  #  };
+  #  #  # sway = {
+  #  #  #  prettyName = "Sway";
+  #  #  #  comment = "Sway compositor managed by UWSM";
+  #  #  #  binPath = lib.mkForce "${pkgs.sway}/bin/sway --unsupported-gpu";
+  #  #  # };
+  #  # };
+  # };
 
   programs.hyprland = {
     enable = true; # enable Hyprland
-    withUWSM = true; # recommended for most users
+    # withUWSM = true; # recommended for most users
     xwayland.enable = true; # Xwayland can be disabled.
   };
 
