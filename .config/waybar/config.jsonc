@@ -15,6 +15,8 @@
   ],
   "modules-right": [
     "custom/icon-left",
+    "idle_inhibitor",
+    "custom/icon-split",
     "network",
     "custom/icon-split",
     "memory",
@@ -26,6 +28,16 @@
     "wireplumber",
     "custom/icon-right-outer"
   ],
+
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "interval": 1,
+    "tooltip": true,
+    "format-icons": {
+      "activated": "",
+      "deactivated": ""
+    }
+  },
 
   "clock": {
     "interval": 1,
@@ -45,7 +57,9 @@
       "kitty": "",
       "wezterm": "",
       "code": "󰨞",
-      "class<org.gnome.Nautilus>": ""
+      "class<org.gnome.Nautilus>": "",
+      "class<org.keepassxc.KeePassXC> title<.*Locked.*>": "󰪪",
+      "class<org.keepassxc.KeePassXC>": "󰆼"
     }
   },
   "battery": {

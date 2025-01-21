@@ -79,6 +79,15 @@ tooltip {
     padding-right: 10px;
 }
 
+#idle_inhibitor {
+    background-color: #000000;
+    color: #ffffff;
+    font-size: 12px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 0px 0px 0px 12px;
+}
+
 #network {
     background-color: #000000;
     color: #ffffff;
