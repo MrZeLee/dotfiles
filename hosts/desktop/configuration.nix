@@ -69,18 +69,18 @@
 
   programs.uwsm = {
    enable = true;
-   waylandCompositors = {
-    hyprland = {
-  	  prettyName = "Hyprland";
-  	  comment = "Hyprland compositor managed by UWSM";
-  	  binPath = lib.mkForce "${pkgs.hyprland}/bin/Hyprland";
-    };
-    # sway = {
-    #  prettyName = "Sway";
-    #  comment = "Sway compositor managed by UWSM";
-    #  binPath = lib.mkForce "${pkgs.sway}/bin/sway --unsupported-gpu";
-    # };
-   };
+   # waylandCompositors = {
+   #  hyprland = {
+   #   prettyName = "Hyprland";
+   #   comment = "Hyprland compositor managed by UWSM";
+   #   binPath = lib.mkForce "${pkgs.hyprland}/bin/Hyprland";
+   #  };
+   #  # sway = {
+   #  #  prettyName = "Sway";
+   #  #  comment = "Sway compositor managed by UWSM";
+   #  #  binPath = lib.mkForce "${pkgs.sway}/bin/sway --unsupported-gpu";
+   #  # };
+   # };
   };
 
   programs.hyprland = {

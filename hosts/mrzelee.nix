@@ -138,6 +138,7 @@ in
       "datareporting.healthreport.uploadEnabled" = false;
       "browser.crashReports.unsubmittedCheck.autoSubmit2" = false;
       "network.trr.mode" = 3;
+      "browser.sessionstore.restore_on_demand" = false;
     };
   };
 
