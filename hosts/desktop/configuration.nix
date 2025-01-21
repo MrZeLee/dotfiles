@@ -68,26 +68,30 @@
   # '';
 
   programs.uwsm = {
-    enable = true;
-    waylandCompositors = {
-      # hyprland = {
-      #   prettyName = "Hyprland";
-      #   comment = "Hyprland compositor managed by UWSM";
-      #   binPath = lib.mkForce "${pkgs.hyprland}/bin/Hyprland";
-      # };
-	#      sway = {
-	#        prettyName = "Sway";
-	# comment = "Sway compositor managed by UWSM";
-	# binPath = lib.mkForce "${pkgs.sway}/bin/sway --unsupported-gpu";
-	#      };
+   enable = true;
+   waylandCompositors = {
+    hyprland = {
+  	  prettyName = "Hyprland";
+  	  comment = "Hyprland compositor managed by UWSM";
+  	  binPath = lib.mkForce "${pkgs.hyprland}/bin/Hyprland";
     };
+    # sway = {
+    #  prettyName = "Sway";
+    #  comment = "Sway compositor managed by UWSM";
+    #  binPath = lib.mkForce "${pkgs.sway}/bin/sway --unsupported-gpu";
+    # };
+   };
   };
 
-  # programs.hyprland = {
-  #   enable = true; # enable Hyprland
-  #   withUWSM = true; # recommended for most users
-  #   xwayland.enable = true; # Xwayland can be disabled.
-  # };
+  programs.hyprland = {
+    enable = true; # enable Hyprland
+    withUWSM = true; # recommended for most users
+    xwayland.enable = true; # Xwayland can be disabled.
+  };
+
+  programs.hyprlock.enable = true;
+  security.pam.services.hyprlock = {};
+  services.hypridle.enable = true;
 
   # enable Sway window manager
   programs.sway = {
@@ -97,10 +101,6 @@
     extraPackages = with pkgs; [ brightnessctl grim pulseaudio swayidle swaylock rofi ];
     extraOptions = [ "--unsupported-gpu" ];
   };
-
-  programs.hyprlock.enable = true;
-  security.pam.services.hyprlock = {};
-  services.hypridle.enable = true;
 
   # Enable OpenGL
   hardware.graphics = {
@@ -123,11 +123,18 @@
     slurp # screenshot functionality
     wl-clipboard # wl-copy and wl-paste for copy/paste from stdin / stdout
     mako # notification system developed by swaywm maintainer
-    # hyprlandPlugins.csgo-vulkan-fix
+    swaylock
+    swayidle
+    swaybg
+    sway-audio-idle-inhibit
+    hyprlandPlugins.csgo-vulkan-fix
+    hyprlandPlugins.hy3
+    pavucontrol
   ];
 
   environment.sessionVariables = {
-    # HYPRLAND_CSGO_VULKAN_FIX = "${pkgs.hyprlandPlugins.csgo-vulkan-fix}";
+    HYPRLAND_CSGO_VULKAN_FIX = "${pkgs.hyprlandPlugins.csgo-vulkan-fix}";
+    HYPRLAND_HY3 = "${pkgs.hyprlandPlugins.hy3}";
     # SWAY = "${pkgs.sway}";
     # LIBVA_DRIVER_NAME = "nvidia";
     # __GLX_VENDOR_LIBRARY_NAME = "nvidia";
