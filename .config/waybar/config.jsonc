@@ -46,19 +46,27 @@
     "max-length": 25,
     "tooltip-format": "{:%Y-%m-%d}"
   },
+  // "window": {
+  //   "format": "{title}",
+  //   "max-length": 50,
+  //   "default": "No Title",   // Fallback when no window title is available
+  //   "ignore": ["windowtitle>>"]
+  // },
   "hyprland/workspaces": {
-    "format": "{icon} {windows}",
+  "format": "{icon} {windows}",
     "window-rewrite-default": "",
     "window-rewrite": {
       "title<.*youtube.*>": "",
       "class<firefox>": "",
       "class<firefox> title<.*github.*>": "",
+      "class<vesktop> title<(?!.*Discord).+>": "",
       "class<vesktop>": "",
+      "class<Spotify>": "",
       "kitty": "",
       "wezterm": "",
       "code": "󰨞",
       "class<org.gnome.Nautilus>": "",
-      "class<org.keepassxc.KeePassXC> title<.*Locked.*>": "󰪪",
+      "class<org.keepassxc.KeePassXC> title<.*Locked.*KeePassXC>": "󰪪",
       "class<org.keepassxc.KeePassXC>": "󰆼"
     }
   },
