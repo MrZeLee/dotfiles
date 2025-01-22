@@ -15,9 +15,32 @@ let
     xcbutilkeysyms = pkgs.xorg.xcbutilkeysyms;
     xcbutilwm = pkgs.xorg.xcbutilwm;
   };
+  koji = pkgs.rustPlatform.buildRustPackage rec {
+    pname = "koji";
+    version = "3.0.0";
+
+    src = pkgs.fetchFromGitHub {
+      owner = "cococonscious";
+      repo = "koji";
+      rev = "v${version}";
+      sha256 = "sha256-v2TptHCnVFJ9DLxki7GP815sosCnDStAzZw7B4g/3mk="; # Replace with actual hash
+    };
+
+    cargoHash = "sha256-posT6wp33Tj2bisuYsoh/CK9swS+OVju5vgpj4bTrYs="; # Replace with actual cargo hash
+
+    nativeBuildInputs = with pkgs; [ pkg-config cmake ];
+    buildInputs = with pkgs; [ libgit2 openssl ];
+
+    meta = with pkgs.lib; {
+      description = "A tool to help create conventional git commits";
+      homepage = "https://github.com/koji/koji";
+      license = licenses.mit;
+      platforms = platforms.unix;
+    };
+  };
 in
 {
-  virtualisation.waydroid.enable = true;
+  # virtualisation.waydroid.enable = true;
 
   programs.steam = {
     enable = true;
@@ -108,6 +131,7 @@ in
       ## dependencies
       pkg-config libgit2 openssl # clang
     ] ++ [
+      koji
       customWezterm
       # pkgs.wezterm
       ## Help Wezterm

@@ -173,7 +173,7 @@
   "custom/lock": {
     "format": "󰍁",
     "tooltip": false,
-    "on-click": "hyprlock"
+    "on-click": "swaylock -f -c 000000;"
   },
   "custom/reboot": {
     "format": "󰜉",
