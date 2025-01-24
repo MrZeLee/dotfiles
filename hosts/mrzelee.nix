@@ -1,11 +1,16 @@
 { config, pkgs, lib, ... }:
 
 let
+  unstable = import
+    (builtins.fetchTarball https://github.com/nixos/nixpkgs/tarball/nixos-unstable)
+    # reuse the current configuration
+    { config = config.nixpkgs.config; };
+
   customWezterm = pkgs.callPackage ./custom-wezterm.nix {
     inherit (pkgs) stdenv rustPlatform lib fetchFromGitHub ncurses perl pkg-config
-      python3 fontconfig installShellFiles openssl libGL libxkbcommon wayland zlib
-      CoreGraphics Cocoa Foundation System libiconv UserNotifications nixosTests
-      runCommand vulkan-loader;
+    python3 fontconfig installShellFiles openssl libGL libxkbcommon wayland zlib
+    CoreGraphics Cocoa Foundation System libiconv UserNotifications nixosTests
+    runCommand vulkan-loader;
 
     # Correct X11-related library paths
     libxcb = pkgs.xorg.libxcb;
@@ -65,15 +70,15 @@ let
 
     buildPhase = ''
       ldflags="-s -w \
-        -X github.com/rancher/fleet/pkg/version.Version=${version} \
+      -X github.com/rancher/fleet/pkg/version.Version=${version} \
         -X github.com/rancher/fleet/pkg/version.GitCommit=unknown"
-      go build -o ${placeholder "out"}/bin/fleet -ldflags "$ldflags" ./cmd/fleetcli
-    '';
+        go build -o ${placeholder "out"}/bin/fleet -ldflags "$ldflags" ./cmd/fleetcli
+        '';
 
     installPhase = ''
       mkdir -p $out/bin
       cp fleet $out/bin/
-    '';
+      '';
 
     checkPhase = ''
       # Uncomment below to skip tests
@@ -84,7 +89,7 @@ let
       echo "$result" | grep "kind: Deployment"
       versionOutput=$(./fleet --version)
       echo "$versionOutput" | grep "${version}"
-    '';
+      '';
 
     meta = with pkgs.lib; {
       description = "Manage large fleets of Kubernetes clusters";
@@ -93,7 +98,7 @@ let
     };
   };
 in
-{
+  {
   # virtualisation.waydroid.enable = true;
 
   programs.steam = {
@@ -184,25 +189,29 @@ in
       ## dependencies
       pkg-config libgit2 openssl # clang
     ] ++ [
-      koji
-      customWezterm
-      fleet-cli
-      # pkgs.wezterm
-      ## Help Wezterm
-      pkgs.mesa
-      pkgs.vulkan-loader
-      pkgs.vulkan-tools
+        koji
+        customWezterm
+        fleet-cli
+        # pkgs.wezterm
+        ## Help Wezterm
+        pkgs.mesa
+        pkgs.vulkan-loader
+        pkgs.vulkan-tools
 
-      pkgs.steam
-      pkgs.vesktop
-      pkgs.spotify
+        pkgs.steam
+        pkgs.vesktop
+        pkgs.spotify
 
-      pkgs.whatsapp-for-linux
-      pkgs.qbittorrent
-      pkgs.tor-browser
-      pkgs.zathura
-      pkgs.zoom-us
-    ];
+        pkgs.whatsapp-for-linux
+        unstable.caprine # messenger facebook
+        pkgs.signal-desktop
+        pkgs.telegram-desktop
+
+        pkgs.qbittorrent
+        pkgs.tor-browser
+        pkgs.zathura
+        pkgs.zoom-us
+      ];
 
     openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC2gO7UAKfjRE2uApIneVTMLCpZxL3QkTPTcipAzm3IjTlrjvzvzyXs0+Y0QEFEK9CImH/ZYMBVzb3yJM9o/KeDThbuzfGWP4q18ZVUHvtsPdrNNu/AxUIqhsw+462SGwdju13TnlgXmPfg8bVYHVnJBwXtW/5lZ8lIEZpDHTv2lU3wvOgn3YRVjd8FdfDVGBiad1O6JQEZY7v9BDrg8ynugK4pyt2EViZvaTwQMuZC3EPuDtdrzhCm1oSWPFnA6KEb7musy+0/zR/aV2ewg4Ouy8E69aWiuSV8DPzgVFKT7sj5zEOH8Ouq0AzElQl8XQoJLPHSHFM4qeQE3pAvokFoJAc+I9Wi1ht/PSvZxdiCSAVXT2L9X4G7IN4i4BWaDaEwIFYv9tmxN+DkC6sWWNXNmMSmOJVdisT7GLhvRY70CZgOChg0DBWrcVAynrh6HpRfjQGKi7huHoPxey4YG15+ByKiM25Vi3nRBYwrstsLdVS4SAuoIS4dV8XJ9JVSrFX/fdWRxcjKMcFDgqwzClQ6rmQdqCHkZeTV9CqnehntP3AvVM6xM5bXK4TppJVxE6iJpSBUc01fe0qJLplztYlBeqMZmjdEa/nPjZZMQFE/0TNURI7oCFAGzMgHnxzbLnmSTNjZMi4YpA2BdXREkUh6Cm9UiXAiCjsRoGDaVR0fRw== josel@DESKTOP-JOSE" ];
   };

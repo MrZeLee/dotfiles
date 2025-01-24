@@ -67,7 +67,11 @@
       "code": "󰨞",
       "class<org.gnome.Nautilus>": "",
       "class<org.keepassxc.KeePassXC> title<.*Locked.*KeePassXC>": "󰪪",
-      "class<org.keepassxc.KeePassXC>": "󰆼"
+      "class<org.keepassxc.KeePassXC>": "󰆼",
+      "class<whatsapp-for-linux>": "",
+      "class<Signal>": "",
+      "class<Caprine>": "",
+      "class<org.telegram.desktop>": ""
     }
   },
   "battery": {

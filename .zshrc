@@ -35,8 +35,12 @@ setopt INC_APPEND_HISTORY       # Add commands to the history file as they are e
 setopt HIST_IGNORE_DUPS         # Avoid duplicate entries in the history file.
 setopt EXTENDED_HISTORY         # Save timestamps in the history file.
 
-bindkey "^[[A" history-beginning-search-backward
-bindkey "^[[B" history-beginning-search-forward
+autoload -U up-line-or-beginning-search
+autoload -U down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey "^[[A" up-line-or-beginning-search # Up
+bindkey "^[[B" down-line-or-beginning-search # Down
 
 bindkey -v
 export KEYTIMEOUT=1
@@ -127,7 +131,7 @@ export XDG_CONFIG_HOME="$HOME/.config"
 
 alias rclone_config='rclone config reconnect GDrive: --auto-confirm'
 
-alias vimv='vimv -e vim'
+alias vimv='vimv -e nvim'
 # Finished adapting your PATH environment variable for use with MacPorts.
 
 #PATH="\$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
