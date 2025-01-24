@@ -27,32 +27,110 @@
     "splash"
   ];
 
-  # Enable OpenGL
-  hardware.graphics = {
-    enable = true;
-  };
-
-  nixpkgs.config.nvidia.acceptLicense = true;
-
-  # Load nvidia driver for Xorg and Wayland
-  # services.xserver.videoDrivers = [ "nvidia" "modesetting" ];
-  services.xserver.videoDrivers = [ "nvidia" ];
+    nixpkgs.config.nvidia.acceptLicense = true;
 
   # Udev rule for NVIDIA device nodes
   # services.udev.extraRules = ''
   #   KERNEL=="nvidia*", MODE="0666"
   # '';
 
+  # programs.uwsm = {
+  #  enable = true;
+  #  # waylandCompositors = {
+  #  #  hyprland = {
+  #  #   prettyName = "Hyprland";
+  #  #   comment = "Hyprland compositor managed by UWSM";
+  #  #   binPath = lib.mkForce "${pkgs.hyprland}/bin/Hyprland";
+  #  #  };
+  #  #  # sway = {
+  #  #  #  prettyName = "Sway";
+  #  #  #  comment = "Sway compositor managed by UWSM";
+  #  #  #  binPath = lib.mkForce "${pkgs.sway}/bin/sway --unsupported-gpu";
+  #  #  # };
+  #  # };
+  # };
+
   programs.hyprland = {
     enable = true; # enable Hyprland
+    # withUWSM = true; # recommended for most users
+    xwayland.enable = true; # Xwayland can be disabled.
   };
+
+  programs.hyprlock.enable = true;
+  security.pam.services.hyprlock = {};
+  services.hypridle.enable = true;
+
+  # enable Sway window manager
+  programs.sway = {
+    enable = true;
+    wrapperFeatures.gtk = true;
+    xwayland.enable = true;
+    extraPackages = with pkgs; [ brightnessctl grim pulseaudio swayidle swaylock rofi ];
+    extraOptions = [ "--unsupported-gpu" ];
+  };
+
+  # Enable OpenGL
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+
+  programs.gamemode.enable = true;
+  programs.gamescope.enable = true;
 
   # Additional NVIDIA Packages
   environment.systemPackages = with pkgs; [
     egl-wayland # For EGL and Wayland compatibility
-    kitty # required for the default Hyprland config
+    waybar # for hyprland
+    hyprpaper # Wallpaper manager for hyprland
+    rofi-wayland # menu to launch apps
+    nautilus # file manager
+    gnumake
+    grim # screenshot functionality
+    slurp # screenshot functionality
+    wl-clipboard # wl-copy and wl-paste for copy/paste from stdin / stdout
+    mako # notification system developed by swaywm maintainer
+    libnotify
+    swaylock
+    swayidle
+    swaybg
+    sway-audio-idle-inhibit
+    hyprlandPlugins.csgo-vulkan-fix
+    hyprlandPlugins.hy3
+    pavucontrol
   ];
 
+  environment.sessionVariables = {
+    HYPRLAND_CSGO_VULKAN_FIX = "${pkgs.hyprlandPlugins.csgo-vulkan-fix}";
+    HYPRLAND_HY3 = "${pkgs.hyprlandPlugins.hy3}";
+    # SWAY = "${pkgs.sway}";
+    # LIBVA_DRIVER_NAME = "nvidia";
+    # __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+  };
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.gnome-keyring pkgs.xdg-desktop-portal-gtk ];
+  };
+
+  # Enable the X11 windowing system.
+  services.xserver = {
+    enable = true;
+    # Load nvidia driver for Xorg and Wayland
+    # services.xserver.videoDrivers = [ "nvidia" "modesetting" ];
+    videoDrivers = [ "nvidia" ];
+    displayManager.gdm = {
+      enable = true;
+      wayland = true;
+      autoSuspend = false;
+    };
+    xkb = {
+      layout = "us";
+      variant = "intl";
+      model = "pc105";
+    };
+  };
+  
   hardware.nvidia = {
 
     # Modesetting is required.
@@ -86,7 +164,6 @@
   };
   hardware.nvidia-container-toolkit.enable = true;
 
-  networking.hostName = "nixos-laptop"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -100,38 +177,21 @@
   time.timeZone = "Europe/Lisbon";
 
   # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.defaultLocale = "pt_PT.UTF-8";
 
   i18n.extraLocaleSettings = {
-    LC_ADDRESS = "pt_PT.UTF-8";
+    LC_MESSAGES = "en_US.UTF-8";
     LC_IDENTIFICATION = "pt_PT.UTF-8";
-    LC_MEASUREMENT = "pt_PT.UTF-8";
-    LC_MONETARY = "pt_PT.UTF-8";
-    LC_NAME = "pt_PT.UTF-8";
-    LC_NUMERIC = "pt_PT.UTF-8";
-    LC_PAPER = "pt_PT.UTF-8";
-    LC_TELEPHONE = "pt_PT.UTF-8";
+    LC_CTYPE = "pt_PT.UTF-8";
+    LC_COLLATE = "pt_PT.UTF-8";
     LC_TIME = "pt_PT.UTF-8";
-  };
-
-  # Enable the X11 windowing system.
-  services.xserver = {
-    enable = true;
-
-    # Enable the GNOME Desktop Environment.
-    displayManager.gdm = {
-      enable = true;
-      autoSuspend = false;
-    };
-
-    desktopManager.gnome.enable = true;
-
-  # Configure keymap in X11
-    xkb = {
-      layout = "us";
-      variant = "alt-intl";
-      options = "caps:escape,terminate:ctrl_alt_bksp";
-    };
+    LC_NUMERIC = "pt_PT.UTF-8";
+    LC_MONETARY = "pt_PT.UTF-8";
+    LC_PAPER = "pt_PT.UTF-8";
+    LC_MEASUREMENT = "pt_PT.UTF-8";
+    LC_NAME = "pt_PT.UTF-8";
+    LC_ADDRESS = "pt_PT.UTF-8";
+    LC_TELEPHONE = "pt_PT.UTF-8";
   };
 
   environment.gnome.excludePackages = (with pkgs; [
@@ -159,28 +219,27 @@
   # Disable powermanagement
   powerManagement.enable = false;
 
-  # Remaps keyboard keys
-  services.evremap = {
-    enable = true;
-    settings = {
-      device_name = "ASUSTeK ROG FALCHION";
-      dual_role = [
-                    {
-                      hold = [
-                        "KEY_ESC"
-                      ];
-                      input = "KEY_CAPSLOCK";
-                      tap = [
-                        "KEY_ESC"
-                      ];
-                    }
-                  ];
-    };
-  };
+  # # Remaps keyboard keys
+  # services.evremap = {
+  #   enable = true;
+  #   settings = {
+  #     device_name = "ASUSTeK ROG FALCHION";
+  #     dual_role = [
+  #                   {
+  #                     hold = [
+  #                       "KEY_ESC"
+  #                     ];
+  #                     input = "KEY_CAPSLOCK";
+  #                     tap = [
+  #                       "KEY_ESC"
+  #                     ];
+  #                   }
+  #                 ];
+  #   };
+  # };
 
   # Configure console keymap
-  # console.keyMap = "us";
-  console.useXkbConfig = true;
+  console.keyMap = "us";
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -194,7 +253,7 @@
     alsa.support32Bit = true;
     pulse.enable = true;
     # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
+    jack.enable = true;
 
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
@@ -214,8 +273,18 @@
 
   # List services that you want to enable:
 
+  services.sshd.enable = true;
+  # And expose via SSH
+  # programs.ssh.startAgent = true;
+
   # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    settings = {
+      PasswordAuthentication = false;
+      KbdInteractiveAuthentication = false;
+    };
+  };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
@@ -231,4 +300,5 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.11"; # Did you read the comment?
 
+  networking.hostName = "nixos-laptop"; # Define your hostname.
 }

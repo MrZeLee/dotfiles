@@ -9,16 +9,16 @@ bindkey '^E' end-of-line
 ZIM_CONFIG_FILE=~/.config/zsh/zimrc
 ZIM_HOME=~/.zim
 
-# # Get OS type using uname
-# OS_TYPE=$(uname)
-#
-# # Check if the OS is Linux or macOS
-# if [[ "$OS_TYPE" == "Linux" ]]; then
-#     export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/keyring/ssh"
-# # elif [[ "$OS_TYPE" == "Darwin" ]]; then
-# else
-#     echo "The operating system is neither Linux nor macOS."
-# fi
+# Get OS type using uname
+OS_TYPE=$(uname)
+
+# Check if the OS is Linux or macOS
+if [[ "$OS_TYPE" == "Linux" ]]; then
+    export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/keyring/ssh"
+# elif [[ "$OS_TYPE" == "Darwin" ]]; then
+else
+  :
+fi
 
 #HISTORY
 HISTFILE=~/.zsh_history
