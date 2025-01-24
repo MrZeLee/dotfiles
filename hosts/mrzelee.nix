@@ -126,7 +126,7 @@ in
       cacert cht-sh cloudflared croc
       cmake coreutils
       ddgr #DuckDuckGo from the terminal.
-      eza #Better ls
+      eza exiftool#Better ls
       gh gh-dash glow gnuplot gnupg graphviz gettext
       home-manager
       isync
@@ -200,6 +200,7 @@ in
       pkgs.whatsapp-for-linux
       pkgs.qbittorrent
       pkgs.tor-browser
+      pkgs.zathura
       pkgs.zoom-us
     ];
 
