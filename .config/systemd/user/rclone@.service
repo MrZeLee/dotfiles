@@ -22,9 +22,9 @@ ExecStartPre=/bin/sh -c 'mkdir -p %h/%i'
 ExecStart= \
 /bin/sh -c 'rclone mount \
 --config=%h/.config/rclone/rclone.conf \
---dir-cache-time 48h \
---attr-timeout 48h \
---vfs-cache-max-age 48h \
+--dir-cache-time 168h \
+--attr-timeout 168h \
+--vfs-cache-max-age 168h \
 --vfs-cache-max-size 10G \
 --vfs-cache-mode full \
 --log-level INFO \
@@ -35,6 +35,8 @@ ExecStop=/bin/sh -c 'fusermount -u %h/%i'
 
 Restart=always
 RestartSec=10s
+RestartSteps=10s
+RestartMaxDelaySec=300s
 
 [Install]
 WantedBy=default.target
