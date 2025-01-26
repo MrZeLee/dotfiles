@@ -179,7 +179,7 @@ in
       #Ani-cli
       ani-cli
       ## dependencies
-      gnugrep gnused curl mpv aria2 yt-dlp ffmpeg_6-full fzf ani-skip gnupatch #iina - installed with homebrew
+      syncplay gnugrep gnused curl mpv aria2 yt-dlp ffmpeg_6-full fzf ani-skip gnupatch #iina - installed with homebrew
 
       #Go-wall - to create wallpapers
       gowall
@@ -194,6 +194,8 @@ in
       slurp
       #swayimg optional
       giflib libjpeg libjxl libpng librsvg libwebp libheif libavif libtiff libsixel
+      #hyprland optional dependencies
+      bc
     ] ++ [
         koji
         customWezterm

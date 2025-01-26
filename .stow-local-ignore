@@ -5,7 +5,6 @@ brew
 .git
 README.md
 clean.sh
-scripts
 .gitconfig.bak
 .opencommit.example
 powerlevel10k

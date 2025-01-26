@@ -14,12 +14,16 @@
 !karabiner/**
 !mako/
 !mako/**
+!mpv/
+!mpv/**
 !nix/
 !nix/**
 !nvim/
 !nvim/**
 !sway/
 !sway/**
+!swayimg/
+!swayimg/**
 !systemd/
 !systemd/**
 !tmux/

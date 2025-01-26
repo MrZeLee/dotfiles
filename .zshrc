@@ -15,7 +15,10 @@ OS_TYPE=$(uname)
 # Check if the OS is Linux or macOS
 if [[ "$OS_TYPE" == "Linux" ]]; then
     export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/keyring/ssh"
-# elif [[ "$OS_TYPE" == "Darwin" ]]; then
+    export OPEN="xdg-open"
+    alias open="xdg-open"
+elif [[ "$OS_TYPE" == "Darwin" ]]; then
+    export OPEN="open"
 else
   :
 fi
@@ -144,8 +147,8 @@ alias vim="nvim -c 'if filereadable(\"Session.vim\") | source Session.vim | endi
 # export DBUS_SESSION_BUS_ADDRESS="unix:path=$DBUS_LAUNCHD_SESSION_BUS_SOCKET"
 
 alias h='cd ~'
-alias o='fzf -m | xargs -I % open %'
-alias f='fzf | xargs -I % open -R %'
+alias o="fzf -m | xargs -I % $OPEN %"
+alias f="fzf | xargs -I % $OPEN -R %"
 alias cl='clear'
 
 alias ta='tmux attach'
