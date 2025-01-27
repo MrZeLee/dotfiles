@@ -67,6 +67,7 @@
       "kitty": "",
       "wezterm": "",
       "code": "󰨞",
+      "class<mpv>": "",
       "class<org.gnome.Nautilus>": "",
       "class<org.keepassxc.KeePassXC> title<.*Locked.*KeePassXC>": "󰪪",
       "class<org.keepassxc.KeePassXC>": "󰆼",
