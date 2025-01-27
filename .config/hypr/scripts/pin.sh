@@ -56,4 +56,4 @@ float_x=$(echo "$monitor_x + ($monitor_width - $float_width) / 2" | bc | awk '{p
 float_y=$(echo "$monitor_y + ($monitor_height - $float_height) / 2" | bc | awk '{print int($1+0.5)}')
 
 # Set the window to floating and resize/move it
-hyprctl -r --quiet --batch "dispatch setfloating address:$active_window; dispatch resizewindowpixel exact ${float_width} ${float_height}, address:$active_window; dispatch movewindowpixel exact ${float_x} ${float_y}, address:$active_window"
+hyprctl -r --quiet --batch "dispatch setfloating address:$active_window; dispatch resizewindowpixel exact ${float_width} ${float_height}, address:$active_window; dispatch movewindowpixel exact ${float_x} ${float_y}, address:$active_window; dispatch pin address:$active_window"
