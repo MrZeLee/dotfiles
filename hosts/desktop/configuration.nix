@@ -6,6 +6,12 @@
 # let
 #   home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/release-24.11.tar.gz";
 # in
+let
+  unstable = import
+    (builtins.fetchTarball https://github.com/nixos/nixpkgs/tarball/nixos-unstable)
+    # reuse the current configuration
+    { config = config.nixpkgs.config; };
+in
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -87,6 +93,12 @@
     enable = true; # enable Hyprland
     # withUWSM = true; # recommended for most users
     xwayland.enable = true; # Xwayland can be disabled.
+    package = pkgs.hyprland.override {
+      withSystemd = false;
+    };
+    # package = unstable.hyprland.override {
+    #   debug = true;
+    # };
   };
 
   programs.hyprlock.enable = true;
