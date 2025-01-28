@@ -11,6 +11,14 @@ let
     (builtins.fetchTarball https://github.com/nixos/nixpkgs/tarball/nixos-unstable)
     # reuse the current configuration
     { config = config.nixpkgs.config; };
+
+  customWaypaper = pkgs.callPackage ./custom/waypaper.nix {
+    inherit (pkgs) lib python3 fetchFromGitHub gobject-introspection wrapGAppsHook3 killall;
+  };
+
+  customSwww = pkgs.callPackage ./custom/swww.nix {
+    inherit (pkgs) lib fetchFromGitHub rustPlatform pkg-config lz4 libxkbcommon installShellFiles scdoc;
+  };
 in
 {
   imports =
@@ -101,9 +109,14 @@ in
     # };
   };
 
-  programs.hyprlock.enable = true;
-  security.pam.services.hyprlock = {};
+  # programs.hyprlock.enable = true;
+  # security.pam.services.hyprlock = {};
   services.hypridle.enable = true;
+  qt = {
+    enable = true;
+    platformTheme = "qt5ct";
+    style = "adwaita-dark";
+  };
 
   # enable Sway window manager
   programs.sway = {
@@ -127,7 +140,6 @@ in
   environment.systemPackages = with pkgs; [
     egl-wayland # For EGL and Wayland compatibility
     waybar # for hyprland
-    hyprpaper # Wallpaper manager for hyprland
     rofi-wayland # menu to launch apps
     nautilus # file manager
     gnumake
@@ -143,6 +155,10 @@ in
     hyprlandPlugins.csgo-vulkan-fix
     hyprlandPlugins.hy3
     pavucontrol
+  ] ++ [
+    customWaypaper
+    customSwww
+    pkgs.lz4 # for swww animations
   ];
 
   environment.sessionVariables = {

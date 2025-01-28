@@ -7,13 +7,13 @@ else
   gdrive_cache_file="$HOME/.cache/gdrive.cache"
 
   # .dotfiles folder
-  dot_dir=$(find ~/.dotfiles -mindepth 0 -maxdepth 0 -type d 2> /dev/null)
+  dot_dir=$(find $HOME/.dotfiles -mindepth 0 -maxdepth 0 -type d 2> /dev/null)
 
   # Find all git directories within ~/Documents/01-Git
-  git_dirs=$(find ~/Documents/01-Git -mindepth 1 -maxdepth 1 -type d 2> /dev/null)
-  other_git_dirs=$(find ~/Documents/01-Git -mindepth 2 -maxdepth 2 -type d -regex '.*/[0-9]\{2\}-[^/]*$' 2> /dev/null)
+  git_dirs=$(find $HOME/Documents/01-Git -mindepth 1 -maxdepth 1 -type d 2> /dev/null)
+  other_git_dirs=$(find $HOME/Documents/01-Git -mindepth 2 -maxdepth 2 -type d -regex '.*/[0-9]\{2\}-[^/]*$' 2> /dev/null)
 
-  doc_dirs=$(find ~/Documents -mindepth 1 -maxdepth 1 -type d 2> /dev/null)
+  doc_dirs=$(find $HOME/Documents -mindepth 1 -maxdepth 1 -type d 2> /dev/null)
   # Find all directories within Google Drive that match the pattern
 
   # Directory to search
@@ -89,7 +89,8 @@ else
   fi
 
   # Combine all directories, sort them, remove duplicates, and select one using fzf
-  selected=$(echo -e "$dot_dir\n$doc_dirs\n$git_dirs\n$other_git_dirs\n$drive_dirs" | sort | uniq | grep -E '.+' | fzf -i)
+  # selected=$(echo -e "$dot_dir\n$doc_dirs\n$git_dirs\n$other_git_dirs\n$drive_dirs" | sort | uniq | grep -E '.+' | fzf -i)
+  selected=$(echo -e "$dot_dir\n$doc_dirs\n$git_dirs\n$other_git_dirs\n$drive_dirs" | awk '!seen[$0]++' | grep -E '.+' | fzf -i)
 fi
 
 # Exit if no directory is selected

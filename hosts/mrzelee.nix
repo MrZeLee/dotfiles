@@ -6,7 +6,7 @@ let
     # reuse the current configuration
     { config = config.nixpkgs.config; };
 
-  customWezterm = pkgs.callPackage ./custom-wezterm.nix {
+  customWezterm = pkgs.callPackage ./custom/wezterm.nix {
     inherit (pkgs) stdenv rustPlatform lib fetchFromGitHub ncurses perl pkg-config
     python3 fontconfig installShellFiles openssl libGL libxkbcommon wayland zlib
     CoreGraphics Cocoa Foundation System libiconv UserNotifications nixosTests
@@ -20,6 +20,7 @@ let
     xcbutilkeysyms = pkgs.xorg.xcbutilkeysyms;
     xcbutilwm = pkgs.xorg.xcbutilwm;
   };
+
   koji = pkgs.rustPlatform.buildRustPackage rec {
     pname = "koji";
     version = "3.0.0";
