@@ -16,10 +16,11 @@ return {
 
             --Viewer options: One may configure the viewer either by specifying a built-in
             --viewer method:
-            vim.g.vimtex_view_method = 'skim'
-            vim.g.vimtex_view_skim_sync = 1
-            vim.g.vimtex_view_skim_activate = 0
-            -- vim.g.vimtex_view_method = 'zathura'
+            -- vim.g.vimtex_view_method = 'skim'
+            -- vim.g.vimtex_view_skim_sync = 1
+            -- vim.g.vimtex_view_skim_activate = 0
+
+            vim.g.vimtex_view_method = 'zathura'
             vim.g.tex_flavor = 'latex'
 
             --Or with a generic interface:

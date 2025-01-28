@@ -12,6 +12,8 @@
 !karabiner/**
 !karabiner/
 !karabiner/**
+!latexmk/
+!latexmk/**
 !mako/
 !mako/**
 !mpv/
