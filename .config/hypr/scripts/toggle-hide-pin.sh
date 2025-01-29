@@ -27,7 +27,7 @@ fi
 count=0
 
 # Iterate over each Hyprland client
-echo "$windows" | jq -c '.[]' | while read -r window; do
+while read -r window; do
   # Extract window details
   pid=$(echo "$window" | jq -r '.pid')
   floating=$(echo "$window" | jq -r '.floating')
@@ -45,23 +45,25 @@ echo "$windows" | jq -c '.[]' | while read -r window; do
 
       # Check if the window's PID matches any audio stream
       object_serial=$(echo "$pipewire_clients" | grep -B4 "pipewire.sec.pid = \"$pid\"" | grep "object.serial = " | awk -F'"' '{print $2}')
-      # # Find the object serial for the PID in PipeWire clients
-      # object_serial=$(echo "$pipewire_clients" | awk -v pid="$pid" '
-      #     /pipewire.sec.pid/ && $0 ~ pid { found=1 }
-      #     found && /object.serial/ { gsub(/[^0-9]/, "", $2); print $2; exit }')
 
-      if [ -n "$object_serial" ]; then
-        stream=$(echo "$audio_streams" | jq -c --arg object_serial "$object_serial" '.[] | select(.client == $object_serial and .corked == false)')
+      stream=$(echo "$audio_streams" | jq -c --arg window_pid "$pid" '.[] | select(.properties."application.process.id" == $window_pid and .corked == false)')
+
+      if [ -n "$object_serial" ] || [ -n "$stream" ]; then
+        if [ -z "$stream" ]; then
+          stream=$(echo "$audio_streams" | jq -c --arg object_serial "$object_serial" '.[] | select(.client == $object_serial and .corked == false)')
+        fi
 
         if [ -n "$stream" ]; then
           # Send a space key to the window
           hyprctl -q dispatch tagwindow +paused address:$address
+          # hyprctl -q dispatch focuswindow address:$address
           hyprctl -q dispatch sendshortcut none, space, address:$address
+          # hyprctl -q dispatch focuscurrentorlast
         fi
       fi
     fi
   fi
-done
+done < <(echo "$windows" | jq -c '.[]') 
 
 # If no windows were hidden, restore windows with the "hide" tag
 if [ "$count" -eq 0 ]; then
@@ -77,7 +79,9 @@ if [ "$count" -eq 0 ]; then
         hyprctl -q dispatch tagwindow -- -hide address:$address
       fi
       if [[ "$tags" == *"\"paused\""* ]]; then
+        # hyprctl -q dispatch focuswindow address:$address
         hyprctl -q dispatch sendshortcut none, space, address:$address
+        # hyprctl -q dispatch focuscurrentorlast
         hyprctl -q dispatch tagwindow -- -paused address:$address
       fi
   done

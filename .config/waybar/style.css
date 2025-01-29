@@ -99,10 +99,17 @@ tooltip {
 
 #custom-icon-nixos {
     background-color: #000000;
-    color: #846bc4;
+    /* color: #846bc4; */
+    color: #ffffff;
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 0px 0px 0px 12px;
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+}
+
+#custom-icon-nixos:hover {
+    background-color: #846bc4; /* Change to your desired hover background color */
+    color: #000000; /* Change to your desired hover text color */
 }
 
 #image {
@@ -118,6 +125,12 @@ tooltip {
     font-size: 12px;
     padding-left: 10px;
     padding-right: 10px;
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+}
+
+#custom-quit:hover, #custom-lock:hover, #custom-reboot:hover, #custom-power:hover {
+    background-color: #846bc4; /* Change to your desired hover background color */
+    color: #000000; /* Change to your desired hover text color */
 }
 
 #custom-icon-arch {
@@ -147,6 +160,12 @@ tooltip {
 #custom-icon-split {
     background-color: #000000;
     color: #846bc4;
+    font-size: 12px;
+}
+
+#custom-icon-split-left {
+    background-color: #000000;
+    color: #ffffff;
     font-size: 12px;
 }
 

@@ -4,7 +4,7 @@
   "modules-left": [
     "custom/icon-left-outer",
     "group/group-power",
-    "custom/icon-split",
+    "custom/icon-split-left",
     "hyprland/workspaces",
     "custom/icon-right"
   ],
@@ -64,6 +64,7 @@
       "class<vesktop> title<(?!.*Discord).+>": "",
       "class<vesktop>": "",
       "class<Spotify>": "",
+      "class<waypaper>": "󰸉",
       "kitty": "",
       "wezterm": "",
       "code": "󰨞",
@@ -165,6 +166,10 @@
     "interval": 0
   },
   "custom/icon-split": {
+    "exec": "echo '|'",
+    "interval": 0
+  },
+  "custom/icon-split-left": {
     "exec": "echo '|'",
     "interval": 0
   },
