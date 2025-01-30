@@ -13,10 +13,10 @@ rustPlatform.buildRustPackage rec {
   name = "swww";
 
   src = fetchFromGitHub {
-    owner = "LGFae";
+    owner = "Nynxz";
     repo = "swww";
-    rev = "3e2e2ba8f44469a1446138ee97d2988e22b093bf";
-    sha256 = "sha256-XBwgv80YfLZ70XYVEnR0nA7Rz5jP241D5FiwrTg7tDk=";
+    rev = "3a6b8b30bd271b0fdeaa0ba34771e5038cec7af9";
+    sha256 = "sha256-DPNYrvgyABzwdlC/iZe4hySFYpD0uPvmpDNG0BP2UVY=";
   };
 
 

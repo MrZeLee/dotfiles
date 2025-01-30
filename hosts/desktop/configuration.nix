@@ -123,7 +123,7 @@ in
     enable = true;
     wrapperFeatures.gtk = true;
     xwayland.enable = true;
-    extraPackages = with pkgs; [ brightnessctl grim pulseaudio swayidle swaylock rofi ];
+    extraPackages = with pkgs; [ brightnessctl grim pulseaudio swayidle swaylock fuzzel ];
     extraOptions = [ "--unsupported-gpu" ];
   };
 
@@ -140,7 +140,7 @@ in
   environment.systemPackages = with pkgs; [
     egl-wayland # For EGL and Wayland compatibility
     waybar # for hyprland
-    rofi-wayland # menu to launch apps
+    fuzzel # to search and launch apps
     nautilus # file manager
     gnumake
     grim # screenshot functionality
@@ -149,12 +149,11 @@ in
     mako # notification system developed by swaywm maintainer
     libnotify
     swaylock
-    swayidle
     swaybg
     sway-audio-idle-inhibit
     hyprlandPlugins.csgo-vulkan-fix
     hyprlandPlugins.hy3
-    pavucontrol
+    pavucontrol #GUI to control audio
   ] ++ [
     customWaypaper
     customSwww
