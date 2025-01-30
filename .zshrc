@@ -3,9 +3,6 @@ zstyle ':zim:zmodule' use 'degit'
 DEDUPE_PATH="$(printf %s "$PATH" | awk -v RS=: '{ if (!arr[$0]++) {printf("%s%s",!ln++?"":":",$0)}}')"
 export PATH=$DEDUPE_PATH
 
-bindkey '^A' beginning-of-line
-bindkey '^E' end-of-line
-
 ZIM_CONFIG_FILE=~/.config/zsh/zimrc
 ZIM_HOME=~/.zim
 
@@ -23,6 +20,8 @@ else
   :
 fi
 
+tmux has-session -t main &> /dev/null || tmux new-session -d -s main
+
 #HISTORY
 HISTFILE=~/.zsh_history
 HISTSIZE=999999999
@@ -38,6 +37,15 @@ setopt INC_APPEND_HISTORY       # Add commands to the history file as they are e
 setopt HIST_IGNORE_DUPS         # Avoid duplicate entries in the history file.
 setopt EXTENDED_HISTORY         # Save timestamps in the history file.
 
+bindkey -v
+
+# enables cursor to delete characters to the left, when exiting visual mode
+bindkey -M viins '^?' backward-delete-char
+bindkey -M viins '^H' backward-delete-char
+
+bindkey '^A' beginning-of-line
+bindkey '^E' end-of-line
+
 autoload -U up-line-or-beginning-search
 autoload -U down-line-or-beginning-search
 zle -N up-line-or-beginning-search
@@ -45,7 +53,6 @@ zle -N down-line-or-beginning-search
 bindkey "^[[A" up-line-or-beginning-search # Up
 bindkey "^[[B" down-line-or-beginning-search # Down
 
-bindkey -v
 export KEYTIMEOUT=1
 
 cursor_mode() {
@@ -132,6 +139,8 @@ fi
 # TMUX
 export XDG_CONFIG_HOME="$HOME/.config"
 
+alias cd='z'
+
 alias rclone_config='rclone config reconnect GDrive: --auto-confirm'
 
 alias vimv='vimv -e nvim'
@@ -206,6 +215,10 @@ if api_key=$(pass show api-key/anthropic 2>/dev/null); then
 fi
 if api_key=$(pass show api-key/oco 2>/dev/null); then
     export OCO_API_KEY="$api_key"
+fi
+
+if command -v zoxide &> /dev/null; then
+  eval "$(zoxide init zsh)"
 fi
 
 [ -f $HOME/.bindkey.zsh ] && source $HOME/.bindkey.zsh

@@ -34,8 +34,8 @@ ExecStart= \
 ExecStop=/bin/sh -c 'fusermount -u %h/%i'
 
 Restart=always
-RestartSec=10s
-RestartSteps=10s
+RestartSec=10
+RestartSteps=10
 RestartMaxDelaySec=300s
 
 [Install]

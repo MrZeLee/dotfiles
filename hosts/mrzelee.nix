@@ -152,6 +152,7 @@ in
       vimv-rs
       watch
       yarn yq
+      zoxide
 
 
       # Git

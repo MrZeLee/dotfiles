@@ -103,17 +103,26 @@ selected_name=$(basename "$selected" | tr . _)
 # Check if tmux is running
 tmux_running=$(pgrep tmux)
 
+# Problems with rclone
+# if [[ ! -d "$selected" ]]; then
+#   exit 1
+# fi
+
+if command -v zoxide &> /dev/null; then
+  zoxide add "$selected"
+fi
+
 # If not inside a tmux session and tmux is not running, start a new session
 if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
-  tmux new-session -s "$selected_name" -c "$selected"
+  tmux new-session -s "$selected_name" -c "$selected" &> /dev/null
   exit 0
 fi
 
 # If the tmux session with the selected name does not exist, create it detached
 if ! tmux has-session -t="$selected_name" 2> /dev/null; then
-  tmux new-session -ds "$selected_name" -c "$selected"
+  tmux new-session -ds "$selected_name" -c "$selected" &> /dev/null
 fi
 
 # Attach to the tmux session with the selected name
-tmux switch-client -t "$selected_name"
-tmux attach-session -t "$selected_name"
+tmux switch-client -t "$selected_name" &> /dev/null
+tmux attach-session -t "$selected_name" &> /dev/null
