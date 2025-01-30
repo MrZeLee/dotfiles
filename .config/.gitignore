@@ -31,6 +31,8 @@
 !systemd/**
 !tmux/
 !tmux/**
+!waypaper/
+!waypaper/**
 !waybar/
 !waybar/**
 !wezterm/
