@@ -185,7 +185,7 @@
   "custom/lock": {
     "format": "󰍁",
     "tooltip": false,
-    "on-click": "swaylock -f -c 000000;"
+    "on-click": "$HOME/.config/hypr/scripts/lock.sh"
   },
   "custom/reboot": {
     "format": "󰜉",
