@@ -28,7 +28,7 @@ return {
     config = function()
         local function is_nixos()
             -- Check if the OS is NixOS by inspecting /etc/os-release
-            local f = io.popen("grep '^ID=' /etc/os-release")
+            local f = io.popen("grep '^ID=' /etc/os-release 2> /dev/null")
             if not f then return false end
             local os_id = f:read("*a") or ""
             f:close()
