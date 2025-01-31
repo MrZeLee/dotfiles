@@ -23,8 +23,8 @@
     "custom/icon-split",
     "cpu",
     "custom/icon-split",
-    // "battery",
-    // "custom/icon-split",
+    "battery",
+    "custom/icon-split",
     "wireplumber",
     "custom/icon-right-outer"
   ],
