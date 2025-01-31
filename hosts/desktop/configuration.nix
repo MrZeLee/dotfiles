@@ -141,7 +141,7 @@ in
     egl-wayland # For EGL and Wayland compatibility
     waybar # for hyprland
     fuzzel # to search and launch apps
-    nautilus # file manager
+    # nautilus # file manager (removed to try nemo)
     gnumake
     grim # screenshot functionality
     slurp # screenshot functionality

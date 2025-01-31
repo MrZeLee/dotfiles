@@ -11,16 +11,18 @@ OS_TYPE=$(uname)
 
 # Check if the OS is Linux or macOS
 if [[ "$OS_TYPE" == "Linux" ]]; then
-    export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/keyring/ssh"
-    export OPEN="xdg-open"
-    alias open="xdg-open"
+  export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/keyring/ssh"
+  export OPEN="xdg-open"
+  function open() {
+    nohup xdg-open "$@" >/dev/null 2>&1 &!
+  }
 elif [[ "$OS_TYPE" == "Darwin" ]]; then
-    export OPEN="open"
+  export OPEN="open"
 else
   :
 fi
 
-tmux has-session -t main &> /dev/null || tmux new-session -d -s main
+{ tmux has-session -t main &> /dev/null || tmux new-session -d -s main; } &!
 
 #HISTORY
 HISTFILE=~/.zsh_history

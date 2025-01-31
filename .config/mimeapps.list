@@ -15,6 +15,7 @@ x-scheme-handler/tonsite=org.telegram.desktop.desktop
 image/png=swayimg.desktop
 image/jpg=swayimg.desktop
 image/jpeg=swayimg.desktop
+inode/directory=nemo
 
 [Added Associations]
 application/octet-stream=org.keepassxc.KeePassXC.desktop;

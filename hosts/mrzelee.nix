@@ -6,6 +6,13 @@ let
     # reuse the current configuration
     { config = config.nixpkgs.config; };
 
+  mvdPackage = pkgs.callPackage (pkgs.fetchFromGitHub {
+    owner = "MrZeLee";
+    repo = "mvd";
+    rev = "main";
+    hash = "sha256-EqWsl3a4ShSf0pTDdblRnfvHf4dkfFB8XCMEw33N0ts=";
+  }) {};
+
   customWezterm = pkgs.callPackage ./custom/wezterm.nix {
     inherit (pkgs) stdenv rustPlatform lib fetchFromGitHub ncurses perl pkg-config
     python3 fontconfig installShellFiles openssl libGL libxkbcommon wayland zlib
@@ -154,6 +161,9 @@ in
       yarn yq
       zoxide
 
+      # Nemo file manager
+      nemo-with-extensions 
+      gvfs udisks2 gphoto2 libmtp cinnamon-desktop shared-mime-info xdg-utils
 
       # Git
       opencommit git-lfs tig
@@ -202,6 +212,7 @@ in
       bc
     ] ++ [
         koji
+        mvdPackage
         customWezterm
         fleet-cli
         # pkgs.wezterm
