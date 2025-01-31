@@ -103,6 +103,7 @@
   environment.sessionVariables = {
     HYPRLAND_CSGO_VULKAN_FIX = "${pkgs.hyprlandPlugins.csgo-vulkan-fix}";
     HYPRLAND_HY3 = "${pkgs.hyprlandPlugins.hy3}";
+    HYPRLAND_HY3 = "nixos-laptop";
     # SWAY = "${pkgs.sway}";
     # LIBVA_DRIVER_NAME = "nvidia";
     # __GLX_VENDOR_LIBRARY_NAME = "nvidia";

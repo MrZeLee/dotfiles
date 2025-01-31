@@ -163,6 +163,7 @@ in
   environment.sessionVariables = {
     HYPRLAND_CSGO_VULKAN_FIX = "${pkgs.hyprlandPlugins.csgo-vulkan-fix}";
     HYPRLAND_HY3 = "${pkgs.hyprlandPlugins.hy3}";
+    HYPRLAND_HOST = "nixos";
     # DBUS_FOLDER = "${pkgs.dbus}";
     # SWAY = "${pkgs.sway}";
     # LIBVA_DRIVER_NAME = "nvidia";
@@ -180,10 +181,17 @@ in
     # Load nvidia driver for Xorg and Wayland
     # services.xserver.videoDrivers = [ "nvidia" "modesetting" ];
     videoDrivers = [ "nvidia" ];
-    displayManager.gdm = {
-      enable = true;
-      wayland = true;
-      autoSuspend = false;
+    displayManager = {
+      gdm = {
+        enable = true;
+        wayland = true;
+        autoSuspend = false;
+        settings = {
+          greeter = {
+            IncludeAll = false;
+          };
+        };
+      };
     };
     xkb = {
       layout = "us";
@@ -228,6 +236,7 @@ in
   hardware.nvidia-container-toolkit.enable = true;
 
   networking.hostName = "nixos"; # Define your hostname.
+
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary

@@ -16,6 +16,7 @@ image/png=swayimg.desktop
 image/jpg=swayimg.desktop
 image/jpeg=swayimg.desktop
 inode/directory=nemo
+application/pdf=org.pwmt.zathura.desktop
 
 [Added Associations]
 application/octet-stream=org.keepassxc.KeePassXC.desktop;
@@ -34,3 +35,4 @@ x-scheme-handler/tonsite=org.telegram.desktop.desktop;
 image/png=org.gnome.Nautilus.desktop;feh.desktop;swayimg.desktop;
 image/gif=swayimg.desktop;
 image/jpeg=swayimg.desktop;
+application/pdf=org.pwmt.zathura.desktop;
