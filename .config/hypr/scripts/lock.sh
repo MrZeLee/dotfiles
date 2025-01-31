@@ -7,7 +7,7 @@ if [ -z "$waypaper_list" ]; then
 fi
 
 # Initialize the swaylock command
-swaylock_cmd="swaylock -f -e -s stretch"
+swaylock_cmd="swaylock -f -e -s stretch -c 000000"
 
 while read -r elem; do
   monitor=$(echo "$elem" | jq -r '.monitor')

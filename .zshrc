@@ -142,6 +142,7 @@ fi
 export XDG_CONFIG_HOME="$HOME/.config"
 
 alias cd='z'
+alias vimdiff='nvim -d'
 
 alias rclone_config='rclone config reconnect GDrive: --auto-confirm'
 

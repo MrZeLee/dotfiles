@@ -3,6 +3,23 @@
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
 { config, lib, pkgs, ... }:
+# let
+#   home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/release-24.11.tar.gz";
+# in
+let
+  unstable = import
+    (builtins.fetchTarball https://github.com/nixos/nixpkgs/tarball/nixos-unstable)
+    # reuse the current configuration
+    { config = config.nixpkgs.config; };
+
+  customWaypaper = pkgs.callPackage ./custom/waypaper.nix {
+    inherit (pkgs) lib python3 fetchFromGitHub gobject-introspection wrapGAppsHook3 killall;
+  };
+
+  customSwww = pkgs.callPackage ./custom/swww.nix {
+    inherit (pkgs) lib fetchFromGitHub rustPlatform pkg-config lz4 libxkbcommon installShellFiles scdoc;
+  };
+in
 
 {
   imports =
@@ -54,18 +71,29 @@
     enable = true; # enable Hyprland
     # withUWSM = true; # recommended for most users
     xwayland.enable = true; # Xwayland can be disabled.
+    package = pkgs.hyprland.override {
+      withSystemd = false;
+    };
+    # package = unstable.hyprland.override {
+    #   debug = true;
+    # };
   };
 
   programs.hyprlock.enable = true;
   security.pam.services.hyprlock = {};
   services.hypridle.enable = true;
+  qt = {
+    enable = true;
+    platformTheme = "qt5ct";
+    style = "adwaita-dark";
+  };
 
   # enable Sway window manager
   programs.sway = {
     enable = true;
     wrapperFeatures.gtk = true;
     xwayland.enable = true;
-    extraPackages = with pkgs; [ brightnessctl grim pulseaudio swayidle swaylock rofi ];
+    extraPackages = with pkgs; [ brightnessctl grim pulseaudio swayidle swaylock fuzzel ];
     extraOptions = [ "--unsupported-gpu" ];
   };
 
@@ -82,9 +110,8 @@
   environment.systemPackages = with pkgs; [
     egl-wayland # For EGL and Wayland compatibility
     waybar # for hyprland
-    hyprpaper # Wallpaper manager for hyprland
-    rofi-wayland # menu to launch apps
-    nautilus # file manager
+    fuzzel # to search and launch apps
+    # nautilus # file manager (removed to try nemo)
     gnumake
     grim # screenshot functionality
     slurp # screenshot functionality
@@ -92,18 +119,21 @@
     mako # notification system developed by swaywm maintainer
     libnotify
     swaylock
-    swayidle
     swaybg
     sway-audio-idle-inhibit
     hyprlandPlugins.csgo-vulkan-fix
     hyprlandPlugins.hy3
-    pavucontrol
+    pavucontrol #GUI to control audio
+  ] ++ [
+    customWaypaper
+    customSwww
+    pkgs.lz4 # for swww animations
   ];
 
   environment.sessionVariables = {
     HYPRLAND_CSGO_VULKAN_FIX = "${pkgs.hyprlandPlugins.csgo-vulkan-fix}";
     HYPRLAND_HY3 = "${pkgs.hyprlandPlugins.hy3}";
-    HYPRLAND_HY3 = "nixos-laptop";
+    HYPRLAND_HOST = "nixos-laptop";
     # SWAY = "${pkgs.sway}";
     # LIBVA_DRIVER_NAME = "nvidia";
     # __GLX_VENDOR_LIBRARY_NAME = "nvidia";
@@ -120,10 +150,17 @@
     # Load nvidia driver for Xorg and Wayland
     # services.xserver.videoDrivers = [ "nvidia" "modesetting" ];
     videoDrivers = [ "nvidia" ];
-    displayManager.gdm = {
-      enable = true;
-      wayland = true;
-      autoSuspend = false;
+    displayManager = {
+      gdm = {
+        enable = true;
+        wayland = true;
+        autoSuspend = false;
+        settings = {
+          greeter = {
+            IncludeAll = false;
+          };
+        };
+      };
     };
     xkb = {
       layout = "us";
@@ -164,6 +201,8 @@
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
   hardware.nvidia-container-toolkit.enable = true;
+
+  networking.hostName = "nixos-laptop"; # Define your hostname.
 
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -245,6 +284,11 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
+  hardware.bluetooth.enable = true; # enables support for Bluetooth
+  hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
+
+  services.blueman.enable = true;
+
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
@@ -301,5 +345,4 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.11"; # Did you read the comment?
 
-  networking.hostName = "nixos-laptop"; # Define your hostname.
 }
