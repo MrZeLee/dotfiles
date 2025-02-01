@@ -186,7 +186,7 @@ alias ga='git commit --amend'
 alias dump_all='find . -type d -name .git -prune -o -type f -print | while read file; do echo "== $file =="; cat "$file"; echo ""; done'
 function dump_files() {
     for file in "$@"; do
-        [[ -f "$file" ]] && echo "== $file ==" && /bin/cat "$file" && echo ""
+        [[ -f "$file" ]] && echo "== $file ==" && command cat "$file" && echo ""
     done
 }
 

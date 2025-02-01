@@ -1,0 +1,106 @@
+return
+{
+  -- "dundalek/lazy-lsp.nvim",
+  -- dependencies = {
+  --   "neovim/nvim-lspconfig",
+  --   -- If you still want autocompletion:
+  --   "hrsh7th/cmp-nvim-lsp",
+  --   "hrsh7th/nvim-cmp",
+  --   "hrsh7th/cmp-buffer",
+  --   "hrsh7th/cmp-path",
+  --   -- If you use snippets with nvim-cmp,
+  --   -- add your snippet plugin here as well, e.g. 'L3MON4D3/LuaSnip'
+  --   --
+  --   -- No lsp-zero here if you don't want it
+  -- },
+  -- config = function()
+  --   local lazy_lsp = require("lazy-lsp")
+  --
+  --   lazy_lsp.setup {
+  --     -- 1. You can list servers to exclude or prefer for certain filetypes
+  --     excluded_servers = {}, -- e.g. { "ccls", "zk" }
+  --     preferred_servers = {
+  --       -- Example if you want certain servers for a filetype
+  --       -- python = { "pyright" },
+  --       -- markdown = { "marksman" },
+  --     },
+  --
+  --     prefer_local = true, -- if you want to prefer local (nix-shell) versions
+  --
+  --     -- 2. Default config that merges into *all* servers
+  --     default_config = {
+  --       -- For example, use your on_attach to set keymaps
+  --       on_attach = function(client, bufnr)
+  --         -- Same keymaps from your old code:
+  --         local opts = { buffer = bufnr }
+  --
+  --         vim.keymap.set('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<cr>', opts)
+  --         vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
+  --         vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
+  --         vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
+  --         vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
+  --         vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
+  --         vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
+  --         vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
+  --         vim.keymap.set("n", "<leader>rn", '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
+  --         vim.keymap.set({ 'n', 'x' }, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
+  --         vim.keymap.set("n", "<leader>vca", '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
+  --         vim.keymap.set("n", "<leader>vws", '<cmd>lua vim.lsp.buf.workspace_symbol()<cr>', opts)
+  --         vim.keymap.set("i", "<C-h>", '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
+  --       end,
+  --
+  --       -- For nvim-cmp autocompletion:
+  --       capabilities = require("cmp_nvim_lsp").default_capabilities(),
+  --
+  --       flags = {
+  --         debounce_text_changes = 150,
+  --       },
+  --     },
+  --
+  --     -- 3. Override certain servers if you wish:
+  --     configs = {
+  --       -- E.g. your lua_ls config
+  --       lua_ls = {
+  --         settings = {
+  --           Lua = {
+  --             diagnostics = {
+  --               globals = { "vim" },
+  --             },
+  --           },
+  --         },
+  --       },
+  --     },
+  --   }
+  --
+  --   -- If you still want to automatically ensure certain servers are installed,
+  --   -- you can keep or remove your `mason` config. For example:
+  --   require("mason").setup()
+  --   -- If you'd like lazy-lsp to handle the *setup*, you don't need to call
+  --   -- `mason-lspconfig.setup` at all — lazy-lsp uses lspconfig directly.
+  --   -- Or you can do:
+  --   -- require("mason-lspconfig").setup {
+  --   --   ensure_installed = {
+  --   --     "lua_ls", "rust_analyzer", ...
+  --   --   }
+  --   -- }
+  --
+  --   -- For nvim-cmp config, you can keep your old code or a simpler variant:
+  --   local cmp = require("cmp")
+  --   cmp.setup({
+  --     -- same config you had before
+  --     -- ...
+  --   })
+  --
+  --   -- Finally, some of your extra diagnostic config if you like:
+  --   vim.diagnostic.config({
+  --     signs = {
+  --       text = {
+  --         [vim.diagnostic.severity.ERROR] = '✘',
+  --         [vim.diagnostic.severity.WARN]  = '▲',
+  --         [vim.diagnostic.severity.HINT]  = '⚑',
+  --         [vim.diagnostic.severity.INFO]  = '»',
+  --       },
+  --     },
+  --   })
+  -- end,
+}

@@ -172,6 +172,7 @@ in
       wl-clipboard
       ## LSP
       lua-language-server
+      marksman
       ## img-clip
       # pngpaste # For MacOs
       ## Mason Core
@@ -222,6 +223,7 @@ in
         pkgs.vulkan-tools
 
         pkgs.steam
+        # pkgs.discord-canary # krisp not working out of the box
         pkgs.vesktop
         pkgs.spotify
 

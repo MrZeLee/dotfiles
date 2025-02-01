@@ -49,6 +49,7 @@ return {
             "ansiblels",
             "jdtls",
             "rnix",
+            "marksman",
         }
 
         require("mason").setup()
@@ -61,6 +62,10 @@ return {
                         if server_name == "lua_ls" then
                             require("lspconfig").lua_ls.setup {
                                 cmd = { "lua-language-server" }, -- Ensure Nix-installed binary is used
+                            }
+                        elseif server_name == "marksman" then
+                            require("lspconfig").marksman.setup {
+                                cmd = { "marksman" },
                             }
                         -- elseif server_name == "sss" then
                         --     -- Custom setup for "sss" on NixOS
@@ -99,6 +104,8 @@ return {
                 },
             },
         }
+
+        lspconfig.marksman.setup {}
 
         -- Reserve a space in the gutter
         -- This will avoid an annoying layout shift in the screen
