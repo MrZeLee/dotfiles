@@ -1,5 +1,3 @@
-// CREATED BY KITTENZEXE
-
 {
   "modules-left": [
     "custom/icon-left-outer",
@@ -23,12 +21,9 @@
     "custom/icon-split",
     "cpu",
     "custom/icon-split",
-    // "battery",
-    // "custom/icon-split",
     "wireplumber",
     "custom/icon-right-outer"
   ],
-
   "idle_inhibitor": {
     "format": "{icon}",
     "interval": 1,
@@ -38,7 +33,6 @@
       "deactivated": ""
     }
   },
-
   "clock": {
     "interval": 1,
     "tooltip": true,
@@ -46,14 +40,8 @@
     "max-length": 25,
     "tooltip-format": "{:%Y-%m-%d}"
   },
-  // "window": {
-  //   "format": "{title}",
-  //   "max-length": 50,
-  //   "default": "No Title",   // Fallback when no window title is available
-  //   "ignore": ["windowtitle>>"]
-  // },
   "hyprland/workspaces": {
-  "format": "{icon} {windows}",
+    "format": "{icon} {windows}",
     "window-rewrite-default": "",
     "window-rewrite": {
       "class<swayimg>": "",
@@ -87,7 +75,18 @@
     },
     "format": "{capacity}% {icon}",
     "format-charging": "{capacity}% 󰂄",
-    "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+    "format-icons": [
+      "󰁺",
+      "󰁻",
+      "󰁼",
+      "󰁽",
+      "󰁾",
+      "󰁿",
+      "󰂀",
+      "󰂁",
+      "󰂂",
+      "󰁹"
+    ],
     "max-length": 25
   },
   "wireplumber": {
@@ -96,7 +95,6 @@
   },
   "cpu": {
     "interval": 1,
-    // "format": "CPU {icon0}{icon1}{icon2}{icon3}{icon4}{icon5}{icon6}{icon7}",
     "format": "CPU {icon}",
     "format-icons": [
       "<span color='#69ff94'>▁</span>",
@@ -106,7 +104,7 @@
       "<span color='#ffffa5'>▅</span>",
       "<span color='#ffffa5'>▆</span>",
       "<span color='#ff9977'>▇</span>",
-      "<span color='#dd532e'>█</span>"  
+      "<span color='#dd532e'>█</span>"
     ]
   },
   "memory": {
@@ -124,15 +122,13 @@
     "tooltip-format-disconnected": "Disconnected",
     "max-length": 50
   },
-
   "image": {
-    "path": "/home/amelia/Photos/Sticker_PPG_20_The_Herta_04.png",
+    "path": "image.png",
     "size": 20,
     "exec": "./hover_image.sh",
     "interval": 0,
     "tooltip": true
   },
-
   "group/group-power": {
     "orientation": "inherit",
     "drawer": {
@@ -147,15 +143,14 @@
       "custom/power"
     ]
   },
-
   "custom/icon-arch": {
-    "exec":"echo '󰣇'",
+    "exec": "echo '󰣇'",
     "interval": 0
   },
   "custom/icon-nixos": {
-    "format":"'",
-    "interval":0,
-    "tooltip": false,
+    "format": "'",
+    "interval": 0,
+    "tooltip": false
   },
   "custom/icon-left": {
     "exec": "echo '✦'",
@@ -181,7 +176,6 @@
     "exec": "echo '✦'",
     "interval": 0
   },
-
   "custom/lock": {
     "format": "󰍁",
     "tooltip": false,
@@ -198,4 +192,3 @@
     "on-click": "shutdown now"
   }
 }
-

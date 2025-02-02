@@ -1,5 +1,3 @@
-// CREATED BY KITTENZEXE
-
 {
   "modules-left": [
     "custom/icon-left-outer",
@@ -46,14 +44,8 @@
     "max-length": 25,
     "tooltip-format": "{:%Y-%m-%d}"
   },
-  // "window": {
-  //   "format": "{title}",
-  //   "max-length": 50,
-  //   "default": "No Title",   // Fallback when no window title is available
-  //   "ignore": ["windowtitle>>"]
-  // },
   "hyprland/workspaces": {
-  "format": "{icon} {windows}",
+    "format": "{icon} {windows}",
     "window-rewrite-default": "",
     "window-rewrite": {
       "class<swayimg>": "",
@@ -96,7 +88,7 @@
   },
   "cpu": {
     "interval": 1,
-    // "format": "CPU {icon0}{icon1}{icon2}{icon3}{icon4}{icon5}{icon6}{icon7}",
+    "format": "CPU {icon0}{icon1}{icon2}{icon3}{icon4}{icon5}{icon6}{icon7}",
     "format": "CPU {icon}",
     "format-icons": [
       "<span color='#69ff94'>▁</span>",
@@ -155,7 +147,7 @@
   "custom/icon-nixos": {
     "format":"'",
     "interval":0,
-    "tooltip": false,
+    "tooltip": false
   },
   "custom/icon-left": {
     "exec": "echo '✦'",
