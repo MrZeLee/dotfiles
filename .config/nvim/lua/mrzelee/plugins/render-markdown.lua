@@ -12,13 +12,16 @@ return {
   ft = { "markdown", "Avante" },
 
   config = function ()
-    require('render-markdown').setup({
-      render_modes = true,
-    })
-    local cmp = require('cmp')
-    cmp.setup({
+    -- Extend cmp for Markdown filetype only
+    local cmp = require("cmp")
+    cmp.setup.filetype({ "markdown", "Avante" }, {
       sources = cmp.config.sources({
-        { name = 'render-markdown' },
+        { name = "render-markdown" },
+      }, {
+        -- In the second table, put the "fallback" sources
+        { name = "nvim_lsp" },
+        { name = "buffer" },
+        { name = "path" },
       }),
     })
   end
