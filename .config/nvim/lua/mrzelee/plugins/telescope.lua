@@ -37,15 +37,15 @@ return {
         })
 
         local builtin = require('telescope.builtin')
-        vim.keymap.set('n', '<leader>pf', builtin.find_files, {})
-        vim.keymap.set('n', '<leader>pg', builtin.git_files, {})
+        vim.keymap.set('n', '<leader>pf', builtin.find_files, {desc="find files"})
+        vim.keymap.set('n', '<leader>pg', builtin.git_files, {desc="find git files"})
         vim.keymap.set('n', '<leader>ps', function()
             builtin.grep_string({
                 search = vim.fn.input("Grep > "),
                 vimgrep_arguments = { 'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case', '--hidden' }
             })
-        end)
-        vim.keymap.set('n', '<leader>vh', builtin.help_tags, {})
+        end, {desc="find files with text using rg"})
+        vim.keymap.set('n', '<leader>vh', builtin.help_tags, {desc="help tags"})
     end
     },
     {

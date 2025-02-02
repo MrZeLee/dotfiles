@@ -5,7 +5,7 @@ vim.g.netrw_hide = 1
 -- Create or get an autocommand group
 local group = vim.api.nvim_create_augroup('netrw_mappings', { clear = true })
 
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
+vim.keymap.set("n", "<leader>pv", vim.cmd.Ex, {desc="going back to netrw"})
 -- delete buffer with :bdelete and then execute vim.Cmd.Ex in normal mode with <leader>pV
 vim.keymap.set("n", "<leader>pV", function()
     if #GetBufferList() > 0 then
