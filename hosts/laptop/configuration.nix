@@ -1,8 +1,8 @@
 # Edit this configuration file to define what should be installed on
-# your system. Help is available in the configuration.nix(5) man page, on
-# https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
+# your system.  Help is available in the configuration.nix(5) man page
+# and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, lib, pkgs, ... }:
+{ config, pkgs, lib,... }:
 # let
 #   home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/release-24.11.tar.gz";
 # in
@@ -24,6 +24,7 @@ in
 {
   imports =
     [ # Include the results of the hardware scan.
+      # (import "${home-manager}/nixos")
       ./hardware-configuration.nix
       ./mrzelee.nix
     ];
@@ -79,8 +80,8 @@ in
     # };
   };
 
-  programs.hyprlock.enable = true;
-  security.pam.services.hyprlock = {};
+  # programs.hyprlock.enable = true;
+  # security.pam.services.hyprlock = {};
   services.hypridle.enable = true;
   qt = {
     enable = true;
@@ -134,6 +135,7 @@ in
     HYPRLAND_CSGO_VULKAN_FIX = "${pkgs.hyprlandPlugins.csgo-vulkan-fix}";
     HYPRLAND_HY3 = "${pkgs.hyprlandPlugins.hy3}";
     HYPRLAND_HOST = "nixos-laptop";
+    # DBUS_FOLDER = "${pkgs.dbus}";
     # SWAY = "${pkgs.sway}";
     # LIBVA_DRIVER_NAME = "nvidia";
     # __GLX_VENDOR_LIBRARY_NAME = "nvidia";
