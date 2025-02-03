@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Neovim
+Comment=Edit text files
+Exec=wezterm -e nvim %F
+Icon=nvim
+Terminal=false
+Type=Application
+MimeType=text/plain;
