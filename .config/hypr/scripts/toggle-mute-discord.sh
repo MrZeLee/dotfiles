@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 
 # Check if Discord is already focused
-current_window=$(hyprctl activewindow -j | jq -r '.initialTitle')
-if [[ "$current_window" != "Discord" ]]; then
-  hyprctl dispatch focuswindow initialtitle:^Discord$ -q
-  hyprctl dispatch sendshortcut CTRL_SHIFT, M, initialtitle:^Discord$ -q
+current_window_address=$(hyprctl activewindow -j | jq -r '.address')
+
+discord_address=$(hyprctl clients -j | jq -r '[.[] | select(.initialClass == "vesktop" and .initialTitle != "Discord Popout")][0] | .address')
+
+if [[ "$current_window_address" != "$discord_address" ]]; then
+  hyprctl dispatch focuswindow address:$discord_address -q
+  hyprctl dispatch sendshortcut CTRL_SHIFT, M, address:$discord_address -q
   hyprctl dispatch focuscurrentorlast -q
 else
-  hyprctl dispatch sendshortcut CTRL_SHIFT, M, initialtitle:^Discord$ -q
+  hyprctl dispatch sendshortcut CTRL_SHIFT, M, address:$discord_address -q
 fi
-
