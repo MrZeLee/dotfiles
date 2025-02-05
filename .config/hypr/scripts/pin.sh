@@ -5,6 +5,7 @@ active_window="$(hyprctl activewindow -j)"
 active_window_address="$(echo "$active_window" | jq -r '.address')"
 active_window_class="$(echo "$active_window" | jq -r '.class')"
 active_window_initialtitle="$(echo "$active_window" | jq -r '.initialTitle')"
+active_window_pinned="$(echo "$active_window" | jq -r '.pinned')"
 
 if [ -z "$active_window_address" ]; then
     echo "No active window found."
@@ -93,4 +94,8 @@ if [[ "$active_window_class" = "firefox" && "$active_window_initialtitle" != "Pi
 fi
 
 # Set the window to floating and resize/move it
-hyprctl -r --quiet --batch "dispatch setfloating address:$active_window_address; dispatch tagwindow +float address:$active_window_address; dispatch resizewindowpixel exact ${float_width} ${float_height}, address:$active_window_address; dispatch movewindowpixel exact ${float_x} ${float_y}, address:$active_window_address; dispatch pin address:$active_window_address"
+if [[ "$active_window_pinned" == "false" ]]; then
+  hyprctl -r --quiet --batch "dispatch setfloating address:$active_window_address; dispatch tagwindow +float address:$active_window_address; dispatch resizewindowpixel exact ${float_width} ${float_height}, address:$active_window_address; dispatch movewindowpixel exact ${float_x} ${float_y}, address:$active_window_address; dispatch pin address:$active_window_address"
+else
+  hyprctl -r --quiet --batch "dispatch setfloating address:$active_window_address; dispatch tagwindow +float address:$active_window_address; dispatch resizewindowpixel exact ${float_width} ${float_height}, address:$active_window_address; dispatch movewindowpixel exact ${float_x} ${float_y}, address:$active_window_address"
+fi
