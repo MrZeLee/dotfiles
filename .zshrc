@@ -16,8 +16,10 @@ if [[ "$OS_TYPE" == "Linux" ]]; then
   function open() {
     nohup xdg-open "$@" >/dev/null 2>&1 &!
   }
+  export COPY="wl-copy"
 elif [[ "$OS_TYPE" == "Darwin" ]]; then
   export OPEN="open"
+  export COPY="pbcopy"
 else
   :
 fi
@@ -57,37 +59,37 @@ bindkey "^[[B" down-line-or-beginning-search # Down
 
 export KEYTIMEOUT=1
 
-cursor_mode() {
-    # See https://ttssh2.osdn.jp/manual/4/en/usage/tips/vim.html for cursor shapes
-    cursor_block='\e[2 q'
-    cursor_beam='\e[6 q'
-
-    function zle-keymap-select {
-        if [[ ${KEYMAP} == vicmd ]] ||
-            [[ $1 = 'block' ]]; then
-            echo -ne $cursor_block
-        elif [[ ${KEYMAP} == main ]] ||
-            [[ ${KEYMAP} == viins ]] ||
-            [[ ${KEYMAP} = '' ]] ||
-            [[ $1 = 'beam' ]]; then
-            echo -ne $cursor_beam
-        fi
-    }
-
-    zle-line-init() {
-        echo -ne $cursor_beam
-    }
-    # Restore cursor to default on exit
-    reset_cursor() {
-        echo -ne '\e[0 q'
-    }
-    trap reset_cursor EXIT
-
-    zle -N zle-keymap-select
-    zle -N zle-line-init
-}
-
-cursor_mode
+# cursor_mode() {
+#     # See https://ttssh2.osdn.jp/manual/4/en/usage/tips/vim.html for cursor shapes
+#     cursor_block='\e[2 q'
+#     cursor_beam='\e[6 q'
+#
+#     function zle-keymap-select {
+#         if [[ ${KEYMAP} == vicmd ]] ||
+#             [[ $1 = 'block' ]]; then
+#             echo -ne $cursor_block
+#         elif [[ ${KEYMAP} == main ]] ||
+#             [[ ${KEYMAP} == viins ]] ||
+#             [[ ${KEYMAP} = '' ]] ||
+#             [[ $1 = 'beam' ]]; then
+#             echo -ne $cursor_beam
+#         fi
+#     }
+#
+#     zle-line-init() {
+#         echo -ne $cursor_beam
+#     }
+#     # Restore cursor to default on exit
+#     reset_cursor() {
+#         echo -ne '\e[0 q'
+#     }
+#     trap reset_cursor EXIT
+#
+#     zle -N zle-keymap-select
+#     zle -N zle-line-init
+# }
+#
+# cursor_mode
 
 zmodload zsh/complist
 bindkey -M menuselect 'h' vi-backward-char
@@ -236,6 +238,6 @@ if command -v zoxide &> /dev/null; then
   eval "$(zoxide init zsh)"
 fi
 
-[ -f $HOME/.bindkey.zsh ] && source $HOME/.bindkey.zsh
+# [ -f $HOME/.bindkey.zsh ] && source $HOME/.bindkey.zsh
 
-# zvm_after_init_commands+=('[ -f $HOME/.bindkey.zsh ] && source $HOME/.bindkey.zsh')
+zvm_after_init_commands+=('[ -f $HOME/.bindkey.zsh ] && source $HOME/.bindkey.zsh')

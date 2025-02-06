@@ -18,12 +18,6 @@ bindkey '^f' tmux_sessionizer
 
 bindkey -s ^h "cd ~\n"
 
-function zvm_vi_yank() {
-	zvm_yank
-	echo -n ${CUTBUFFER} | pbcopy
-	zvm_exit_visual_mode
-}
-
 if type "brew" > /dev/null; then
   if [ -f $(brew --prefix)/share/google-cloud-sdk/path.zsh.inc ]; then
     source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
@@ -60,3 +54,9 @@ then
   alias la="ls -a"
   alias ll="ls -al"
 fi
+
+function zvm_vi_yank() {
+  zvm_yank
+  echo -n ${CUTBUFFER} | ${COPY}
+  zvm_exit_visual_mode
+}
