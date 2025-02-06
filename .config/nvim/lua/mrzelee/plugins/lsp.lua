@@ -108,33 +108,101 @@ return {
       vim.api.nvim_create_autocmd('LspAttach', {
         desc = 'LSP actions',
         callback = function(event)
-          local opts = { buffer = event.buf }
+          local opts = { buffer = event.buf, noremap = true, silent = true }
 
-          vim.keymap.set('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<cr>', opts)
-          vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
-          vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
-          vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
-          vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
-          vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
-          vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
-          vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
-          vim.keymap.set("n", "<leader>rn", '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
-          vim.keymap.set({ 'n', 'x' }, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
-          vim.keymap.set("n", "<leader>vca", '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
-          vim.keymap.set("n", "<leader>vws", '<cmd>lua vim.lsp.buf.workspace_symbol()<cr>', opts)
-          -- Fix Control h that is also used to move left in nvim panes
-          vim.keymap.set("i", "<C-h>", '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
+          -- Diagnostics
+          vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, {
+            desc = "Show diagnostics in floating window",
+            unpack(opts)
+          })
+          vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, {
+            desc = "Go to previous diagnostic",
+            unpack(opts)
+          })
+          vim.keymap.set('n', ']d', vim.diagnostic.goto_next, {
+            desc = "Go to next diagnostic",
+            unpack(opts)
+          })
 
-          -- vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
-          -- vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
-          -- vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
-          -- vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
-          -- vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
-          -- vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
-          -- vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
-          -- vim.keymap.set({'n', 'x'}, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
-          -- vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
+          -- LSP navigation and info
+          vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {
+            desc = "Go to definition",
+            unpack(opts)
+          })
+          vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, {
+            desc = "Go to implementation",
+            unpack(opts)
+          })
+          vim.keymap.set('n', 'go', vim.lsp.buf.type_definition, {
+            desc = "Go to type definition",
+            unpack(opts)
+          })
+          vim.keymap.set('n', 'gr', vim.lsp.buf.references, {
+            desc = "Show references",
+            unpack(opts)
+          })
+          vim.keymap.set('n', 'K', vim.lsp.buf.hover, {
+            desc = "Show hover documentation",
+            unpack(opts)
+          })
+          vim.keymap.set('n', 'gs', vim.lsp.buf.signature_help, {
+            desc = "Show signature help",
+            unpack(opts)
+          })
+
+          -- Code actions
+          vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, {
+            desc = "Rename symbol",
+            unpack(opts)
+          })
+          vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, {
+            desc = "Code actions",
+            unpack(opts)
+          })
+          vim.keymap.set('n', '<leader>ws', vim.lsp.buf.workspace_symbol, {
+            desc = "Search workspace symbols",
+            unpack(opts)
+          })
+          vim.keymap.set({ 'n', 'x' }, '<F3>', function()
+            vim.lsp.buf.format({ async = true })
+          end, {
+            desc = "Format code",
+            unpack(opts)
+          })
+
+          -- Signature help in insert mode
+          -- Fixed Control h that is also used to move left in nvim panes
+          vim.keymap.set('i', '<C-h>', vim.lsp.buf.signature_help, {
+            desc = "Show signature help",
+            unpack(opts)
+          })
+
+          vim.keymap.set({ 'n', 'x' }, 'gq', function()
+            vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
+          end, {
+            desc = "Format the file",
+            unpack(opts)
+          })
         end,
+      })
+
+      local wk = require("which-key")
+
+      wk.add({
+        { "<F3>",       desc = "Format code" },
+        { "<leader>ca", desc = "Code actions" },
+        { "<leader>e",  desc = "Show diagnostics in floating window" },
+        { "<leader>rn", desc = "Rename symbol" },
+        { "<leader>ws", desc = "Search workspace symbols" },
+        { "K",          desc = "Show hover documentation" },
+        { "[d",         desc = "Go to previous diagnostic" },
+        { "]d",         desc = "Go to next diagnostic" },
+        { "gd",         desc = "Go to definition" },
+        { "gi",         desc = "Go to implementation" },
+        { "go",         desc = "Go to type definition" },
+        { "gr",         desc = "Show references" },
+        { "gs",         desc = "Show signature help" },
+        { "gq",         desc = "Format the file" },
       })
 
       local cmp = require('cmp')
@@ -175,7 +243,7 @@ return {
           ['<S-Tab>'] = cmp.mapping.select_prev_item({ behavior = 'select' }),
 
           -- `Enter` key to confirm completion
-          ['<CR>'] = cmp.mapping.confirm({ select = false }),
+          -- ['<CR>'] = cmp.mapping.confirm({ select = false }),
           ['<C-y>'] = cmp.mapping.confirm({ select = true }),
 
           -- Ctrl+Space to trigger completion menu
@@ -190,16 +258,6 @@ return {
             vim.snippet.expand(args.body)
           end,
         },
-      })
-
-      vim.api.nvim_create_autocmd('LspAttach', {
-        callback = function(event)
-          local opts = { buffer = event.buf }
-
-          vim.keymap.set({ 'n', 'x' }, 'gq', function()
-            vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
-          end, opts)
-        end
       })
 
       vim.diagnostic.config({
@@ -223,7 +281,7 @@ return {
         -- Load luvit types when the `vim.uv` word is found
         { path = "${3rd}/luv/library", words = { "vim%.uv" } },
         -- Only load the telescope library when the `telescope.nvim` global is found
-        { path = "telescope.nvim", words = { "telescope" } },
+        { path = "telescope.nvim",     words = { "telescope" } },
       },
     },
   },
