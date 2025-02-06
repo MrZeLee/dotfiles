@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Restart
+Comment=Restart the system
+Exec=systemctl reboot
+Icon=restart
+Terminal=false
+Type=Application

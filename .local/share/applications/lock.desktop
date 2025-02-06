@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Lock Screen
+Comment=Lock the screen using swaylock
+Exec=sh -c "$HOME/.dotfiles/.config/hypr/scripts/lock.sh"
+Icon=lock
+Terminal=false
+Type=Application
