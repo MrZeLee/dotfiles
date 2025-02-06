@@ -6,18 +6,20 @@ let
     # reuse the current configuration
     { config = config.nixpkgs.config; };
 
-  mvdPackage = pkgs.callPackage (pkgs.fetchFromGitHub {
-    owner = "MrZeLee";
-    repo = "mvd";
-    rev = "main";
-    hash = "sha256-EqWsl3a4ShSf0pTDdblRnfvHf4dkfFB8XCMEw33N0ts=";
-  }) {};
+  mvdPackage = pkgs.callPackage
+    (pkgs.fetchFromGitHub {
+      owner = "MrZeLee";
+      repo = "mvd";
+      rev = "main";
+      hash = "sha256-EqWsl3a4ShSf0pTDdblRnfvHf4dkfFB8XCMEw33N0ts=";
+    })
+    { };
 
   customWezterm = pkgs.callPackage ./custom/wezterm.nix {
     inherit (pkgs) stdenv rustPlatform lib fetchFromGitHub ncurses perl pkg-config
-    python3 fontconfig installShellFiles openssl libGL libxkbcommon wayland zlib
-    CoreGraphics Cocoa Foundation System libiconv UserNotifications nixosTests
-    runCommand vulkan-loader;
+      python3 fontconfig installShellFiles openssl libGL libxkbcommon wayland zlib
+      CoreGraphics Cocoa Foundation System libiconv UserNotifications nixosTests
+      runCommand vulkan-loader;
 
     # Correct X11-related library paths
     libxcb = pkgs.xorg.libxcb;
@@ -81,12 +83,12 @@ let
       -X github.com/rancher/fleet/pkg/version.Version=${version} \
         -X github.com/rancher/fleet/pkg/version.GitCommit=unknown"
         go build -o ${placeholder "out"}/bin/fleet -ldflags "$ldflags" ./cmd/fleetcli
-        '';
+    '';
 
     installPhase = ''
       mkdir -p $out/bin
       cp fleet $out/bin/
-      '';
+    '';
 
     checkPhase = ''
       # Uncomment below to skip tests
@@ -97,7 +99,7 @@ let
       echo "$result" | grep "kind: Deployment"
       versionOutput=$(./fleet --version)
       echo "$versionOutput" | grep "${version}"
-      '';
+    '';
 
     meta = with pkgs.lib; {
       description = "Manage large fleets of Kubernetes clusters";
@@ -105,8 +107,9 @@ let
       license = licenses.asl20;
     };
   };
+
 in
-  {
+{
   # virtualisation.waydroid.enable = true;
 
   programs.steam = {
@@ -133,40 +136,88 @@ in
     useDefaultShell = false;
     packages = with pkgs; [
       # thunderbird
-      abook ansible
-      bat brotab (btop.override { cudaSupport = true; })
+      abook
+      ansible
+      bat
+      brotab
+      (btop.override { cudaSupport = true; })
       # croc - easy send files to another computer
-      cacert cht-sh cloudflared croc
-      cmake coreutils
+      cacert
+      cht-sh
+      cloudflared
+      croc
+      cmake
+      coreutils
       ddgr #DuckDuckGo from the terminal.
-      eza exiftool#Better ls
-      gh gh-dash glow gnuplot gnupg graphviz gettext
+      eza
+      exiftool #Better ls
+      gh
+      gh-dash
+      glow
+      gnuplot
+      gnupg
+      graphviz
+      gettext
       home-manager
       isync
       k9s #Kubernetes CLI and TUI To Manage Your Clusters In Style!
-      keepassxc kompose kubectl kubernetes-helm kubeseal kubetail kustomize
-      lazygit libgit2 libiconv lynx lshw
-      msmtp maven monero-cli moreutils
-      # mvdPackage
-      neomutt netcat neofetch notmuch nmap
-      opentofu # ollama
+      keepassxc
+      kompose
+      kubectl
+      kubernetes-helm
+      kubeseal
+      kubetail
+      kustomize
+      lazygit
+      libgit2
+      libiconv
+      lynx
+      lshw
+      msmtp
+      maven
+      monero-cli
+      moreutils
+      neomutt
+      netcat
+      neofetch
+      notmuch
+      nmap
+      opencommit
+      opentofu
+      (if config.hardware.nvidia.modesetting.enable
+      then ollama-cuda
+      else ollama)
       # php83
-      pass python312Packages.pylatexenc python312Packages.virtualenv
+      pass
+      python312Packages.pylatexenc
+      python312Packages.virtualenv
       rclone
-      speedtest-cli stow
-      tldr tree tor
+      speedtest-cli
+      stow
+      tldr
+      tree
+      tor
+      usbutils
       urlscan
       vimv-rs
       watch
-      yarn yq
+      yarn
+      yq
       zoxide
 
       # Nemo file manager
-      nemo-with-extensions 
-      gvfs udisks2 gphoto2 libmtp cinnamon-desktop shared-mime-info xdg-utils
+      nemo-with-extensions
+      gvfs
+      udisks2
+      gphoto2
+      libmtp
+      cinnamon-desktop
+      shared-mime-info
+      xdg-utils
 
       # Git
-      opencommit git-lfs tig
+      git-lfs
+      tig
 
       # Neovim
       wl-clipboard
@@ -176,25 +227,62 @@ in
       ## img-clip
       # pngpaste # For MacOs
       ## Mason Core
-      unzip wget curl gzip gnutar # bash sh
+      unzip
+      wget
+      curl
+      gzip
+      gnutar # bash sh
       ## Mason Languages
-      go php83 php83Packages.composer lua51Packages.lua lua51Packages.luarocks julia_19-bin python312 python312Packages.pip pipx rustc cargo nodejs_23 zulu23 texliveFull
+      go
+      php83
+      php83Packages.composer
+      lua51Packages.lua
+      lua51Packages.luarocks
+      julia_19-bin
+      python312
+      python312Packages.pip
+      pipx
+      rustc
+      cargo
+      nodejs_23
+      zulu23
+      texliveFull
       ## Treesitter
-      tree-sitter gcc # nodejs_22 git
+      tree-sitter
+      gcc # nodejs_22 git
       ## Telescope
-      ripgrep fd
+      ripgrep
+      fd
       ## VimTex
       xdotool
 
       # Yazi
       yazi
       ## dependencies
-      ffmpegthumbnailer p7zip jq poppler fd ripgrep fzf zoxide imagemagick
+      ffmpegthumbnailer
+      p7zip
+      jq
+      poppler
+      fd
+      ripgrep
+      fzf
+      zoxide
+      imagemagick
 
       #Ani-cli
       ani-cli
       ## dependencies
-      syncplay gnugrep gnused curl mpv aria2 yt-dlp ffmpeg_6-full fzf ani-skip gnupatch #iina - installed with homebrew
+      syncplay
+      gnugrep
+      gnused
+      curl
+      mpv
+      aria2
+      yt-dlp
+      ffmpeg_6-full
+      fzf
+      ani-skip
+      gnupatch #iina - installed with homebrew
 
       #Go-wall - to create wallpapers
       gowall
@@ -202,46 +290,57 @@ in
       #cargo
       cargo
       ## dependencies
-      pkg-config libgit2 openssl # clang
+      pkg-config
+      libgit2
+      openssl # clang
 
       #to take screenshots
       grim
       slurp
       #swayimg optional
-      giflib libjpeg libjxl libpng librsvg libwebp libheif libavif libtiff libsixel
+      giflib
+      libjpeg
+      libjxl
+      libpng
+      librsvg
+      libwebp
+      libheif
+      libavif
+      libtiff
+      libsixel
       #hyprland optional dependencies
       bc
     ] ++ [
-        koji
-        mvdPackage
-        customWezterm
-        fleet-cli
-        # pkgs.wezterm
-        ## Help Wezterm
-        pkgs.mesa
-        pkgs.vulkan-loader
-        pkgs.vulkan-tools
+      koji
+      mvdPackage
+      customWezterm
+      fleet-cli
+      # pkgs.wezterm
+      ## Help Wezterm
+      pkgs.mesa
+      pkgs.vulkan-loader
+      pkgs.vulkan-tools
 
-        pkgs.steam
-        # pkgs.discord-canary # krisp not working out of the box
-        pkgs.vesktop
-        pkgs.spotify
+      pkgs.steam
+      # pkgs.discord-canary # krisp not working out of the box
+      pkgs.vesktop
+      pkgs.spotify
 
-        pkgs.whatsapp-for-linux
-        unstable.caprine # messenger facebook
-        pkgs.signal-desktop
-        pkgs.telegram-desktop
+      pkgs.whatsapp-for-linux
+      unstable.caprine # messenger facebook
+      pkgs.signal-desktop
+      pkgs.telegram-desktop
 
-        pkgs.qbittorrent
-        pkgs.tor-browser
-        pkgs.zathura
-        pkgs.zoom-us
+      pkgs.qbittorrent
+      pkgs.tor-browser
+      pkgs.zathura
+      pkgs.zoom-us
 
-        pkgs.swayimg
-        pkgs.gimp
+      pkgs.swayimg
+      pkgs.gimp
 
-        pkgs.seahorse
-      ];
+      pkgs.seahorse
+    ];
 
     openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC2gO7UAKfjRE2uApIneVTMLCpZxL3QkTPTcipAzm3IjTlrjvzvzyXs0+Y0QEFEK9CImH/ZYMBVzb3yJM9o/KeDThbuzfGWP4q18ZVUHvtsPdrNNu/AxUIqhsw+462SGwdju13TnlgXmPfg8bVYHVnJBwXtW/5lZ8lIEZpDHTv2lU3wvOgn3YRVjd8FdfDVGBiad1O6JQEZY7v9BDrg8ynugK4pyt2EViZvaTwQMuZC3EPuDtdrzhCm1oSWPFnA6KEb7musy+0/zR/aV2ewg4Ouy8E69aWiuSV8DPzgVFKT7sj5zEOH8Ouq0AzElQl8XQoJLPHSHFM4qeQE3pAvokFoJAc+I9Wi1ht/PSvZxdiCSAVXT2L9X4G7IN4i4BWaDaEwIFYv9tmxN+DkC6sWWNXNmMSmOJVdisT7GLhvRY70CZgOChg0DBWrcVAynrh6HpRfjQGKi7huHoPxey4YG15+ByKiM25Vi3nRBYwrstsLdVS4SAuoIS4dV8XJ9JVSrFX/fdWRxcjKMcFDgqwzClQ6rmQdqCHkZeTV9CqnehntP3AvVM6xM5bXK4TppJVxE6iJpSBUc01fe0qJLplztYlBeqMZmjdEa/nPjZZMQFE/0TNURI7oCFAGzMgHnxzbLnmSTNjZMi4YpA2BdXREkUh6Cm9UiXAiCjsRoGDaVR0fRw== josel@DESKTOP-JOSE" ];
   };
