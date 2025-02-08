@@ -37,8 +37,9 @@ Map("v", "<", "<gv")
 Map("v", ">", ">gv")
 
 Map("n", "J", "mzJ`z")
-Map("n", "<C-d>", "<C-d>zz")
-Map("n", "<C-u>", "<C-u>zz")
+-- added buffer = true so it works with which-key plugin
+Map("n", "<C-d>", "<C-d>zz", { desc = 'Jump half page down', buffer = true})
+Map("n", "<C-u>", "<C-u>zz", { desc = 'Jump half page up', buffer = true})
 Map("n", "n", "nzzzv")
 Map("n", "N", "Nzzzv")
 
