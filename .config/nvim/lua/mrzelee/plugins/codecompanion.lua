@@ -2,6 +2,15 @@ local supported_adapters = {
   anthropic = function()
     return require("codecompanion.adapters").extend("anthropic", {})
   end,
+  gemini = function()
+    return require("codecompanion.adapters").extend("gemini",{
+      schema = {
+        model = {
+          default = "gemini-2.0-flash",
+        },
+      },
+    })
+  end,
 }
 
 local function save_path()
@@ -112,7 +121,7 @@ return {
 
     strategies = {
       chat = {
-        adapter = "anthropic",
+        adapter = "gemini",
         slash_commands = {
           ["buffer"] = {
             opts = {
@@ -140,7 +149,7 @@ return {
         },
       },
       inline = {
-        adapter = "anthropic",
+        adapter = "gemini",
       },
       -- cmd = {
       --   adapter = "copilot",
