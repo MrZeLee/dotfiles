@@ -100,7 +100,7 @@ bindkey -M menuselect 'j' vi-down-line-or-history
 # Download zimfw plugin manager if missing.
 if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
   curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh \
-      https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
+    https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
 fi
 
 # Install missing modules and update ${ZIM_HOME}/init.zsh if missing or outdated.
@@ -148,8 +148,8 @@ fi
 
 # Only add this if you have the plugin installed
 if [ -f $HOME/.config/tmux/plugins/tmux-git-autofetch/git-autofetch.tmux ]; then
-    tmux-git-autofetch() {($HOME/.config/tmux/plugins/tmux-git-autofetch/git-autofetch.tmux --current &)}
-    add-zsh-hook chpwd tmux-git-autofetch
+  tmux-git-autofetch() {($HOME/.config/tmux/plugins/tmux-git-autofetch/git-autofetch.tmux --current &)}
+  add-zsh-hook chpwd tmux-git-autofetch
 fi
 
 # TMUX
@@ -199,14 +199,14 @@ alias ga='git commit --amend'
 
 alias dump_all='find . -type d -name .git -prune -o -type f -print | while read file; do echo "== $file =="; cat "$file"; echo ""; done'
 function dump_files() {
-    for file in "$@"; do
-        [[ -f "$file" ]] && echo "== $file ==" && command cat "$file" && echo ""
-    done
+  for file in "$@"; do
+    [[ -f "$file" ]] && echo "== $file ==" && command cat "$file" && echo ""
+  done
 }
 
 # check if bat is installed
 if command -v bat &> /dev/null; then
-    alias cat='bat'
+  alias cat='bat'
 fi
 
 if command -v automator &> /dev/null; then
@@ -218,20 +218,23 @@ cheat() { curl cheat.sh/$1 }
 
 _fzf_complete_pass() {
   _fzf_complete +m -- "$@" < <(
-    local prefix
-    prefix="${PASSWORD_STORE_DIR:-$HOME/.password-store}"
-    command find -L "$prefix" \
-      -name "*.gpg" -type f | \
-      sed -e "s#${prefix}/\{0,1\}##" -e 's#\.gpg##' -e 's#\\#\\\\#' | sort
+  local prefix
+  prefix="${PASSWORD_STORE_DIR:-$HOME/.password-store}"
+  command find -L "$prefix" \
+    -name "*.gpg" -type f | \
+    sed -e "s#${prefix}/\{0,1\}##" -e 's#\.gpg##' -e 's#\\#\\\\#' | sort
   )
 }
 
 # Check if the `pass` command successfully retrieves the API key
 if api_key=$(pass show api-key/anthropic 2>/dev/null); then
-    export ANTHROPIC_API_KEY="$api_key"
+  export ANTHROPIC_API_KEY="$api_key"
 fi
 if api_key=$(pass show api-key/oco 2>/dev/null); then
-    export OCO_API_KEY="$api_key"
+  export OCO_API_KEY="$api_key"
+fi
+if api_key=$(pass show api-key/gemini 2>/dev/null); then
+  export GEMINI_API_KEY="$api_key"
 fi
 
 if command -v zoxide &> /dev/null; then
