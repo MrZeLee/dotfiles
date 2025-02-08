@@ -230,11 +230,12 @@ _fzf_complete_pass() {
 if api_key=$(pass show api-key/anthropic 2>/dev/null); then
   export ANTHROPIC_API_KEY="$api_key"
 fi
-if api_key=$(pass show api-key/oco 2>/dev/null); then
-  export OCO_API_KEY="$api_key"
-fi
+# if api_key=$(pass show api-key/oco 2>/dev/null); then
+#   export OCO_API_KEY="$api_key"
+# fi
 if api_key=$(pass show api-key/gemini 2>/dev/null); then
   export GEMINI_API_KEY="$api_key"
+  export OCO_API_KEY="$api_key"
 fi
 
 if command -v zoxide &> /dev/null; then
