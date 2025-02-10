@@ -150,8 +150,18 @@ in
     };
   };
 
-  programs.noisetorch.enable = true;
+  programs.mangohud = {
+    enable = true;
+    settings = {
+      cpu_temp = true;
+      gpu_temp = true;
+      vram = true;
+      frame_timing = false;
+      toggle_hud = "Shift_L+F11";
+    };
+  };
 
+  programs.noisetorch.enable = true;
 
   systemd.user.services.noisetorch = {
     description = "Noisetorch Noise Cancelling";
@@ -460,8 +470,6 @@ in
     pinentry-all
     pciutils
     mesa-demos
-    #gaming
-    mangohud # protonup-qt lutris bottles heroic
   ];
 
   environment.variables.EDITOR = "nvim";

@@ -71,7 +71,7 @@ in
     "quiet"
     "splash"
 
-    "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+    # "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
   ];
 
   nixpkgs.config.nvidia.acceptLicense = true;
