@@ -18,6 +18,7 @@ image/jpeg=swayimg.desktop
 inode/directory=nemo
 application/pdf=org.pwmt.zathura.desktop
 text/plain=nvim.desktop
+application/x-shellscript=nvim.desktop
 
 [Added Associations]
 application/octet-stream=org.keepassxc.KeePassXC.desktop;
@@ -37,3 +38,4 @@ image/png=org.gnome.Nautilus.desktop;feh.desktop;swayimg.desktop;
 image/gif=swayimg.desktop;
 image/jpeg=swayimg.desktop;
 application/pdf=org.pwmt.zathura.desktop;
+application/x-shellscript=nvim.desktop;
