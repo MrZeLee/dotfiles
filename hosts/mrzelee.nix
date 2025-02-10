@@ -403,7 +403,6 @@ in
       pkgs.vulkan-loader
       pkgs.vulkan-tools
 
-      pkgs.steam
       # pkgs.discord-canary # krisp not working out of the box
       pkgs.vesktop
       pkgs.spotify
