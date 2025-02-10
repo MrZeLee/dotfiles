@@ -131,6 +131,8 @@ in
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
+    # Still don't know if it is doing anything
+    extraPackages = with pkgs; [ nvidia-vaapi-driver ];
   };
 
   programs.gamemode.enable = true;

@@ -108,16 +108,96 @@ let
     };
   };
 
+  nix-gaming = import (builtins.fetchTarball "https://github.com/fufexan/nix-gaming/archive/master.tar.gz");
+
+  inherit (pkgs.writers) writeDash;
+
+  hyprctl = "${lib.getExe' pkgs.hyprland "hyprctl"} -i 0";
+  # powerprofilesctl = lib.getExe pkgs.power-profiles-daemon;
+  notify-send = lib.getExe pkgs.libnotify;
+
+  startScript = writeDash "gamemode-start" ''
+    ${hyprctl} --batch "\
+      keyword animations:enabled 0;\
+      keyword decoration:shadow:enabled 0;\
+      keyword decoration:blur:enabled 0;\
+      keyword general:gaps_in 0;\
+      keyword general:gaps_out 0;\
+      keyword general:border_size 1;\
+      keyword decoration:rounding 0"
+    ${notify-send} -u low -a 'Gamemode' 'Optimizations activated'
+  '';
+  endScript = writeDash "gamemode-end" ''
+    ${hyprctl} reload
+    ${notify-send} -u low -a 'Gamemode' 'Optimizations deactivated'
+  '';
+
 in
 {
-  # virtualisation.waydroid.enable = true;
+  programs.gamemode = {
+    enable = true;
+    settings = {
+      general = {
+        softrealtime = "auto";
+        renice = 15;
+      };
+      custom = {
+        start = startScript.outPath;
+        end = endScript.outPath;
+      };
+    };
+  };
+
+  programs.noisetorch.enable = true;
+
+
+  systemd.user.services.noisetorch = {
+    description = "Noisetorch Noise Cancelling";
+    after = ["wireplumber.service"];
+
+    serviceConfig = {
+      Type = "simple";
+      RemainAfterExit = "yes";
+      ExecStart = "${pkgs.noisetorch}/bin/noisetorch -i -s alsa_input.usb-Macronix_Razer_Barracuda_Pro_2.4_1234-00.mono-fallback -t 95";
+      ExecStop = "${pkgs.noisetorch}/bin/noisetorch -u";
+      ExecStartPre = "${pkgs.coreutils}/bin/sleep 10s";
+    };
+
+    wantedBy = [
+        "default.target"
+    ];
+  };
+
+  imports = [
+    nix-gaming.nixosModules.platformOptimizations
+    nix-gaming.nixosModules.pipewireLowLatency
+  ];
+
+  hardware.steam-hardware.enable = true;
 
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-    # gamescopeSession.enable = true;
+    gamescopeSession.enable = true;
+    extest.enable = true;
+    protontricks.enable = true;
   };
+
+  programs.gamescope = {
+    enable = true;
+    package = pkgs.gamescope;
+    args = [
+      "--backend wayland"
+      "--force-grab-cursor"
+      "-W 1920"
+      "-H 1080"
+      "-r 165"
+      "-ef"
+    ];
+  };
+
+  services.pipewire.lowLatency.enable = true;
 
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.login.enableGnomeKeyring = true;
@@ -129,7 +209,7 @@ in
   users.users.mrzelee = {
     isNormalUser = true;
     description = "MrZeLee";
-    extraGroups = [ "networkmanager" "wheel" "video" "render" "input" "uinput" ];
+    extraGroups = [ "networkmanager" "wheel" "video" "render" "input" "uinput" "gamemode"];
     home = "/home/mrzelee";
     createHome = true;
     shell = pkgs.zsh;
@@ -140,7 +220,9 @@ in
       ansible
       bat
       brotab
-      (btop.override { cudaSupport = true; })
+      (if config.hardware.nvidia.modesetting.enable
+      then btop.override { cudaSupport = true; }
+      else btop)
       # croc - easy send files to another computer
       cacert
       cht-sh
