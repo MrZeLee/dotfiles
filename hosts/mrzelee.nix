@@ -124,7 +124,9 @@ let
       keyword general:gaps_in 0;\
       keyword general:gaps_out 0;\
       keyword general:border_size 1;\
-      keyword decoration:rounding 0"
+      keyword decoration:rounding 0;\
+      keyword input:kb_layout us_intl_dead_grave_and_dead_tilde_LSGT;\
+      keyword input:kb_options caps:none"
     ${notify-send} -u low -a 'Gamemode' 'Optimizations activated'
   '';
   endScript = writeDash "gamemode-end" ''
