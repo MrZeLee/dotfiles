@@ -63,7 +63,9 @@
       "class<whatsapp-for-linux>": "",
       "class<Signal>": "",
       "class<Caprine>": "",
-      "class<org.telegram.desktop>": ""
+      "class<org.telegram.desktop>": "",
+      "class<steam>": "󰓓",
+      "class<gamescope>": "󰊖"
     }
   },
   "battery": {
@@ -187,7 +189,7 @@
     "on-click": "reboot"
   },
   "custom/power": {
-    "format": "",
+    "format": "󰐥",
     "tooltip": false,
     "on-click": "shutdown now"
   }

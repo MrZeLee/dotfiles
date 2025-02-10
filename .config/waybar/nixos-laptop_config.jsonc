@@ -67,7 +67,9 @@
       "class<whatsapp-for-linux>": "",
       "class<Signal>": "",
       "class<Caprine>": "",
-      "class<org.telegram.desktop>": ""
+      "class<org.telegram.desktop>": "",
+      "class<steam>": "󰓓",
+      "class<gamescope>": "󰊖"
     }
   },
   "battery": {
@@ -88,7 +90,6 @@
   },
   "cpu": {
     "interval": 1,
-    "format": "CPU {icon0}{icon1}{icon2}{icon3}{icon4}{icon5}{icon6}{icon7}",
     "format": "CPU {icon}",
     "format-icons": [
       "<span color='#69ff94'>▁</span>",
@@ -185,7 +186,7 @@
     "on-click": "reboot"
   },
   "custom/power": {
-    "format": "",
+    "format": "󰐥",
     "tooltip": false,
     "on-click": "shutdown now"
   }
