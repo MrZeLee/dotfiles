@@ -4,7 +4,7 @@
     "group/group-power",
     "custom/icon-split-left",
     "hyprland/workspaces",
-    "custom/icon-right"
+    "custom/icon-right-outer"
   ],
   "modules-center": [
     "custom/icon-left",
@@ -15,6 +15,8 @@
     "custom/icon-left",
     "idle_inhibitor",
     "custom/icon-split",
+    "custom/toggle_notifications",
+    "custom/icon-split",
     "network",
     "custom/icon-split",
     "memory",
@@ -24,6 +26,13 @@
     "wireplumber",
     "custom/icon-right-outer"
   ],
+  "custom/toggle_notifications": {
+    "exec-if": "command -v makoctl",
+    "exec": "( makoctl mode | grep do-not-disturb >/dev/null && echo '\nDND active\nnone' ) || echo '\nDND not active\nnone' ",
+    "format": "{}",
+    "on-click": "makoctl mode -t do-not-disturb",
+    "interval": 3
+  },
   "idle_inhibitor": {
     "format": "{icon}",
     "interval": 1,
@@ -36,9 +45,26 @@
   "clock": {
     "interval": 1,
     "tooltip": true,
+    "rotate": 0,
     "format": "{:%H:%M:%S}",
     "max-length": 25,
-    "tooltip-format": "{:%Y-%m-%d}"
+    "locale": "en_US.UTF-8",
+    "tooltip-format": "<tt><small>{calendar}</small></tt>",
+    "calendar": {
+      "mode": "month",
+      "mode-mon-col": 4,
+      "format": {
+        "months": "<span color='#ffead3'><b>{}</b></span>",
+        "days": "<span color='#ecc6d9'><b>{}</b></span>",
+        "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+        "today": "<span color='#ff6699'><b><u>{}</u></b></span>"
+      }
+    },
+    "actions": {
+      "on-click-right": "mode",
+      "on-scroll-up": "shift_up",
+      "on-scroll-down": "shift_down"
+    }
   },
   "hyprland/workspaces": {
     "format": "{icon} {windows}",
