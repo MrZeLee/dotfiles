@@ -99,12 +99,10 @@ in
     enable = true; # enable Hyprland
     # withUWSM = true; # recommended for most users
     xwayland.enable = true; # Xwayland can be disabled.
-    package = unstable.hyprland.override {
+    package = pkgs.hyprland.override {
       withSystemd = false;
+      debug = false;
     };
-    # package = unstable.hyprland.override {
-    #   debug = true;
-    # };
   };
 
   # programs.hyprlock.enable = true;
@@ -152,9 +150,9 @@ in
     swaybg
     sway-audio-idle-inhibit
     hyprlandPlugins.csgo-vulkan-fix
+    hyprlandPlugins.hy3
     pavucontrol #GUI to control audio
   ] ++ [
-    unstable.hyprlandPlugins.hy3
     customWaypaper
     customSwww
     pkgs.lz4 # for swww animations
@@ -162,7 +160,7 @@ in
 
   environment.sessionVariables = {
     HYPRLAND_CSGO_VULKAN_FIX = "${pkgs.hyprlandPlugins.csgo-vulkan-fix}";
-    HYPRLAND_HY3 = "${unstable.hyprlandPlugins.hy3}";
+    HYPRLAND_HY3 = "${pkgs.hyprlandPlugins.hy3}";
     HYPRLAND_HOST = "nixos";
     # DBUS_FOLDER = "${pkgs.dbus}";
     # SWAY = "${pkgs.sway}";
