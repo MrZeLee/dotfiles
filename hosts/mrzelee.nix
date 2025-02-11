@@ -115,6 +115,8 @@ let
   hyprctl = "${lib.getExe' pkgs.hyprland "hyprctl"} -i 0";
   # powerprofilesctl = lib.getExe pkgs.power-profiles-daemon;
   notify-send = lib.getExe pkgs.libnotify;
+  makoctl = lib.getExe pkgs.mako;
+  swww = lib.getExe pkgs.swww;
 
   startScript = writeDash "gamemode-start" ''
     ${hyprctl} --batch "\
@@ -127,10 +129,17 @@ let
       keyword decoration:rounding 0;\
       keyword input:kb_layout us_intl_dead_grave_and_dead_tilde_LSGT;\
       keyword input:kb_options caps:none"
+    ${hyprctl} --batch "\
+      keyword monitor desc:ASUSTek COMPUTER INC ASUS VG279Q1A 0x0000AEB1,1920x1080@165.00Hz,0x0,1,transform,0;\
+      keyword monitor desc:LG Electronics LG HDR WQHD 0x0008CD21,disable"
+    ${swww} kill &> /dev/null
     ${notify-send} -u low -a 'Gamemode' 'Optimizations activated'
+    ${pkgs.mako}/bin/makoctl mode -a 'do-not-disturb'
   '';
   endScript = writeDash "gamemode-end" ''
     ${hyprctl} reload
+    ${pkgs.swww}/bin/swww-daemon
+    ${pkgs.mako}/bin/makoctl mode -r 'do-not-disturb'
     ${notify-send} -u low -a 'Gamemode' 'Optimizations deactivated'
   '';
 
