@@ -7,5 +7,5 @@ if pgrep -fx "$WAYBAR_CMD" >/dev/null; then
     pkill -fx "$WAYBAR_CMD"
 else
     # Waybar is not running, so launch it
-    $WAYBAR_CMD &
+    $WAYBAR_CMD | tee -a /tmp/waybar.log &
 fi
