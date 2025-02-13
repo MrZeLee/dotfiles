@@ -179,6 +179,10 @@ in
   hardware.nvidia = {
 
     prime = {
+      # offload = {
+      #   enable = true;
+      #   enableOffloadCmd = true;
+      # };
       sync.enable = true;
 
       intelBusId = "PCI:0:2:0";
@@ -217,6 +221,10 @@ in
   hardware.nvidia-container-toolkit.enable = true;
 
   networking.hostName = "nixos-laptop"; # Define your hostname.
+
+  powerManagement = {
+    enable = true;
+  };
 
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -266,29 +274,6 @@ in
   ]);
 
   programs.dconf.enable = true;
-
-
-  # Disable powermanagement
-  powerManagement.enable = false;
-
-  # # Remaps keyboard keys
-  # services.evremap = {
-  #   enable = true;
-  #   settings = {
-  #     device_name = "ASUSTeK ROG FALCHION";
-  #     dual_role = [
-  #                   {
-  #                     hold = [
-  #                       "KEY_ESC"
-  #                     ];
-  #                     input = "KEY_CAPSLOCK";
-  #                     tap = [
-  #                       "KEY_ESC"
-  #                     ];
-  #                   }
-  #                 ];
-  #   };
-  # };
 
   # Configure console keymap
   console.keyMap = "us";
