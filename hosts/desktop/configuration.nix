@@ -141,6 +141,7 @@ in
     egl-wayland # For EGL and Wayland compatibility
     waybar # for hyprland
     fuzzel # to search and launch apps
+    kitty
     # nautilus # file manager (removed to try nemo)
     gnumake
     grim # screenshot functionality
@@ -154,18 +155,22 @@ in
     hyprlandPlugins.csgo-vulkan-fix
     hyprlandPlugins.hy3
     pavucontrol #GUI to control audio
+    adwaita-icon-theme # cursor theme
   ] ++ [
     customWaypaper
     customSwww
     pkgs.lz4 # for swww animations
+    (pkgs.catppuccin-sddm.override {
+            flavor = "mocha";
+          })
   ];
 
   environment.sessionVariables = {
     HYPRLAND_CSGO_VULKAN_FIX = "${pkgs.hyprlandPlugins.csgo-vulkan-fix}";
     HYPRLAND_HY3 = "${pkgs.hyprlandPlugins.hy3}";
     HYPRLAND_HOST = "nixos";
-    LIBVA_DRIVER_NAME = "nvidia";
-    __EGL_VENDOR_LIBRARY_FILENAMES = "/run/opengl-driver/share/glvnd/egl_vendor.d/10_nvidia.json";
+    # LIBVA_DRIVER_NAME = "nvidia";
+    # __EGL_VENDOR_LIBRARY_FILENAMES = "/run/opengl-driver/share/glvnd/egl_vendor.d/10_nvidia.json";
   };
 
   xdg.portal = {
@@ -174,30 +179,40 @@ in
   };
 
   # Enable the X11 windowing system.
-  services.xserver = {
-    enable = true;
-    # Load nvidia driver for Xorg and Wayland
-    videoDrivers = lib.mkForce [ "nvidia" ];
-    displayManager = {
-      gdm = {
-        enable = true;
-        wayland = true;
-        autoSuspend = false;
-        settings = {
-          greeter = {
-            IncludeAll = false;
-          };
-        };
+  services = {
+    libinput = {
+      mouse.accelProfile = "flat";
+      touchpad.accelProfile = "flat";
+    };
+    xserver = {
+      enable = true;
+      # Load nvidia driver for Xorg and Wayland
+      videoDrivers = [ "nvidia" ];
+      xkb = {
+        layout = "us";
+        variant = "intl";
+        model = "pc105";
       };
     };
-    xkb = {
-      layout = "us";
-      variant = "intl";
-      model = "pc105";
+    displayManager = {
+      sddm = {
+        enable = true;
+        wayland.enable = true;
+        package = pkgs.kdePackages.sddm;
+        theme = "catppuccin-mocha";
+      };
+      defaultSession = "hyprland";
     };
   };
   
   hardware.nvidia = {
+
+    prime = {
+      sync.enable = true;
+
+      intelBusId = "PCI:0:2:0";
+      nvidiaBusId = "PCI:1:0:0";
+    };
 
     # Modesetting is required.
     modesetting.enable = true;
@@ -281,8 +296,6 @@ in
 
   programs.dconf.enable = true;
 
-  # Set Mouse accelaration Profile
-  services.libinput.mouse.accelProfile = "flat";
 
   # Disable powermanagement
   powerManagement.enable = false;

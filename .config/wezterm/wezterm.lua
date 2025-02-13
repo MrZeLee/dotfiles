@@ -1,25 +1,9 @@
 local wezterm = require 'wezterm'
 
--- local xcursor_size = nil
--- local xcursor_theme = nil
-
--- local success, stdout, stderr = wezterm.run_child_process({"gsettings", "get", "org.gnome.desktop.interface", "cursor-theme"})
--- if success then
---   xcursor_theme = stdout:gsub("'(.+)'\n", "%1")
--- end
--- 
--- local success, stdout, stderr = wezterm.run_child_process({"gsettings", "get", "org.gnome.desktop.interface", "cursor-size"})
--- if success then
---   xcursor_size = tonumber(stdout)
--- end
-
--- Determine the OS
 local target_triple = wezterm.target_triple
 local is_linux = target_triple:find("linux") ~= nil
 local is_macos = target_triple:find("darwin") ~= nil
--- local is_windows = target_triple:find("windows") ~= nil
 
--- Base configuration
 local config = {
   -- Spawn a zsh shell in login mode
   default_prog = { '/run/current-system/sw/bin/zsh' },
@@ -70,17 +54,16 @@ local config = {
   use_fancy_tab_bar = false,
   enable_tab_bar = false,
 
-  front_end = "WebGpu",
   enable_wayland = true,
 }
 
--- OS-specific configurations
+
 if is_linux then
   config.window_decorations = "NONE"
   config.font_size = 12.0
   config.mux_enable_ssh_agent = false
 elseif is_macos then
   config.font_size = 14.0
+  config.front_end = true
 end
-
 return config

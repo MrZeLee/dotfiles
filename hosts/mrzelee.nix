@@ -108,6 +108,12 @@ let
     };
   };
 
+  qt = {
+    enable = true;
+    style = "adwaita-dark";
+    platformTheme = "kde";
+  };
+
   nix-gaming = import (builtins.fetchTarball "https://github.com/fufexan/nix-gaming/archive/master.tar.gz");
 
   inherit (pkgs.writers) writeDash;
