@@ -70,6 +70,8 @@ in
     # disable the boot lines
     "quiet"
     "splash"
+
+    "nvidia.NVreg_EnableGpuFirmware=0"
   ];
 
   nixpkgs.config.nvidia.acceptLicense = true;
@@ -128,7 +130,7 @@ in
     enable = true;
     enable32Bit = true;
     # Still don't know if it is doing anything
-    # extraPackages = with pkgs; [ nvidia-vaapi-driver ];
+    extraPackages = with pkgs; [ nvidia-vaapi-driver ];
   };
 
   programs.gamemode.enable = true;
@@ -162,10 +164,8 @@ in
     HYPRLAND_CSGO_VULKAN_FIX = "${pkgs.hyprlandPlugins.csgo-vulkan-fix}";
     HYPRLAND_HY3 = "${pkgs.hyprlandPlugins.hy3}";
     HYPRLAND_HOST = "nixos";
-    # DBUS_FOLDER = "${pkgs.dbus}";
-    # SWAY = "${pkgs.sway}";
-    # LIBVA_DRIVER_NAME = "nvidia";
-    # __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+    LIBVA_DRIVER_NAME = "nvidia";
+    __EGL_VENDOR_LIBRARY_FILENAMES = "/run/opengl-driver/share/glvnd/egl_vendor.d/10_nvidia.json";
   };
 
   xdg.portal = {
@@ -177,7 +177,7 @@ in
   services.xserver = {
     enable = true;
     # Load nvidia driver for Xorg and Wayland
-    videoDrivers = [ "nvidia" ];
+    videoDrivers = lib.mkForce [ "nvidia" ];
     displayManager = {
       gdm = {
         enable = true;
@@ -202,8 +202,6 @@ in
     # Modesetting is required.
     modesetting.enable = true;
 
-    prime.nvidiaBusId = "PCI:1:0:0";
-
     # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
     # Enable this if you have graphical corruption issues or application crashes after waking
     # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead 
@@ -221,7 +219,7 @@ in
     # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus 
     # Only available from driver 515.43.04+
     # Currently alpha-quality/buggy, so false is currently the recommended setting.
-    open = false;
+    open = true;
 
     # Enable the Nvidia settings menu,
 	# accessible via `nvidia-settings`.

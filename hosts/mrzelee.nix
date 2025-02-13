@@ -129,9 +129,6 @@ let
       keyword decoration:rounding 0;\
       keyword input:kb_layout us_intl_dead_grave_and_dead_tilde_LSGT;\
       keyword input:kb_options caps:none"
-    ${hyprctl} --batch "\
-      keyword monitor desc:ASUSTek COMPUTER INC ASUS VG279Q1A 0x0000AEB1,1920x1080@165.00Hz,0x0,1,transform,0;\
-      keyword monitor desc:LG Electronics LG HDR WQHD 0x0008CD21,disable"
     ${swww} kill &> /dev/null
     ${notify-send} -u low -a 'Gamemode' 'Optimizations activated'
     ${pkgs.mako}/bin/makoctl mode -a 'do-not-disturb'
@@ -189,9 +186,10 @@ in
     enable = true;
     remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-    gamescopeSession.enable = true;
-    extest.enable = true;
+    gamescopeSession.enable = false;
+    extest.enable = false;
     protontricks.enable = true;
+    package = pkgs.steam.override { extraLibraries = pkgs: [ pkgs.gperftools ]; };
   };
 
   programs.gamescope = {
