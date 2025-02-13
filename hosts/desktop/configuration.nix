@@ -168,7 +168,7 @@ in
   environment.sessionVariables = {
     HYPRLAND_CSGO_VULKAN_FIX = "${pkgs.hyprlandPlugins.csgo-vulkan-fix}";
     HYPRLAND_HY3 = "${pkgs.hyprlandPlugins.hy3}";
-    HYPRLAND_HOST = "nixos";
+    HYPRLAND_HOST = "${config.networking.hostName}";
     # LIBVA_DRIVER_NAME = "nvidia";
     # __EGL_VENDOR_LIBRARY_FILENAMES = "/run/opengl-driver/share/glvnd/egl_vendor.d/10_nvidia.json";
   };

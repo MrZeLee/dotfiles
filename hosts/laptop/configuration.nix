@@ -45,7 +45,7 @@ in
     "splash"
   ];
 
-    nixpkgs.config.nvidia.acceptLicense = true;
+  nixpkgs.config.nvidia.acceptLicense = true;
 
   # Udev rule for NVIDIA device nodes
   # services.udev.extraRules = ''
@@ -74,10 +74,8 @@ in
     xwayland.enable = true; # Xwayland can be disabled.
     package = pkgs.hyprland.override {
       withSystemd = false;
+      debug = false;
     };
-    # package = unstable.hyprland.override {
-    #   debug = true;
-    # };
   };
 
   # programs.hyprlock.enable = true;
@@ -102,6 +100,8 @@ in
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
+    # Still don't know if it is doing anything
+    extraPackages = with pkgs; [ nvidia-vaapi-driver ];
   };
 
   programs.gamemode.enable = true;
@@ -112,6 +112,7 @@ in
     egl-wayland # For EGL and Wayland compatibility
     waybar # for hyprland
     fuzzel # to search and launch apps
+    kitty
     # nautilus # file manager (removed to try nemo)
     gnumake
     grim # screenshot functionality
@@ -125,20 +126,22 @@ in
     hyprlandPlugins.csgo-vulkan-fix
     hyprlandPlugins.hy3
     pavucontrol #GUI to control audio
+    adwaita-icon-theme # cursor theme
   ] ++ [
     customWaypaper
     customSwww
     pkgs.lz4 # for swww animations
+    (pkgs.catppuccin-sddm.override {
+            flavor = "mocha";
+          })
   ];
 
   environment.sessionVariables = {
     HYPRLAND_CSGO_VULKAN_FIX = "${pkgs.hyprlandPlugins.csgo-vulkan-fix}";
     HYPRLAND_HY3 = "${pkgs.hyprlandPlugins.hy3}";
-    HYPRLAND_HOST = "nixos-laptop";
-    # DBUS_FOLDER = "${pkgs.dbus}";
-    # SWAY = "${pkgs.sway}";
+    HYPRLAND_HOST = "${config.networking.hostName}";
     # LIBVA_DRIVER_NAME = "nvidia";
-    # __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+    # __EGL_VENDOR_LIBRARY_FILENAMES = "/run/opengl-driver/share/glvnd/egl_vendor.d/10_nvidia.json";
   };
 
   xdg.portal = {
@@ -147,27 +150,29 @@ in
   };
 
   # Enable the X11 windowing system.
-  services.xserver = {
-    enable = true;
-    # Load nvidia driver for Xorg and Wayland
-    # services.xserver.videoDrivers = [ "nvidia" "modesetting" ];
-    videoDrivers = [ "nvidia" ];
-    displayManager = {
-      gdm = {
-        enable = true;
-        wayland = true;
-        autoSuspend = false;
-        settings = {
-          greeter = {
-            IncludeAll = false;
-          };
-        };
+  services = {
+    libinput = {
+      mouse.accelProfile = "flat";
+      touchpad.accelProfile = "flat";
+    };
+    xserver = {
+      enable = true;
+      # Load nvidia driver for Xorg and Wayland
+      videoDrivers = [ "nvidia" ];
+      xkb = {
+        layout = "us";
+        variant = "intl";
+        model = "pc105";
       };
     };
-    xkb = {
-      layout = "us";
-      variant = "intl";
-      model = "pc105";
+    displayManager = {
+      sddm = {
+        enable = true;
+        wayland.enable = true;
+        package = pkgs.kdePackages.sddm;
+        theme = "catppuccin-mocha";
+      };
+      defaultSession = "hyprland";
     };
   };
   
@@ -193,7 +198,7 @@ in
     # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus 
     # Only available from driver 515.43.04+
     # Currently alpha-quality/buggy, so false is currently the recommended setting.
-    open = false;
+    open = true;
 
     # Enable the Nvidia settings menu,
 	# accessible via `nvidia-settings`.
@@ -255,8 +260,6 @@ in
 
   programs.dconf.enable = true;
 
-  # Set Mouse accelaration Profile
-  services.libinput.mouse.accelProfile = "flat";
 
   # Disable powermanagement
   powerManagement.enable = false;
