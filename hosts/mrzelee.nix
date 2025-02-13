@@ -445,6 +445,11 @@ in
     enable = true;
     preferencesStatus = "default";
     preferences = {
+      "media.ffmpeg.vaapi.enabled" = true;
+      "media.rdd-fmmpeg.enabled" = true;
+      "media.av1.enabled" = false;
+      "widget.dmabuf.force-enabled" = true;
+
       "browser.preferences.defaultPerformanceSettings.enabled" = false;
       "browser.translations.automaticallyPopup" = false;
       "signon.rememberSignons" = false;
