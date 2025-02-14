@@ -46,32 +46,32 @@ in
     "iommu=pt" # Enables IOMMU in pass-through mode, reducing virtualization overhead and ensuring optimal PCIe device performance.
 
     # NVMe and Storage
-    "nvme_core.default_ps_max_latency_us=0" # Disables NVMe power-saving modes that can cause latency issues.
-    "ahci.mobile_lpm_policy=1" # Reduces power management aggressiveness for SATA AHCI, which may prevent disk disconnects.
-
-    # Intel CPU Features
-    "nosmt=off" # Ensure hyper-threading (SMT) is enabled unless explicitly disabled for security.
-    "intel_iommu=on" # Enables Intel's IOMMU for better PCIe device handling, particularly useful for virtualization or PCIe passthrough.
-    "idle=nomwait" # Prevents the CPU from entering deep C-states that might cause compatibility issues on some motherboards.
-
-    # PCI and Interrupt Handling
-    "pcie_aspm=off"
-    "pci=realloc"
-    "pcie_ports=native"
-    ## "pci=nomsi"
-    "pci=nommconf"
-    "pci=noaer"
-
-    # ACPI and Power Management
-    "acpi=force"
-    "acpi_enforce_resources=lax"
-    "turbostat=1"
+    # "nvme_core.default_ps_max_latency_us=0" # Disables NVMe power-saving modes that can cause latency issues.
+    # "ahci.mobile_lpm_policy=1" # Reduces power management aggressiveness for SATA AHCI, which may prevent disk disconnects.
+    #
+    # # Intel CPU Features
+    # "nosmt=off" # Ensure hyper-threading (SMT) is enabled unless explicitly disabled for security.
+    # "intel_iommu=on" # Enables Intel's IOMMU for better PCIe device handling, particularly useful for virtualization or PCIe passthrough.
+    # "idle=nomwait" # Prevents the CPU from entering deep C-states that might cause compatibility issues on some motherboards.
+    #
+    # # PCI and Interrupt Handling
+    # "pcie_aspm=off"
+    # "pci=realloc"
+    # "pcie_ports=native"
+    # ## "pci=nomsi"
+    # "pci=nommconf"
+    # "pci=noaer"
+    #
+    # # ACPI and Power Management
+    # "acpi=force"
+    # "acpi_enforce_resources=lax"
+    # "turbostat=1"
 
     # disable the boot lines
     "quiet"
     "splash"
 
-    "nvidia.NVreg_EnableGpuFirmware=0"
+    # "nvidia.NVreg_EnableGpuFirmware=0"
   ];
 
   nixpkgs.config.nvidia.acceptLicense = true;
