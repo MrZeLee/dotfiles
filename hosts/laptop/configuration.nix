@@ -161,6 +161,7 @@ in
     libinput = {
       mouse.accelProfile = "flat";
       touchpad.accelProfile = "flat";
+      touchpad.naturalScrolling = true;
     };
     xserver = {
       enable = true;
