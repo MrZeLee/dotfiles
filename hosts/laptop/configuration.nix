@@ -20,7 +20,6 @@ let
     inherit (pkgs) lib fetchFromGitHub rustPlatform pkg-config lz4 libxkbcommon installShellFiles scdoc;
   };
 in
-
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -35,7 +34,7 @@ in
   boot.loader.systemd-boot.configurationLimit = 2; # Keep only the last two configurations
 
 
-    boot.kernelParams = [
+  boot.kernelParams = [
     # General Performance Optimization
     "intel_pstate=active" # Ensures the Intel-specific CPU frequency scaling driver is used for better performance
     "iommu=pt" # Enables IOMMU in pass-through mode, reducing virtualization overhead and ensuring optimal PCIe device performance.
@@ -110,7 +109,15 @@ in
   # Additional NVIDIA Packages
   environment.systemPackages = with pkgs; [
     egl-wayland # For EGL and Wayland compatibility
-    waybar # for hyprland
+    (waybar.overrideAttrs (oldAttrs: {
+      patches = (oldAttrs.patches or []) ++ [
+        (fetchpatch {
+          name = "fix-IPC";
+          url = "https://github.com/Alexays/Waybar/commit/dacecb9b265c1c7c36ee43d17526fa95f4e6596f.patch";
+          hash = "sha256-9JU4Bw1VXr+3zniF/D1blu2ef9/nb5Q6oKfoxmJ+eQw=";
+        })
+      ];
+    })) # for hyprland
     fuzzel # to search and launch apps
     kitty
     # nautilus # file manager (removed to try nemo)
@@ -132,8 +139,8 @@ in
     customSwww
     pkgs.lz4 # for swww animations
     (pkgs.catppuccin-sddm.override {
-            flavor = "mocha";
-          })
+      flavor = "mocha";
+    })
   ];
 
   environment.sessionVariables = {
@@ -179,10 +186,6 @@ in
   hardware.nvidia = {
 
     prime = {
-      # offload = {
-      #   enable = true;
-      #   enableOffloadCmd = true;
-      # };
       sync.enable = true;
 
       intelBusId = "PCI:0:2:0";
@@ -221,10 +224,6 @@ in
   hardware.nvidia-container-toolkit.enable = true;
 
   networking.hostName = "nixos-laptop"; # Define your hostname.
-
-  powerManagement = {
-    enable = true;
-  };
 
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -274,6 +273,29 @@ in
   ]);
 
   programs.dconf.enable = true;
+
+
+  # Disable powermanagement
+  powerManagement.enable = false;
+
+  # # Remaps keyboard keys
+  # services.evremap = {
+  #   enable = true;
+  #   settings = {
+  #     device_name = "ASUSTeK ROG FALCHION";
+  #     dual_role = [
+  #                   {
+  #                     hold = [
+  #                       "KEY_ESC"
+  #                     ];
+  #                     input = "KEY_CAPSLOCK";
+  #                     tap = [
+  #                       "KEY_ESC"
+  #                     ];
+  #                   }
+  #                 ];
+  #   };
+  # };
 
   # Configure console keymap
   console.keyMap = "us";

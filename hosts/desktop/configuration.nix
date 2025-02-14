@@ -139,7 +139,15 @@ in
   # Additional NVIDIA Packages
   environment.systemPackages = with pkgs; [
     egl-wayland # For EGL and Wayland compatibility
-    waybar # for hyprland
+    (waybar.overrideAttrs (oldAttrs: {
+      patches = (oldAttrs.patches or []) ++ [
+        (fetchpatch {
+          name = "fix-IPC";
+          url = "https://github.com/Alexays/Waybar/commit/dacecb9b265c1c7c36ee43d17526fa95f4e6596f.patch";
+          hash = "sha256-9JU4Bw1VXr+3zniF/D1blu2ef9/nb5Q6oKfoxmJ+eQw=";
+        })
+      ];
+    })) # for hyprland
     fuzzel # to search and launch apps
     kitty
     # nautilus # file manager (removed to try nemo)
@@ -161,8 +169,8 @@ in
     customSwww
     pkgs.lz4 # for swww animations
     (pkgs.catppuccin-sddm.override {
-            flavor = "mocha";
-          })
+      flavor = "mocha";
+    })
   ];
 
   environment.sessionVariables = {
