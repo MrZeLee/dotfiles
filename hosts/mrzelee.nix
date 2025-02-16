@@ -174,7 +174,7 @@ in
 
   systemd.user.services.noisetorch = {
     description = "Noisetorch Noise Cancelling";
-    after = ["wireplumber.service"];
+    after = [ "wireplumber.service" ];
 
     serviceConfig = {
       Type = "simple";
@@ -185,7 +185,7 @@ in
     };
 
     wantedBy = [
-        "default.target"
+      "default.target"
     ];
   };
 
@@ -231,7 +231,7 @@ in
   users.users.mrzelee = {
     isNormalUser = true;
     description = "MrZeLee";
-    extraGroups = [ "networkmanager" "wheel" "video" "render" "input" "uinput" "gamemode"];
+    extraGroups = [ "networkmanager" "wheel" "video" "render" "input" "uinput" "gamemode" ];
     home = "/home/mrzelee";
     createHome = true;
     shell = pkgs.zsh;
@@ -337,6 +337,10 @@ in
       gzip
       gnutar # bash sh
       ## Mason Languages
+      ###Formatters
+      beautysh
+      stylua
+
       go
       php83
       php83Packages.composer
@@ -358,6 +362,7 @@ in
       ripgrep
       fd
       ## VimTex
+      pstree
       xdotool
 
       # Yazi
