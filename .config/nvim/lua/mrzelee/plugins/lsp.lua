@@ -6,16 +6,22 @@ return {
     dependencies = {
       {
         "williamboman/mason.nvim",
-        tag = 'v1.10.0',
+        tag = 'v1.11.0',
       },
       {
         "williamboman/mason-lspconfig.nvim",
-        tag = 'v1.31.0',
+        tag = 'v1.32.0',
       },
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/nvim-cmp",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
+      {
+        "stevearc/conform.nvim",
+        tag = 'v9.0.0',
+        lazy = true,
+      },
+      "zapling/mason-conform.nvim",
     },
 
     config = function()
@@ -36,12 +42,22 @@ return {
         "jdtls",
         "rnix",
         "jsonls",
-        "bashls"
+        "bashls",
+      }
+
+      local not_lsp_nix = {
+        "lua_ls",
+        "marksman",
+      }
+
+      local not_formatter_nix = {
+        "beautysh",
+        "stylua",
       }
 
       if not is_nixos() then
-        table.insert(ensure_installed, "lua_ls")
-        table.insert(ensure_installed, "marksman")
+        vim.list_extend(ensure_installed, not_lsp_nix)
+        not_formatter_nix = {}
       end
 
       require("mason").setup()
@@ -52,18 +68,13 @@ return {
             if is_nixos() then
               -- NixOS-specific setup
               if server_name == "lua_ls" then
-                require("lspconfig").lua_ls.setup {
+                require("lspconfig")[server_name].setup {
                   cmd = { "lua-language-server" }, -- Ensure Nix-installed binary is used
                 }
-              elseif server_name == "marksman" then
-                require("lspconfig").marksman.setup {
-                  cmd = { "marksman" },
+              elseif vim.tbl_contains(not_lsp_nix, server_name) then
+                require("lspconfig")[server_name].setup {
+                  cmd = { server_name },
                 }
-                -- elseif server_name == "sss" then
-                --     -- Custom setup for "sss" on NixOS
-                --     require("lspconfig").sss.setup {
-                --         cmd = { "path/to/sss" }, -- Adjust for NixOS-specific path
-                --     }
               else
                 -- Default setup for other servers on NixOS
                 require("lspconfig")[server_name].setup {}
@@ -164,7 +175,7 @@ return {
             unpack(opts)
           })
           vim.keymap.set({ 'n', 'x' }, '<F3>', function()
-            vim.lsp.buf.format({ async = true })
+            require("conform").format({ async = true })
           end, {
             desc = "Format code",
             unpack(opts)
@@ -176,9 +187,8 @@ return {
             desc = "Show signature help",
             unpack(opts)
           })
-
           vim.keymap.set({ 'n', 'x' }, 'gq', function()
-            vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
+            require("conform").format({ async = false, timeout_ms = 10000 })
           end, {
             desc = "Format the file",
             unpack(opts)
@@ -203,6 +213,34 @@ return {
         { "gr",         desc = "Show references" },
         { "gs",         desc = "Show signature help" },
         { "gq",         desc = "Format the file" },
+      })
+
+      require("conform").setup({
+        formatters_by_ft = {
+          lua = { "stylua" },
+          python = { "isort", "black" },
+          javascript = { "prettierd", "prettier" },
+          typescript = { "prettierd", "prettier" },
+          json = { "prettierd", "prettier" },
+          yaml = { "prettierd", "prettier" },
+          markdown = { "prettierd", "prettier" },
+          rust = { "rustfmt" },
+          sh = { "beautysh" },
+        },
+        formatters = {
+          beautysh = {
+            prepend_args = { "-i", vim.opt.shiftwidth:get() },
+          },
+        },
+        -- format_on_save = {
+        --   timeout_ms = 500,
+        --   lsp_fallback = true,
+        -- },
+      })
+
+
+      require("mason-conform").setup({
+        ignore_install = not_formatter_nix -- List of formatters to ignore during install
       })
 
       local cmp = require('cmp')

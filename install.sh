@@ -50,9 +50,9 @@ else
 fi
 
 if [[ "$OS_TYPE" == "Linux" ]]; then
-	SED_OPTION="-i=''"
+  SED_OPTION="-i=''"
 elif [[ "$OS_TYPE" == "Darwin" ]]; then
-	SED_OPTION="-i ''"
+  SED_OPTION="-i ''"
 fi
 
 # Check if com.apple.HIToolbox.plist differs between $HOME/.dotfiles and $HOME/Library/Preferences

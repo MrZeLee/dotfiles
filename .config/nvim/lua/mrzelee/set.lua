@@ -13,7 +13,7 @@ vim.opt.mouse = ""
 vim.opt.guicursor = ""
 
 vim.opt.nu = true
-vim.opt.relativenumber= true
+vim.opt.relativenumber = true
 
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
@@ -46,12 +46,12 @@ vim.opt.colorcolumn = "0"
 vim.opt.textwidth = 160
 
 vim.api.nvim_create_autocmd("VimEnter", {
-    callback = function()
-        vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20"
-    end,
+  callback = function()
+    vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20"
+  end,
 })
 
 local servername = vim.v.servername
 if servername == '' and vim.fn.exists('*remote_startserver') ~= 0 then
-    vim.fn.remote_startserver('VIM')
+  vim.fn.remote_startserver('VIM')
 end
