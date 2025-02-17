@@ -338,8 +338,8 @@ in
       gnutar # bash sh
       ## Mason Languages
       ###Formatters
-      beautysh
       stylua
+      prettierd
 
       go
       php83
