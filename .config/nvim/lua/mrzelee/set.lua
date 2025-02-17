@@ -19,13 +19,16 @@ vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
 
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = "markdown",
-  callback = function()
-    vim.opt.tabstop = 2
-    vim.opt.softtabstop = 2
-    vim.opt.shiftwidth = 2
-  end,
+	pattern = "markdown",
+	callback = function()
+		vim.opt.tabstop = 2
+		vim.opt.softtabstop = 2
+		vim.opt.shiftwidth = 2
+	end,
 })
 
 vim.opt.expandtab = true
@@ -56,12 +59,12 @@ vim.opt.colorcolumn = "0"
 vim.opt.textwidth = 160
 
 vim.api.nvim_create_autocmd("VimEnter", {
-  callback = function()
-    vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20"
-  end,
+	callback = function()
+		vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20"
+	end,
 })
 
 local servername = vim.v.servername
-if servername == '' and vim.fn.exists('*remote_startserver') ~= 0 then
-  vim.fn.remote_startserver('VIM')
+if servername == "" and vim.fn.exists("*remote_startserver") ~= 0 then
+	vim.fn.remote_startserver("VIM")
 end
