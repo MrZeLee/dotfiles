@@ -5,6 +5,7 @@ xkb_symbols "basic" {
   name[Group1]= "English (US, intl., with dead keys and dead_grave and dead_tilde in LSGT key)";
 
   key <LSGT> { [dead_grave, dead_tilde,         grave,       asciitilde ] };
+  key <ESC> { [ Escape ]};
 
 };
 

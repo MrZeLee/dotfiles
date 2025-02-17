@@ -74,6 +74,8 @@ in
     # "nvidia.NVreg_EnableGpuFirmware=0"
   ];
 
+  hardware.cpu.intel.sgx.provision.enable = true;
+
   nixpkgs.config.nvidia.acceptLicense = true;
 
   # Udev rule for NVIDIA device nodes
@@ -211,6 +213,9 @@ in
         theme = "catppuccin-mocha";
       };
       defaultSession = "hyprland";
+    };
+    power-profiles-daemon = {
+      enable = true;
     };
   };
   
