@@ -29,14 +29,22 @@ in
     ];
 
   # Bootloader.
-  boot.loader = {
-    efi.canTouchEfiVariables = true;
-    # systemd-boot.enable = true;
-    grub = {
-      enable = true;
-      devices = [ "nodev" ];
-      efiSupport = true;
-      useOSProber = true;
+  boot = {
+    consoleLogLevel = 0;
+    initrd = {
+      verbose = false;
+      kernelModules = [ "i915" ];
+    };
+    plymouth.enable = true;
+    loader = {
+      efi.canTouchEfiVariables = true;
+      # systemd-boot.enable = true;
+      grub = {
+        enable = true;
+        devices = [ "nodev" ];
+        efiSupport = true;
+        useOSProber = true;
+      };
     };
   };
 
@@ -70,6 +78,11 @@ in
     # disable the boot lines
     "quiet"
     "splash"
+    "boot.shell_on_fail"
+    "i915.fastboot=1"
+    "rd.systemd.show_status=false"
+    "rd.udev.log_level=3"
+    "udev.log_priority=3"
 
     # "nvidia.NVreg_EnableGpuFirmware=0"
   ];

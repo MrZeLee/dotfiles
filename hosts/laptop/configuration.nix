@@ -29,9 +29,21 @@ in
     ];
 
   # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.systemd-boot.configurationLimit = 2; # Keep only the last two configurations
+  boot = {
+    consoleLogLevel = 0;
+    initrd = {
+      verbose = false;
+      kernelModules = [ "i915" ];
+    };
+    plymouth.enable = true;
+    loader = {
+      efi.canTouchEfiVariables = true;
+      systemd-boot = {
+        enable = true;
+        configurationLimit = 2; # Keep only the last two configurations
+      };
+    };
+  };
 
 
   boot.kernelParams = [
@@ -42,6 +54,11 @@ in
     # disable the boot lines
     "quiet"
     "splash"
+    "boot.shell_on_fail"
+    "i915.fastboot=1"
+    "rd.systemd.show_status=false"
+    "rd.udev.log_level=3"
+    "udev.log_priority=3"
   ];
 
   nixpkgs.config.nvidia.acceptLicense = true;
