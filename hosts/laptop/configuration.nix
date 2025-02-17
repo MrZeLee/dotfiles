@@ -199,6 +199,9 @@ in
       };
       defaultSession = "hyprland";
     };
+    power-profiles-daemon = {
+      enable = true;
+    };
   };
   
   hardware.nvidia = {
