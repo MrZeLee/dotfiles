@@ -16,24 +16,24 @@
 
 -- saves commands in file, for easier reading
 function SaveOutputToFile(command, filename)
-    filename = filename or "output.txt"
-    local output = vim.inspect(command)
-    local file = io.open(filename, "w")
-    file:write(output)
-    file:close()
+	filename = filename or "output.txt"
+	local output = vim.inspect(command)
+	local file = io.open(filename, "w")
+	file:write(output)
+	file:close()
 end
 
 function GetBufferList()
-    local buffers = vim.api.nvim_list_bufs()
-    local buffer_list = {}
+	local buffers = vim.api.nvim_list_bufs()
+	local buffer_list = {}
 
-    for _, buf in ipairs(buffers) do
-        if vim.api.nvim_buf_get_option(buf, 'buflisted') then
-            local bufname = vim.api.nvim_buf_get_name(buf)
-            local bufnr = vim.api.nvim_buf_get_number(buf)
-            table.insert(buffer_list, {bufname, bufnr})
-        end
-    end
+	for _, buf in ipairs(buffers) do
+		if vim.api.nvim_buf_get_option(buf, "buflisted") then
+			local bufname = vim.api.nvim_buf_get_name(buf)
+			local bufnr = vim.api.nvim_buf_get_number(buf)
+			table.insert(buffer_list, { bufname, bufnr })
+		end
+	end
 
-    return buffer_list
+	return buffer_list
 end

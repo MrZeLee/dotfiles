@@ -1,4 +1,5 @@
 require("mrzelee.set")
 require("mrzelee.remap")
+require("mrzelee.utils")
 require("mrzelee.lazy")
 require("mrzelee.functions")
