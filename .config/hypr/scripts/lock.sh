@@ -13,7 +13,6 @@ while read -r elem; do
   monitor=$(echo "$elem" | jq -r '.monitor')
   wallpaper=$(echo "$elem" | jq -r '.wallpaper')
 
-  
   # Append the -i argument for swaylock
   swaylock_cmd+=" -i \"$monitor:$wallpaper\""
 done < <(echo "$waypaper_list" | jq -c '.[]')
