@@ -80,6 +80,7 @@
       "class<vesktop> title<(?!.*Discord).+>": "",
       "class<vesktop>": "",
       "class<Spotify>": "",
+      "class<kitty> title<spotify_player>": "",
       "class<waypaper>": "󰸉",
       "kitty": "",
       "wezterm": "",

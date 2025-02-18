@@ -1,25 +1,53 @@
-{ config, pkgs, lib, ... }:
-
-let
-  unstable = import
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
+  unstable =
+    import
     (builtins.fetchTarball https://github.com/nixos/nixpkgs/tarball/nixos-unstable)
     # reuse the current configuration
-    { config = config.nixpkgs.config; };
+    {config = config.nixpkgs.config;};
 
-  mvdPackage = pkgs.callPackage
+  mvdPackage =
+    pkgs.callPackage
     (pkgs.fetchFromGitHub {
       owner = "MrZeLee";
       repo = "mvd";
       rev = "main";
       hash = "sha256-EqWsl3a4ShSf0pTDdblRnfvHf4dkfFB8XCMEw33N0ts=";
     })
-    { };
+    {};
 
   customWezterm = pkgs.callPackage ./custom/wezterm.nix {
-    inherit (pkgs) stdenv rustPlatform lib fetchFromGitHub ncurses perl pkg-config
-      python3 fontconfig installShellFiles openssl libGL libxkbcommon wayland zlib
-      CoreGraphics Cocoa Foundation System libiconv UserNotifications nixosTests
-      runCommand vulkan-loader;
+    inherit
+      (pkgs)
+      stdenv
+      rustPlatform
+      lib
+      fetchFromGitHub
+      ncurses
+      perl
+      pkg-config
+      python3
+      fontconfig
+      installShellFiles
+      openssl
+      libGL
+      libxkbcommon
+      wayland
+      zlib
+      CoreGraphics
+      Cocoa
+      Foundation
+      System
+      libiconv
+      UserNotifications
+      nixosTests
+      runCommand
+      vulkan-loader
+      ;
 
     # Correct X11-related library paths
     libxcb = pkgs.xorg.libxcb;
@@ -43,8 +71,8 @@ let
 
     cargoHash = "sha256-posT6wp33Tj2bisuYsoh/CK9swS+OVju5vgpj4bTrYs="; # Replace with actual cargo hash
 
-    nativeBuildInputs = with pkgs; [ pkg-config cmake ];
-    buildInputs = with pkgs; [ libgit2 openssl ];
+    nativeBuildInputs = with pkgs; [pkg-config cmake];
+    buildInputs = with pkgs; [libgit2 openssl];
 
     meta = with pkgs.lib; {
       description = "A tool to help create conventional git commits";
@@ -75,7 +103,7 @@ let
       sha256 = "sha256-le0+a0uHXn4PnZ2avFXb2lcshjNL6YN4Cm6ReLUSlHs=";
     };
 
-    nativeBuildInputs = [ pkgs.git ];
+    nativeBuildInputs = [pkgs.git];
     # buildInputs = [ pkgs.git ];
 
     buildPhase = ''
@@ -153,9 +181,7 @@ let
     ${makoctl} mode -r 'do-not-disturb'
     ${notify-send} -u low -a 'Gamemode' 'Optimizations deactivated'
   '';
-
-in
-{
+in {
   programs.gamemode = {
     enable = true;
     settings = {
@@ -174,7 +200,7 @@ in
 
   systemd.user.services.noisetorch = {
     description = "Noisetorch Noise Cancelling";
-    after = [ "wireplumber.service" ];
+    after = ["wireplumber.service"];
 
     serviceConfig = {
       Type = "simple";
@@ -203,7 +229,7 @@ in
     gamescopeSession.enable = false;
     extest.enable = false;
     protontricks.enable = true;
-    package = pkgs.steam.override { extraLibraries = pkgs: [ pkgs.gperftools ]; };
+    package = pkgs.steam.override {extraLibraries = pkgs: [pkgs.gperftools];};
   };
 
   programs.gamescope = {
@@ -231,227 +257,238 @@ in
   users.users.mrzelee = {
     isNormalUser = true;
     description = "MrZeLee";
-    extraGroups = [ "networkmanager" "wheel" "video" "render" "input" "uinput" "gamemode" ];
+    extraGroups = ["networkmanager" "wheel" "video" "render" "input" "uinput" "gamemode"];
     home = "/home/mrzelee";
     createHome = true;
     shell = pkgs.zsh;
     useDefaultShell = false;
-    packages = with pkgs; [
-      # thunderbird
-      abook
-      ansible
-      bat
-      brotab
-      (if config.hardware.nvidia.modesetting.enable
-      then btop.override { cudaSupport = true; }
-      else btop)
-      # croc - easy send files to another computer
-      cacert
-      cht-sh
-      cloudflared
-      croc
-      cmake
-      coreutils
-      ddgr #DuckDuckGo from the terminal.
-      eza
-      exiftool #Better ls
-      gh
-      gh-dash
-      glow
-      gnuplot
-      gnupg
-      graphviz
-      gettext
-      home-manager
-      isync
-      k9s #Kubernetes CLI and TUI To Manage Your Clusters In Style!
-      keepassxc
-      kompose
-      kubectl
-      kubernetes-helm
-      kubeseal
-      kubetail
-      kustomize
-      lazygit
-      libgit2
-      libiconv
-      lynx
-      lshw
-      msmtp
-      maven
-      monero-cli
-      moreutils
-      neomutt
-      netcat
-      neofetch
-      notmuch
-      nmap
-      opencommit
-      opentofu
-      (if config.hardware.nvidia.modesetting.enable
-      then ollama-cuda
-      else ollama)
-      # php83
-      pass
-      python312Packages.pylatexenc
-      python312Packages.virtualenv
-      rclone
-      speedtest-cli
-      stow
-      tldr
-      tree
-      tor
-      usbutils
-      urlscan
-      vimv-rs
-      watch
-      yarn
-      yq
-      zoxide
+    packages = with pkgs;
+      [
+        # thunderbird
+        abook
+        ansible
+        bat
+        brotab
+        (
+          if config.hardware.nvidia.modesetting.enable
+          then btop.override {cudaSupport = true;}
+          else btop
+        )
+        # croc - easy send files to another computer
+        cacert
+        cht-sh
+        cloudflared
+        croc
+        cmake
+        coreutils
+        ddgr #DuckDuckGo from the terminal.
+        eza
+        exiftool #Better ls
+        gh
+        gh-dash
+        glow
+        gnuplot
+        gnupg
+        graphviz
+        gettext
+        home-manager
+        isync
+        k9s #Kubernetes CLI and TUI To Manage Your Clusters In Style!
+        keepassxc
+        kompose
+        kubectl
+        kubernetes-helm
+        kubeseal
+        kubetail
+        kustomize
+        lazygit
+        libgit2
+        libiconv
+        lynx
+        lshw
+        msmtp
+        maven
+        monero-cli
+        moreutils
+        neomutt
+        netcat
+        neofetch
+        notmuch
+        nmap
+        opencommit
+        opentofu
+        (
+          if config.hardware.nvidia.modesetting.enable
+          then ollama-cuda
+          else ollama
+        )
+        # php83
+        pass
+        python312Packages.pylatexenc
+        python312Packages.virtualenv
+        rclone
+        speedtest-cli
+        stow
+        tldr
+        tree
+        tor
+        usbutils
+        urlscan
+        vimv-rs
+        watch
+        yarn
+        yq
+        zoxide
 
-      # Nemo file manager
-      nemo-with-extensions
-      gvfs
-      udisks2
-      gphoto2
-      libmtp
-      cinnamon-desktop
-      shared-mime-info
-      xdg-utils
+        # Nemo file manager
+        nemo-with-extensions
+        gvfs
+        udisks2
+        gphoto2
+        libmtp
+        cinnamon-desktop
+        shared-mime-info
+        xdg-utils
 
-      # Git
-      git-lfs
-      tig
+        # Git
+        git-lfs
+        tig
 
-      # Neovim
-      wl-clipboard
-      ## LSP
-      lua-language-server
-      marksman
-      ## img-clip
-      # pngpaste # For MacOs
-      ## Mason Core
-      unzip
-      wget
-      curl
-      gzip
-      gnutar # bash sh
-      ## Mason Languages
-      ###Formatters
-      stylua
-      prettierd
+        # Neovim
+        wl-clipboard
+        ## LSP
+        lua-language-server
+        marksman
+        ## img-clip
+        # pngpaste # For MacOs
+        ## Mason Core
+        unzip
+        wget
+        curl
+        gzip
+        gnutar # bash sh
+        ## Mason Languages
+        ###Formatters
+        stylua
+        prettierd
 
-      go
-      php83
-      php83Packages.composer
-      lua51Packages.lua
-      lua51Packages.luarocks
-      julia_19-bin
-      python312
-      python312Packages.pip
-      pipx
-      rustc
-      cargo
-      nodejs_23
-      zulu23
-      texliveFull
-      ## Treesitter
-      tree-sitter
-      gcc # nodejs_22 git
-      ## Telescope
-      ripgrep
-      fd
-      ## VimTex
-      pstree
-      xdotool
+        go
+        php83
+        php83Packages.composer
+        lua51Packages.lua
+        lua51Packages.luarocks
+        julia_19-bin
+        python312
+        python312Packages.pip
+        pipx
+        rustc
+        cargo
+        nodejs_23
+        zulu23
+        texliveFull
+        ## Treesitter
+        tree-sitter
+        gcc # nodejs_22 git
+        ## Telescope
+        ripgrep
+        fd
+        ## VimTex
+        pstree
+        xdotool
 
-      # Yazi
-      yazi
-      ## dependencies
-      ffmpegthumbnailer
-      p7zip
-      jq
-      poppler
-      fd
-      ripgrep
-      fzf
-      zoxide
-      imagemagick
+        # Yazi
+        yazi
+        ## dependencies
+        ffmpegthumbnailer
+        p7zip
+        jq
+        poppler
+        fd
+        ripgrep
+        fzf
+        zoxide
+        imagemagick
 
-      #Ani-cli
-      ani-cli
-      ## dependencies
-      syncplay
-      gnugrep
-      gnused
-      curl
-      mpv
-      aria2
-      yt-dlp
-      ffmpeg_6-full
-      fzf
-      ani-skip
-      gnupatch #iina - installed with homebrew
+        #Ani-cli
+        ani-cli
+        ## dependencies
+        syncplay
+        gnugrep
+        gnused
+        curl
+        mpv
+        aria2
+        yt-dlp
+        ffmpeg_6-full
+        fzf
+        ani-skip
+        gnupatch #iina - installed with homebrew
 
-      #Go-wall - to create wallpapers
-      gowall
+        #Go-wall - to create wallpapers
+        gowall
 
-      #cargo
-      cargo
-      ## dependencies
-      pkg-config
-      libgit2
-      openssl # clang
+        #cargo
+        cargo
+        ## dependencies
+        pkg-config
+        libgit2
+        openssl # clang
 
-      #to take screenshots
-      grim
-      slurp
-      #swayimg optional
-      giflib
-      libjpeg
-      libjxl
-      libpng
-      librsvg
-      libwebp
-      libheif
-      libavif
-      libtiff
-      libsixel
-      #hyprland optional dependencies
-      bc
-    ] ++ [
-      koji
-      mvdPackage
-      customWezterm
-      fleet-cli
-      # pkgs.wezterm
-      ## Help Wezterm
-      pkgs.mesa
-      pkgs.vulkan-loader
-      pkgs.vulkan-tools
+        #to take screenshots
+        grim
+        slurp
+        #swayimg optional
+        giflib
+        libjpeg
+        libjxl
+        libpng
+        librsvg
+        libwebp
+        libheif
+        libavif
+        libtiff
+        libsixel
+        #hyprland optional dependencies
+        bc
+      ]
+      ++ [
+        koji
+        mvdPackage
+        customWezterm
+        fleet-cli
+        # pkgs.wezterm
+        ## Help Wezterm
+        pkgs.mesa
+        pkgs.vulkan-loader
+        pkgs.vulkan-tools
 
-      # pkgs.discord-canary # krisp not working out of the box
-      pkgs.vesktop
-      pkgs.spotify
+        # pkgs.discord-canary # krisp not working out of the box
+        pkgs.vesktop
+        pkgs.spotify
+        (unstable.spotify-player.override {withAudioBackend = "pulseaudio";})
 
-      pkgs.whatsapp-for-linux
-      unstable.caprine # messenger facebook
-      pkgs.signal-desktop
-      pkgs.telegram-desktop
+        pkgs.whatsapp-for-linux
+        unstable.caprine # messenger facebook
+        pkgs.signal-desktop
+        pkgs.telegram-desktop
 
-      pkgs.qbittorrent
-      pkgs.tor-browser
-      pkgs.zathura
-      pkgs.zoom-us
+        pkgs.qbittorrent
+        pkgs.tor-browser
+        pkgs.zathura
+        pkgs.zoom-us
 
-      pkgs.swayimg
-      pkgs.gimp
+        pkgs.swayimg
+        pkgs.gimp
 
-      pkgs.seahorse
-    ];
+        pkgs.seahorse
+      ];
 
-    openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC2gO7UAKfjRE2uApIneVTMLCpZxL3QkTPTcipAzm3IjTlrjvzvzyXs0+Y0QEFEK9CImH/ZYMBVzb3yJM9o/KeDThbuzfGWP4q18ZVUHvtsPdrNNu/AxUIqhsw+462SGwdju13TnlgXmPfg8bVYHVnJBwXtW/5lZ8lIEZpDHTv2lU3wvOgn3YRVjd8FdfDVGBiad1O6JQEZY7v9BDrg8ynugK4pyt2EViZvaTwQMuZC3EPuDtdrzhCm1oSWPFnA6KEb7musy+0/zR/aV2ewg4Ouy8E69aWiuSV8DPzgVFKT7sj5zEOH8Ouq0AzElQl8XQoJLPHSHFM4qeQE3pAvokFoJAc+I9Wi1ht/PSvZxdiCSAVXT2L9X4G7IN4i4BWaDaEwIFYv9tmxN+DkC6sWWNXNmMSmOJVdisT7GLhvRY70CZgOChg0DBWrcVAynrh6HpRfjQGKi7huHoPxey4YG15+ByKiM25Vi3nRBYwrstsLdVS4SAuoIS4dV8XJ9JVSrFX/fdWRxcjKMcFDgqwzClQ6rmQdqCHkZeTV9CqnehntP3AvVM6xM5bXK4TppJVxE6iJpSBUc01fe0qJLplztYlBeqMZmjdEa/nPjZZMQFE/0TNURI7oCFAGzMgHnxzbLnmSTNjZMi4YpA2BdXREkUh6Cm9UiXAiCjsRoGDaVR0fRw== josel@DESKTOP-JOSE" ];
+    openssh.authorizedKeys.keys = ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC2gO7UAKfjRE2uApIneVTMLCpZxL3QkTPTcipAzm3IjTlrjvzvzyXs0+Y0QEFEK9CImH/ZYMBVzb3yJM9o/KeDThbuzfGWP4q18ZVUHvtsPdrNNu/AxUIqhsw+462SGwdju13TnlgXmPfg8bVYHVnJBwXtW/5lZ8lIEZpDHTv2lU3wvOgn3YRVjd8FdfDVGBiad1O6JQEZY7v9BDrg8ynugK4pyt2EViZvaTwQMuZC3EPuDtdrzhCm1oSWPFnA6KEb7musy+0/zR/aV2ewg4Ouy8E69aWiuSV8DPzgVFKT7sj5zEOH8Ouq0AzElQl8XQoJLPHSHFM4qeQE3pAvokFoJAc+I9Wi1ht/PSvZxdiCSAVXT2L9X4G7IN4i4BWaDaEwIFYv9tmxN+DkC6sWWNXNmMSmOJVdisT7GLhvRY70CZgOChg0DBWrcVAynrh6HpRfjQGKi7huHoPxey4YG15+ByKiM25Vi3nRBYwrstsLdVS4SAuoIS4dV8XJ9JVSrFX/fdWRxcjKMcFDgqwzClQ6rmQdqCHkZeTV9CqnehntP3AvVM6xM5bXK4TppJVxE6iJpSBUc01fe0qJLplztYlBeqMZmjdEa/nPjZZMQFE/0TNURI7oCFAGzMgHnxzbLnmSTNjZMi4YpA2BdXREkUh6Cm9UiXAiCjsRoGDaVR0fRw== josel@DESKTOP-JOSE"];
   };
+
+  #SPOTIFY
+  networking.firewall.allowedUDPPorts = [5353];
+  networking.firewall.allowedTCPPorts = [57621];
 
   # Install firefox.
   programs.firefox = {
@@ -495,13 +532,11 @@ in
   ];
 
   environment.variables.EDITOR = "nvim";
-  environment.shells = [ pkgs.zsh pkgs.bash ];
+  environment.shells = [pkgs.zsh pkgs.bash];
 
   fonts = {
     packages = [
-      (pkgs.nerdfonts.override { fonts = [ "Hack" ]; }) # Only install Hack Nerd Font
+      (pkgs.nerdfonts.override {fonts = ["Hack"];}) # Only install Hack Nerd Font
     ];
   };
-
 }
-
