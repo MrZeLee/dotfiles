@@ -64,6 +64,6 @@ if is_linux then
   config.mux_enable_ssh_agent = false
 elseif is_macos then
   config.font_size = 14.0
-  config.front_end = true
+  -- config.front_end = true
 end
 return config
