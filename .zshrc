@@ -156,9 +156,10 @@ fi
 export XDG_CONFIG_HOME="$HOME/.config"
 
 alias cd='z'
+alias copy='$COPY'
 alias vimdiff='nvim -d'
 
-alias rclone_config='rclone config reconnect GDrive: --auto-confirm'
+alias rclone_config='rclone config reconnect GDrive: --auto-confirm; systemctl --user restart rclone@GDrive.service'
 
 alias vimv='vimv -e nvim'
 # Finished adapting your PATH environment variable for use with MacPorts.

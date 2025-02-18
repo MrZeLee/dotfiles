@@ -55,6 +55,8 @@ local config = {
   enable_tab_bar = false,
 
   enable_wayland = true,
+
+  max_fps = 120,
 }
 
 
