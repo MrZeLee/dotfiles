@@ -100,6 +100,7 @@ end, { nargs = "*" })
 
 return {
   "olimorris/codecompanion.nvim",
+  tag = "v12.5.2",
   dependencies = {
     "nvim-lua/plenary.nvim",
     "nvim-treesitter/nvim-treesitter",

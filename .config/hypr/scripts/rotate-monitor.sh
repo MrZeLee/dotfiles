@@ -27,7 +27,7 @@ direction=${direction:-"clockwise"}
 
 # Function to parse hyprland.conf and create cache
 create_cache() {
-    local config_file="$HOME/.config/hypr/hyprland.conf"
+    local config_file="$HOME/.config/hypr/hyprland/hosts/$HYPRLAND_HOST.conf"
     if [ ! -f "$config_file" ]; then
         echo "Error: hyprland.conf not found at $config_file"
         exit 1
