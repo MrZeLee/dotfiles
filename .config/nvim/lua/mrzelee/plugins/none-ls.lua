@@ -23,8 +23,16 @@ return {
 			"stylua",
 		}
 
-		if not IsNixos() then
+		local not_install_darwin = {
+			"alejandra",
+		}
+
+		if not IsNixos then
 			vim.list_extend(ensure_installed, not_install_nix)
+		end
+
+		if not IsDarwin then
+			vim.list_extend(ensure_installed, not_install_darwin)
 		end
 
 		mason_null_ls.setup({

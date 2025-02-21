@@ -25,7 +25,7 @@ return {
 				"ts_ls",
 				"ansiblels",
 				"jdtls",
-				"rnix",
+				"nil_ls",
 				"jsonls",
 				"bashls",
 			}
@@ -35,7 +35,7 @@ return {
 				"marksman",
 			}
 
-			if not IsNixos() then
+			if not IsNixos then
 				vim.list_extend(ensure_installed, not_install_nix)
 			end
 
@@ -44,7 +44,7 @@ return {
 				ensure_installed = ensure_installed,
 				handlers = {
 					function(server_name)
-						if IsNixos() then
+						if IsNixos then
 							-- NixOS-specific setup
 							if server_name == "lua_ls" then
 								require("lspconfig").lua_ls.setup({
