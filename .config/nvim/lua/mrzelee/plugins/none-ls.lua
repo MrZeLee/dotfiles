@@ -11,7 +11,6 @@ return {
 		local null_ls_utils = require("null-ls.utils")
 
 		local ensure_installed = {
-			"alejandra", -- nix formatter
 			"prettierd", -- prettierd formatter
 			"black", -- python formatter
 			"shfmt", -- sh formatter
