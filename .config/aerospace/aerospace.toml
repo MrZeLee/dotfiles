@@ -19,7 +19,7 @@ after-startup-command = [
 start-at-login = true
 
 # Normalizations. See: https://nikitabobko.github.io/AeroSpace/guide#normalization
-enable-normalization-flatten-containers = true
+enable-normalization-flatten-containers = false
 enable-normalization-opposite-orientation-for-nested-containers = true
 
 # See: https://nikitabobko.github.io/AeroSpace/guide#layouts
@@ -69,6 +69,9 @@ outer.right =      [{monitor."^LG HDR WQHD" = 10}, {monitor."^ASUS VG279Q1A" = 1
 # Fallback value (if you omit the key): mode.main.binding = {}
 [mode.main.binding]
 
+cmd-h = ['exec-and-forget osascript $HOME/.config/aerospace/scripts/minimize_pip.scpt'] # Disable "hide application"
+cmd-alt-h = [] # Disable "hide others"
+
 # All possible keys:
 # - Letters.        a, b, c, ..., z
 # - Numbers.        0, 1, 2, ..., 9
@@ -92,10 +95,14 @@ outer.right =      [{monitor."^LG HDR WQHD" = 10}, {monitor."^ASUS VG279Q1A" = 1
 #     activate
 # end tell'
 # '''
+alt-f = 'fullscreen'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#layout
-alt-slash = 'layout tiles horizontal vertical'
+alt-period = 'layout tiles horizontal vertical'
 alt-comma = 'layout accordion horizontal vertical'
+
+alt-v = 'split vertical'
+alt-b = 'split horizontal'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#focus
 alt-h = 'focus left'
@@ -124,7 +131,7 @@ alt-3 = 'workspace 3'
 # alt-8 = 'workspace 8'
 # alt-9 = 'workspace 9'
 # alt-a = 'workspace A' # In your config, you can drop workspace bindings that you don't need
-alt-b = 'workspace B'
+alt-e = 'workspace E'
 # alt-c = 'workspace C'
 alt-d = 'workspace D'
 # alt-e = 'workspace E'
@@ -157,7 +164,7 @@ alt-shift-3 = 'move-node-to-workspace 3'
 # alt-shift-8 = 'move-node-to-workspace 8'
 # alt-shift-9 = 'move-node-to-workspace 9'
 # alt-shift-a = 'move-node-to-workspace A'
-alt-shift-b = 'move-node-to-workspace B'
+alt-shift-e = 'move-node-to-workspace E'
 # alt-shift-c = 'move-node-to-workspace C'
 alt-shift-d = 'move-node-to-workspace D'
 # alt-shift-e = 'move-node-to-workspace E'
@@ -182,19 +189,17 @@ alt-shift-z = 'move-node-to-workspace Z'
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
 alt-tab = 'workspace-back-and-forth'
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor
-alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
+alt-slash = 'move-workspace-to-monitor --wrap-around next'
 
 alt-enter = 'mode apps'
-
-alt-semicolon = ['exec-and-forget osascript $HOME/.config/aerospace/scripts/minimize_pip.scpt']
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#mode
 alt-shift-semicolon = 'mode service'
 
 [mode.apps.binding]
 esc = ['mode main']
-enter = ['exec-and-forget open -n /Applications/WezTerm.app', 'mode main']
-s = ['exec-and-forget open /Applications/Spotify.app', 'mode main']
+enter = ['exec-and-forget open -n /Users/mrzelee/Applications/Home\ Manager\ Trampolines/WezTerm.app', 'mode main']
+s = ['exec-and-forget open /Users/mrzelee/Applications/Home\ Manager\ Trampolines/Spotify.app', 'mode main']
 b = ['exec-and-forget open /Applications/Firefox.app', 'mode main']
 d = ['exec-and-forget open /Applications/Discord.app', 'mode main']
 m = ['exec-and-forget open /System/Applications/Messages.app', 'mode main']
@@ -268,7 +273,7 @@ run = "move-node-to-workspace D"
 [[on-window-detected]]
 if.app-id = 'com.google.Chrome'
 check-further-callbacks = true
-run = "move-node-to-workspace B"
+run = "move-node-to-workspace E"
 
 [[on-window-detected]]
 if.window-title-regex-substring = 'Picture in Picture'
@@ -277,7 +282,7 @@ run = "layout floating"
 [[on-window-detected]]
 if.app-id = 'org.mozilla.firefox'
 check-further-callbacks = true
-run = "move-node-to-workspace B"
+run = "move-node-to-workspace E"
 
 [[on-window-detected]]
 if.window-title-regex-substring = 'Picture-in-Picture'
