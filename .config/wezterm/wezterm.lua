@@ -54,8 +54,6 @@ local config = {
   use_fancy_tab_bar = false,
   enable_tab_bar = false,
 
-  enable_wayland = true,
-
   max_fps = 120,
 }
 
@@ -64,6 +62,7 @@ if is_linux then
   config.window_decorations = "NONE"
   config.font_size = 12.0
   config.mux_enable_ssh_agent = false
+  config.enable_wayland = true
 elseif is_macos then
   config.font_size = 14.0
   -- config.front_end = true

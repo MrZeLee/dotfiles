@@ -191,14 +191,15 @@ alt-tab = 'workspace-back-and-forth'
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor
 alt-slash = 'move-workspace-to-monitor --wrap-around next'
 
-alt-enter = 'mode apps'
+alt-enter = ['exec-and-forget open -n /Users/mrzelee/Applications/Home\ Manager\ Trampolines/WezTerm.app', 'mode main']
+# alt-enter = 'mode apps'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#mode
 alt-shift-semicolon = 'mode service'
 
 [mode.apps.binding]
 esc = ['mode main']
-enter = ['exec-and-forget open -n /Users/mrzelee/Applications/Home\ Manager\ Trampolines/WezTerm.app', 'mode main']
+enter = ['exec-and-forget open /Users/mrzelee/Applications/Home\ Manager\ Trampolines/WezTerm.app', 'mode main']
 s = ['exec-and-forget open /Users/mrzelee/Applications/Home\ Manager\ Trampolines/Spotify.app', 'mode main']
 b = ['exec-and-forget open /Applications/Firefox.app', 'mode main']
 d = ['exec-and-forget open /Applications/Discord.app', 'mode main']
