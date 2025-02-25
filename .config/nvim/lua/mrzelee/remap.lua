@@ -125,3 +125,101 @@ vim.keymap.set("n", "<leader>fp", function()
   -- Optional: print message to confirm
   print("File path copied to clipboard: " .. filePath)
 end, { desc = "[P]Copy full file path to clipboard" })
+
+-- Function to toggle formatting for the currently selected text (visual mode).
+local function ToggleFormatting(fmt)
+  -- Grab the current visual selection from the default register.
+  local s = vim.fn.getreg('"')
+  local fmt_len = #fmt
+  if s:sub(1, fmt_len) == fmt and s:sub(-fmt_len) == fmt then
+    -- If already formatted, remove the markers.
+    s = s:sub(fmt_len + 1, -fmt_len - 1)
+  else
+    -- Otherwise, add the formatting markers.
+    s = fmt .. s .. fmt
+  end
+  -- Update the default register and replace the visual selection.
+  vim.fn.setreg('"', s)
+  vim.cmd("normal! gv\"_c<C-r>\"")
+end
+
+-- Function to toggle formatting for the word under the cursor (normal mode).
+local function ToggleFormattingNormal(fmt)
+  -- Get the current word under the cursor.
+  local cur_word = vim.fn.expand("<cword>")
+  local fmt_len = #fmt
+  local new_word
+  if cur_word:sub(1, fmt_len) == fmt and cur_word:sub(-fmt_len) == fmt then
+    -- If already formatted, remove the markers.
+    new_word = cur_word:sub(fmt_len + 1, -fmt_len - 1)
+  else
+    -- Otherwise, add the formatting markers.
+    new_word = fmt .. cur_word .. fmt
+  end
+  -- Replace the current word using 'ciw' (change inner word)
+  -- and then exit insert mode with <Esc> (represented as \027).
+  vim.cmd("normal! ciw" .. new_word .. "\027")
+end
+
+-- Create an autocommand for Markdown files.
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  callback = function()
+    -- Set a buffer-local localleader; here using comma (",") as an example.
+    vim.opt_local.maplocalleader = ","
+
+    -- Visual mode mappings for toggling formatting on the selected text.
+    vim.keymap.set("v", "<localleader>b", function() ToggleFormatting("**") end, {
+      buffer = true,
+      desc = "Toggle bold formatting on selection"
+    })
+    vim.keymap.set("v", "<localleader>i", function() ToggleFormatting("_") end, {
+      buffer = true,
+      desc = "Toggle italic formatting on selection"
+    })
+    vim.keymap.set("v", "<localleader>s", function() ToggleFormatting("~~") end, {
+      buffer = true,
+      desc = "Toggle strikethrough formatting on selection"
+    })
+    vim.keymap.set("v", "<localleader>`", function() ToggleFormatting("`") end, {
+      buffer = true,
+      desc = "Toggle inline code formatting on selection"
+    })
+    vim.keymap.set('v', '<localleader>t', 'c[<c-r>"]()<left>', {
+      buffer = true,
+      desc = "Wrap selection as Markdown link [text](), place cursor in URL"
+    })
+    vim.keymap.set('v', '<localleader>u', 'c[](<c-r>")<c-o>F]', {
+      buffer = true,
+      desc = "Wrap selection as Markdown link [](text), place cursor in title"
+    })
+
+    -- Normal mode mappings for toggling formatting on the word under the cursor.
+    vim.keymap.set("n", "<localleader>b", function() ToggleFormattingNormal("**") end, {
+      buffer = true,
+      desc = "Toggle bold formatting on word under cursor"
+    })
+    vim.keymap.set("n", "<localleader>i", function() ToggleFormattingNormal("_") end, {
+      buffer = true,
+      desc = "Toggle italic formatting on word under cursor"
+    })
+    vim.keymap.set("n", "<localleader>s", function() ToggleFormattingNormal("~~") end, {
+      buffer = true,
+      desc = "Toggle strikethrough formatting on word under cursor"
+    })
+    vim.keymap.set("n", "<localleader>`", function() ToggleFormattingNormal("`") end, {
+      buffer = true,
+      desc = "Toggle inline code formatting on word under cursor"
+    })
+    -- Selects the word and wraps it as [word](), positioning the cursor inside the parentheses for URL input.
+    vim.keymap.set('n', '<localleader>t', 'viWc[<c-r>"]()<left>', {
+      buffer = true,
+      desc = "Wrap word under cursor as Markdown link [Word](), place cursor in URL"
+    })
+    -- Selects the word and wraps it as [](), then moves the cursor inside the brackets for the link text.
+    vim.keymap.set('n', '<localleader>u', 'viWc[](<c-r>")<c-o>F]', {
+      buffer = true,
+      desc = "Wrap word under cursor as Markdown link [](Word), place cursor in title"
+    })
+  end,
+})
