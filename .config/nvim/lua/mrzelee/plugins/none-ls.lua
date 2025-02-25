@@ -11,7 +11,8 @@ return {
 		local null_ls_utils = require("null-ls.utils")
 
 		local ensure_installed = {
-			"prettierd", -- prettierd formatter
+			-- "prettierd", -- prettierd formatter
+			"prettier",
 			"black", -- python formatter
 			"shfmt", -- sh formatter
 
@@ -57,7 +58,13 @@ return {
 				--   extra_filetypes = { "svelte" },
 				-- }), -- js/ts formatter
 				formatting.alejandra,
-				formatting.prettierd,
+				formatting.prettier.with({
+					filetypes = { "markdown" },
+					extra_args = { "--prose-wrap", "always", "--print-width", "80" },
+				}),
+				formatting.prettier.with({
+					disabled_filetypes = { "markdown" },
+				}),
 				formatting.stylua, -- lua formatter
 				formatting.isort,
 				formatting.black,

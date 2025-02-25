@@ -56,7 +56,7 @@ vim.opt.updatetime = 50
 
 vim.opt.colorcolumn = "0"
 
-vim.opt.textwidth = 160
+vim.opt.textwidth = 80
 
 vim.api.nvim_create_autocmd("VimEnter", {
 	callback = function()
