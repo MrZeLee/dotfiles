@@ -126,47 +126,43 @@ vim.keymap.set("n", "<leader>fp", function()
   print("File path copied to clipboard: " .. filePath)
 end, { desc = "[P]Copy full file path to clipboard" })
 
--- Function to toggle formatting for the currently selected text (visual mode).
-local function ToggleFormatting(fmt)
-  -- Grab the current visual selection from the default register.
-  local s = vim.fn.getreg('"')
-  local fmt_len = #fmt
-  if s:sub(1, fmt_len) == fmt and s:sub(-fmt_len) == fmt then
-    -- If already formatted, remove the markers.
-    s = s:sub(fmt_len + 1, -fmt_len - 1)
-  else
-    -- Otherwise, add the formatting markers.
-    s = fmt .. s .. fmt
-  end
-  -- Update the default register and replace the visual selection.
-  vim.fn.setreg('"', s)
-  vim.cmd("normal! gv\"_c<C-r>\"")
+-- Escape Lua pattern magic characters.
+local function escape_lua_pattern(s)
+  return s:gsub("([%^%$%(%)%%%.%[%]*%+%-%?])", "%%%1")
 end
 
--- Function to toggle formatting for the word under the cursor (normal mode).
+-- Toggle formatting for the current visual selection.
+local function ToggleFormatting(fmt)
+   -- In visual mode, first yank the selection into register 'z'
+  vim.cmd('normal! "zy')
+  -- Now delete the selection (which clears it, but we already have the text in 'z')
+  vim.cmd('normal! gv"_d')
+  -- Retrieve the yanked text
+  local s = vim.fn.getreg('z')
+  local escaped_fmt = fmt:gsub("([%^%$%(%)%%%.%[%]*%+%-%?])", "%%%1")
+  local pattern = "^" .. escaped_fmt .. "(.-)" .. escaped_fmt .. "$"
+  local inner = s:match(pattern)
+  local new_text = inner or (fmt .. s .. fmt)
+  -- Paste the new text
+  vim.cmd("normal! i" .. new_text .. vim.api.nvim_replace_termcodes("<Esc>", true, false, true))
+end
+
+-- Function to toggle formatting for the word under the cursor (normal mode)
 local function ToggleFormattingNormal(fmt)
-  -- Get the current word under the cursor.
-  local cur_word = vim.fn.expand("<cword>")
-  local fmt_len = #fmt
-  local new_word
-  if cur_word:sub(1, fmt_len) == fmt and cur_word:sub(-fmt_len) == fmt then
-    -- If already formatted, remove the markers.
-    new_word = cur_word:sub(fmt_len + 1, -fmt_len - 1)
-  else
-    -- Otherwise, add the formatting markers.
-    new_word = fmt .. cur_word .. fmt
-  end
-  -- Replace the current word using 'ciw' (change inner word)
-  -- and then exit insert mode with <Esc> (represented as \027).
-  vim.cmd("normal! ciw" .. new_word .. "\027")
+  -- Use <cWORD> to capture the entire contiguous word (which may include formatting markers)
+  local cur_word = vim.fn.expand("<cWORD>")
+  local escaped_fmt = escape_lua_pattern(fmt)
+  local pattern = "^" .. escaped_fmt .. "(.-)" .. escaped_fmt .. "$"
+  local inner = cur_word:match(pattern)
+  local new_word = inner or (fmt .. cur_word .. fmt)
+  -- Replace the WORD using 'ciW' (change inner WORD)
+  vim.cmd("normal! ciW" .. new_word .. vim.api.nvim_replace_termcodes("<Esc>", true, false, true))
 end
 
 -- Create an autocommand for Markdown files.
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "markdown",
   callback = function()
-    -- Set a buffer-local localleader; here using comma (",") as an example.
-    vim.opt_local.maplocalleader = ","
 
     -- Visual mode mappings for toggling formatting on the selected text.
     vim.keymap.set("v", "<localleader>b", function() ToggleFormatting("**") end, {
