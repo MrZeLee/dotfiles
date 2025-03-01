@@ -20,6 +20,7 @@ if [[ "$OS_TYPE" == "Linux" ]]; then
 elif [[ "$OS_TYPE" == "Darwin" ]]; then
   export OPEN="open"
   export COPY="pbcopy"
+  export DBUS_SESSION_BUS_ADDRESS="unix:path=$DBUS_LAUNCHD_SESSION_BUS_SOCKET"
 else
   :
 fi
