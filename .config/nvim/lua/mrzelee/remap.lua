@@ -100,7 +100,7 @@ vim.keymap.set({"n","t","i"}, "<C-f>", "<cmd>silent !tmux neww -n 'sessionizer' 
 -- that's basically the main benefit lamw25wmal
 vim.keymap.set(
     "n",
-    "<leader>h",
+    "<leader>hh",
     -- Notice that I start it in normal mode to navigate similarly to bufexplorer,
     -- the ivy theme is also similar to bufexplorer and tmux sessions
     "<cmd>Telescope buffers sort_mru=true sort_lastused=true initial_mode=normal theme=ivy<cr>",
