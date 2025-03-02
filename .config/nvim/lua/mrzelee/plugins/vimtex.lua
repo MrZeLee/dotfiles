@@ -2,7 +2,7 @@ return {
     --{'lervag/vimtex', lazy = false},
     {
         'lervag/vimtex',
-        tag = 'v2.15',
+        version = "*",
         lazy = false,
         config = function()
             --Note that most plugin managers will do this automatically.
