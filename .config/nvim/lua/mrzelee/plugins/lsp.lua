@@ -2,15 +2,15 @@ return {
 	{
 
 		"neovim/nvim-lspconfig",
-		tag = "v1.0.0",
+		version = "*",
 		dependencies = {
 			{
 				"williamboman/mason.nvim",
-				tag = "v1.11.0",
+				version = "*",
 			},
 			{
 				"williamboman/mason-lspconfig.nvim",
-				tag = "v1.32.0",
+				version = "*",
 			},
 			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/nvim-cmp",
@@ -41,7 +41,21 @@ return {
 
 			require("mason").setup()
 			require("mason-lspconfig").setup({
+				-- Whether servers that are set up (via lspconfig) should be automatically installed if they're not already installed.
+				-- This setting has no relation with the `ensure_installed` setting.
+				-- Can either be:
+				--   - false: Servers are not automatically installed.
+				--   - true: All servers set up via lspconfig are automatically installed.
+				--   - { exclude: string[] }: All servers set up via lspconfig, except the ones provided in the list, are automatically installed.
+				--       Example: automatic_installation = { exclude = { "rust_analyzer", "solargraph" } }
+				---@type boolean
+				automatic_installation = false,
+				-- A list of servers to automatically install if they're not already installed. Example: { "rust_analyzer@nightly", "lua_ls" }
+				-- This setting has no relation with the `automatic_installation` setting.
+				---@type string[]
 				ensure_installed = ensure_installed,
+				-- See `:h mason-lspconfig.setup_handlers()`
+				---@type table<string, fun(server_name: string)>?
 				handlers = {
 					function(server_name)
 						if IsNixos then
@@ -263,6 +277,7 @@ return {
 	},
 	{
 		"folke/lazydev.nvim",
+		version = "*",
 		ft = "lua", -- only load on lua files
 		opts = {
 			library = {
@@ -276,6 +291,7 @@ return {
 	},
 	{ -- optional cmp completion source for require statements and module annotations
 		"hrsh7th/nvim-cmp",
+		version = "*",
 		opts = function(_, opts)
 			opts.sources = opts.sources or {}
 			table.insert(opts.sources, {
@@ -283,5 +299,5 @@ return {
 				group_index = 0, -- set group index to 0 to skip loading LuaLS completions
 			})
 		end,
-	}
+	},
 }
