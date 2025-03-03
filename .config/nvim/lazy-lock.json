@@ -6,7 +6,7 @@
   "cmp-buffer": { "branch": "main", "commit": "3022dbc9166796b644a841a02de8dd1cc1d311fa" },
   "cmp-nvim-lsp": { "branch": "main", "commit": "99290b3ec1322070bcfb9e846450a46f6efa50f0" },
   "cmp-path": { "branch": "main", "commit": "91ff86cd9c29299a64f968ebb45846c485725f23" },
-  "codecompanion.nvim": { "branch": "main", "commit": "2dd2ab27f9d007a51658eaf876a65e98e92993b8" },
+  "codecompanion.nvim": { "branch": "main", "commit": "77623e79b6d39f05dcd3021d07ab1d37ebe1a50b" },
   "fidget.nvim": { "branch": "main", "commit": "b61e8af9b8b68ee0ec7da5fb7a8c203aae854f2e" },
   "focus.nvim": { "branch": "master", "commit": "d76338e58e49f844e8f6a7aff16a74a2a55a80ef" },
   "fzf-lua": { "branch": "main", "commit": "480e29c20cb324bb9bf3d6f7d8e5505bcb49d555" },
