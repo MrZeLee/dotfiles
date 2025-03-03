@@ -11,6 +11,15 @@ local supported_adapters = {
 			},
 		})
 	end,
+  openai = function ()
+    return require("codecompanion.adapters").extend("openai", {
+      schema = {
+        model = {
+          default = "o3-mini",
+        },
+      },
+    })
+  end,
 }
 
 local function save_path()
