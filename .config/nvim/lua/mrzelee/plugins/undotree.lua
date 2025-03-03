@@ -1,11 +1,11 @@
 return {
-    "mbbill/undotree",
-    tag = "rel_6.1",
+	"mbbill/undotree",
+	tag = "rel_6.1",
 
-    config = function()
-        --require('undotree').setup({})
+	config = function()
+		--require('undotree').setup({})
 
-        -- Configurations
-        vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle, {desc="acess undotree"})
-    end
+		-- Configurations
+		vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle, { desc = "acess undotree" })
+	end,
 }
