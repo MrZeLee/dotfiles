@@ -15,8 +15,6 @@ return {
 			"prettier",
 			"black", -- python formatter
 			"shfmt", -- sh formatter
-
-			"pylint", -- python linter
 		}
 
 		local not_install_nix = {
@@ -69,7 +67,6 @@ return {
 				formatting.isort,
 				formatting.black,
 				formatting.shfmt,
-				diagnostics.pylint,
 			},
 			-- configure format on save
 			-- on_attach = function(current_client, bufnr)
