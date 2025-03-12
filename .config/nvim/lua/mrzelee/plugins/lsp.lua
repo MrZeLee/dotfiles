@@ -28,6 +28,7 @@ return {
 				"nil_ls",
 				"jsonls",
 				"bashls",
+        "pyright",
 			}
 
 			local not_install_nix = {
