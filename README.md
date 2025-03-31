@@ -37,9 +37,6 @@ Before installing these dotfiles, ensure you have the following tools installed:
 - **Git:** For cloning and managing the dotfiles repository.
 - **GNU Stow:** For creating symbolic links to the configurations in your home
   directory.
-- **Nix:** For managing packages and environments (recommended, especially for
-  Linux).
-- **Homebrew (macOS):** For managing packages on macOS.
 - **Zsh:** As the preferred shell.
 
 ## Installation
