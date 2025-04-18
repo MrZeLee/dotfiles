@@ -69,12 +69,6 @@ if [ "$OS_TYPE" = "Darwin" ]; then
   fi
 fi
 
-# Run nix-darwin switch with flake if macOS
-if [ "$OS_TYPE" = "Darwin" ]; then
-  nix run nix-darwin -- switch --flake ~/.dotfiles
-  darwin-rebuild switch --flake ~/.dotfiles
-fi
-
 mkdir $HOME/.local 2>/dev/null
 mkdir $HOME/.local/bin/ 2>/dev/null
 ln -s $HOME/.config/tmux/scripts/tmux-sessionizer $HOME/.local/bin/
