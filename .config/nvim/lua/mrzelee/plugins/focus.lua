@@ -1,6 +1,5 @@
 return {
-  -- "nvim-focus/focus.nvim",
-	"MrZeLee/focus.nvim",
+  "nvim-focus/focus.nvim",
   branch = "master",
   -- dir = "/home/mrzelee/Documents/01-Git/focus.nvim/",
   -- dev = true,
