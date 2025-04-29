@@ -77,6 +77,8 @@
       "title<.*youtube.*>": "",
       "class<firefox>": "",
       "class<firefox> title<.*github.*>": "",
+      "class<librewolf>": "",
+      "class<librewolf> title<.*github.*>": "",
       "class<vesktop> title<(?!.*Discord).+>": "",
       "class<vesktop>": "",
       "class<Spotify>": "",
