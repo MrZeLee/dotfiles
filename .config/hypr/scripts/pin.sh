@@ -12,8 +12,8 @@ if [ -z "$active_window_address" ]; then
     exit 1
 fi
 
-if [[ "$active_window_class" = "firefox" && "$active_window_initialtitle" != "Picture-in-Picture" ]]; then
-  clients_start_addresses="$(hyprctl clients -j | jq -r '.[] | select(.class == "firefox" and .initialTitle == "Picture-in-Picture") | .address')"
+if [[ "$active_window_class" = "librewolf" && "$active_window_initialtitle" != "Picture-in-Picture" ]]; then
+  clients_start_addresses="$(hyprctl clients -j | jq -r '.[] | select(.class == "librewolf" and .initialTitle == "Picture-in-Picture") | .address')"
   hyprctl --quiet dispatch sendshortcut CTRL_SHIFT, bracketright, activeWindow
 fi
 
@@ -63,9 +63,9 @@ fi
 float_x=$(echo "$monitor_x + ($monitor_width - $float_width) / 2" | bc | awk '{print int($1+0.5)}')
 float_y=$(echo "$monitor_y + ($monitor_height - $float_height) / 2" | bc | awk '{print int($1+0.5)}')
 
-if [[ "$active_window_class" = "firefox" && "$active_window_initialtitle" != "Picture-in-Picture" ]]; then
+if [[ "$active_window_class" = "librewolf" && "$active_window_initialtitle" != "Picture-in-Picture" ]]; then
   clients_end="$(hyprctl clients -j)"
-  clients_end_addresses="$(echo "$clients_end" | jq -r '.[] | select(.class == "firefox" and .initialTitle == "Picture-in-Picture") | .address')"
+  clients_end_addresses="$(echo "$clients_end" | jq -r '.[] | select(.class == "librewolf" and .initialTitle == "Picture-in-Picture") | .address')"
   
   # Find new PiP windows by comparing start and end lists
   new_window=""
@@ -77,7 +77,7 @@ if [[ "$active_window_class" = "firefox" && "$active_window_initialtitle" != "Pi
           # Compare start and end lists to find new addresses
           while IFS= read -r end_address; do
               if [[ ! "$clients_start_addresses" =~ "$end_address" ]]; then
-                check="$(echo "$clients_end" | jq -r --arg add "$clients_end" '.[] | select(.address == $end_address and .class == "firefox" and .initialTitle == "Picture-in-Picture")')"
+                check="$(echo "$clients_end" | jq -r --arg add "$clients_end" '.[] | select(.address == $end_address and .class == "librewolf" and .initialTitle == "Picture-in-Picture")')"
                 if [ -z "$check" ]; then
                   new_window="$end_address"
                   break
