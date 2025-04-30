@@ -132,7 +132,7 @@ fi
 
 if command -v direnv &> /dev/null
 then
-  source <(direnv hook zsh)
+  eval "$(direnv hook zsh)"
 fi
 
 if command -v yazi &> /dev/null
