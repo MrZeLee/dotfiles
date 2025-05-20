@@ -244,6 +244,10 @@ if command -v zoxide &> /dev/null; then
   eval "$(zoxide init zsh)"
 fi
 
+if command -v warp-cli &> /dev/null; then
+  eval "$(warp-cli generate-completions zsh)"
+fi
+
 # [ -f $HOME/.bindkey.zsh ] && source $HOME/.bindkey.zsh
 
 zvm_after_init_commands+=('[ -f $HOME/.bindkey.zsh ] && source $HOME/.bindkey.zsh')
