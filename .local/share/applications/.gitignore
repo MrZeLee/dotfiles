@@ -1,0 +1,6 @@
+*
+!.gitignore
+!lock.desktop
+!nvim.desktop
+!restart.desktop
+!shutdown.desktop
