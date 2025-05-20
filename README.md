@@ -39,6 +39,8 @@ Before installing these dotfiles, ensure you have the following tools installed:
   directory.
 - **Zsh:** As the preferred shell.
 
+Add the ssh keys, and gpg private keys.
+
 ## Installation
 
 Follow these steps to install the dotfiles:
