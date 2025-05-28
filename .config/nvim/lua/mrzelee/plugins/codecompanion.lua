@@ -113,12 +113,19 @@ return {
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		"nvim-treesitter/nvim-treesitter",
+    {
+      "ravitemer/mcphub.nvim",
+      build = "npm install -g mcp-hub@latest",
+      config = function()
+        require("mcphub").setup()
+      end
+    },
 	},
 	keys = {
-		{ "<leader>cc", "<cmd>CodeCompanionChat<cr>", desc = "Chat with CodeCompanion" },
-		{ "<leader>cca", "<cmd>CodeCompanionActions<cr>", desc = "CodeCompanion Actions" },
-		{ "<leader>ccs", "<cmd>CodeCompanionSave<cr>", desc = "Save Messages with CodeCompanion" },
-		{ "<leader>ccl", "<cmd>CodeCompanionLoad<cr>", desc = "Load CodeCompanion saved Messages" },
+		{ "<leader>ai", "<cmd>CodeCompanionChat Toggle<cr>", desc = "Chat with CodeCompanion" },
+		{ "<leader>aa", "<cmd>CodeCompanionActions<cr>", desc = "CodeCompanion Actions" },
+		{ "<leader>as", "<cmd>CodeCompanionSave<cr>", desc = "Save Messages with CodeCompanion" },
+		{ "<leader>al", "<cmd>CodeCompanionLoad<cr>", desc = "Load CodeCompanion saved Messages" },
 	},
 	opts = {
 
@@ -126,6 +133,17 @@ return {
 		--   -- WARNING: send_code does not accept a function. It should be evaluated each time CWD changes.
 		--   send_code = require("fredrik.utils.private").is_ai_enabled(),
 		-- },
+
+    extensions = {
+      mcphub = {
+        callback = "mcphub.extensions.codecompanion",
+        opts = {
+          make_vars = true,
+          make_slash_commands = true,
+          show_result_in_chat = true
+        }
+      }
+    },
 
 		adapters = supported_adapters,
 
@@ -173,7 +191,7 @@ return {
 				provider = "default", -- default|telescope|mini_pick
 			},
 			diff = {
-				provider = "default", -- default|mini_diff
+				provider = "mini_diff", -- default|mini_diff
 			},
 		},
 		config = function(_, opts)
