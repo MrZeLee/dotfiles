@@ -42,6 +42,7 @@ return {
 
 			require("mason").setup()
 			require("mason-lspconfig").setup({
+        automatic_enable = false,
 				-- Whether servers that are set up (via lspconfig) should be automatically installed if they're not already installed.
 				-- This setting has no relation with the `ensure_installed` setting.
 				-- Can either be:
@@ -120,15 +121,26 @@ return {
 						desc = "Show diagnostics in floating window",
 						unpack(opts),
 					})
-					vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, {
+          -- [d  → diagnóstico anterior (count negativo)
+          vim.keymap.set('n', '[d', function()
+            vim.diagnostic.jump {
+              count = -vim.v.count1,  -- usa o count digitado; -1 por padrão
+              float = true            -- abre o pop-up com a mensagem
+            }
+          end, {
 						desc = "Go to previous diagnostic",
 						unpack(opts),
-					})
-					vim.keymap.set("n", "]d", vim.diagnostic.goto_next, {
+          })
+          -- ]d  → próximo diagnóstico (count positivo)
+          vim.keymap.set('n', ']d', function()
+            vim.diagnostic.jump {
+              count =  vim.v.count1,  -- +1 por padrão
+              float = true
+            }
+          end, {
 						desc = "Go to next diagnostic",
 						unpack(opts),
-					})
-
+            })
 					-- LSP navigation and info
 					vim.keymap.set("n", "gd", vim.lsp.buf.definition, {
 						desc = "Go to definition",
