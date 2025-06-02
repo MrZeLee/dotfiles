@@ -37,7 +37,7 @@
   },
   "idle_inhibitor": {
     "format": "{icon}",
-    "interval": 1,
+    "interval": 5,
     "tooltip": true,
     "format-icons": {
       "activated": "",
@@ -45,10 +45,10 @@
     }
   },
   "clock": {
-    "interval": 1,
+    "interval": 5,
     "tooltip": true,
     "rotate": 0,
-    "format": "{:%H:%M:%S}",
+    "format": "{:%H:%M}",
     "max-length": 25,
     "locale": "en_US.UTF-8",
     "tooltip-format": "<tt><small>{calendar}</small></tt>",
@@ -128,7 +128,7 @@
     "on-click": "pavucontrol"
   },
   "cpu": {
-    "interval": 1,
+    "interval": 5,
     "format": "CPU {icon}",
     "format-icons": [
       "<span color='#69ff94'>▁</span>",
