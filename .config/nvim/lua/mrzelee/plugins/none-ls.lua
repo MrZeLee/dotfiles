@@ -60,9 +60,9 @@ return {
 					filetypes = { "markdown" },
 					extra_args = { "--prose-wrap", "always", "--print-width", "80" },
 				}),
-				formatting.prettier.with({
-					disabled_filetypes = { "markdown" },
-				}),
+				-- formatting.prettier.with({
+				-- 	disabled_filetypes = { "markdown" },
+				-- }),
 				formatting.stylua, -- lua formatter
 				formatting.isort,
 				formatting.black,

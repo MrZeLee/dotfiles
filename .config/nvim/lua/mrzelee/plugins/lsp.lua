@@ -42,7 +42,7 @@ return {
 
 			require("mason").setup()
 			require("mason-lspconfig").setup({
-        automatic_enable = false,
+        automatic_enable = true,
 				-- Whether servers that are set up (via lspconfig) should be automatically installed if they're not already installed.
 				-- This setting has no relation with the `ensure_installed` setting.
 				-- Can either be:
