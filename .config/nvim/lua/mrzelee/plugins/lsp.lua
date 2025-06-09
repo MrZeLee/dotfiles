@@ -403,6 +403,7 @@ return {
 					formatting.isort,
 					formatting.black,
 					formatting.shfmt,
+          formatting.xmllint,
 				},
 				-- configure format on save
 				-- on_attach = function(current_client, bufnr)
