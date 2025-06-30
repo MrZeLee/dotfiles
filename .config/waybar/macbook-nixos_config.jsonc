@@ -101,7 +101,7 @@
     }
   },
   "battery": {
-    "bat": "BAT1",
+    "bat": "macsmc-battery",
     "interval": 10,
     "states": {
       "warning": 30,
