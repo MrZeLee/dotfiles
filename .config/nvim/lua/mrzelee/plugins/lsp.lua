@@ -23,11 +23,11 @@ return {
 				"rust_analyzer",
 				"ts_ls",
 				"ansiblels",
-				"jdtls",
 				"nil_ls",
 				"jsonls",
 				"bashls",
 				"pyright",
+        "jdtls",
 			}
 
 			local not_install_nix = {
@@ -39,9 +39,15 @@ return {
 				vim.list_extend(ensure_installed, not_install_nix)
 			end
 
+      local mason_lspconfig = require("mason-lspconfig")
+
 			require("mason").setup()
-			require("mason-lspconfig").setup({
-				automatic_enable = true,
+			mason_lspconfig.setup({
+				automatic_enable = {
+          exclude = {
+            "jdtls",
+          }
+        },
 				-- Whether servers that are set up (via lspconfig) should be automatically installed if they're not already installed.
 				-- This setting has no relation with the `ensure_installed` setting.
 				-- Can either be:
@@ -57,26 +63,28 @@ return {
 				ensure_installed = ensure_installed,
 				-- See `:h mason-lspconfig.setup_handlers()`
 				---@type table<string, fun(server_name: string)>?
+        ---TODO: I think this handlers are obsulete
 				handlers = {
 					function(server_name)
+            print("🔥 Server Name: ", server_name)
 						if IsNixos then
 							-- NixOS-specific setup
 							if server_name == "lua_ls" then
+                -- where Mason put lombok.jar alongside jdtls
 								require("lspconfig").lua_ls.setup({
+
 									cmd = { "lua-language-server" }, -- Ensure Nix-installed binary is used
 								})
+                return
 							elseif vim.tbl_contains(not_install_nix, server_name) then
 								require("lspconfig")[server_name].setup({
 									cmd = { server_name },
 								})
-							else
-								-- Default setup for other servers on NixOS
-								require("lspconfig")[server_name].setup({})
+                return
 							end
-						else
-							-- Default setup for all servers on non-NixOS systems
-							require("lspconfig")[server_name].setup({})
-						end
+            end
+            -- Default setup for all servers on non-NixOS systems
+            require("lspconfig")[server_name].setup({})
 					end,
 				},
 			})
@@ -105,6 +113,42 @@ return {
 			if IsNixos then
 				lspconfig.marksman.setup({})
 			end
+
+      -- TODO: add a callback function so every time I enter a java file it
+      -- works well
+      local util = lspconfig.util
+
+      -- helper to find the git root using vim.fs
+      local function find_git_root(startpath)
+        local git_dir = vim.fs.find(".git", { path = startpath, upward = true })[1]
+        return git_dir and vim.fs.dirname(git_dir)
+      end
+
+      -- in your handler:
+      local fname = vim.api.nvim_buf_get_name(0)
+
+      local root_dir = util.root_pattern("pom.xml", "build.gradle")(fname)
+      or find_git_root(fname)
+      or vim.loop.cwd()
+
+      local lombok_path = vim.fn.stdpath('data') .. '/mason/packages/jdtls/lombok.jar'
+      lspconfig.jdtls.setup({
+        cmd = {
+          vim.fn.exepath("jdtls"),
+          "--jvm-arg=-javaagent:" .. lombok_path,
+          "-configuration", vim.fn.stdpath("cache") .. "/jdtls/" .. vim.fs.basename(root_dir) .. "/config",
+          "-data",          vim.fn.stdpath("cache") .. "/jdtls/" .. vim.fs.basename(root_dir) .. "/workspace",
+        },
+        settings  = {
+          java = {
+            inlayHints = { parameterNames = { enabled = "all" } },
+          },
+        },
+        init_options = {
+          bundles = {},  -- add your debug/test bundles here if you need them
+        },
+        capabilities = vim.lsp.protocol.make_client_capabilities(),
+      })
 
 			-- Reserve a space in the gutter
 			-- This will avoid an annoying layout shift in the screen
