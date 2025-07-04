@@ -125,7 +125,7 @@
   },
   "wireplumber": {
     "format": "󰕿 {volume}%",
-    "on-click": "pavucontrol"
+    "on-click": "GSK_RENDERER=ngl pavucontrol"
   },
   "cpu": {
     "interval": 5,
