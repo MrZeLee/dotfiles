@@ -38,6 +38,7 @@
   "render-markdown.nvim": { "branch": "main", "commit": "935c2c70c296d87ed1bcce9ce667c239c9c982b5" },
   "telescope-ui-select.nvim": { "branch": "master", "commit": "6e51d7da30bd139a6950adf2a47fda6df9fa06d2" },
   "telescope.nvim": { "branch": "master", "commit": "a0bbec21143c7bc5f8bb02e0005fa0b982edc026" },
+  "todo-comments.nvim": { "branch": "main", "commit": "304a8d204ee787d2544d8bc23cd38d2f929e7cc5" },
   "undotree": { "branch": "master", "commit": "be23eacb2a63380bd79e207a738c728214ecc9d3" },
   "vim-fugitive": { "branch": "master", "commit": "96c1009fcf8ce60161cc938d149dd5a66d570756" },
   "vim-obsession": { "branch": "master", "commit": "ed9dfc7c2cc917ace8b24f4f9f80a91e05614b63" },
