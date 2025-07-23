@@ -21,6 +21,7 @@ text/plain=nvim.desktop
 application/x-shellscript=nvim.desktop
 x-scheme-handler/discord=vesktop.desktop
 x-scheme-handler/msteams=teams-for-linux.desktop
+x-scheme-handler/mailto=librewolf.desktop
 
 [Added Associations]
 application/octet-stream=org.keepassxc.KeePassXC.desktop;
