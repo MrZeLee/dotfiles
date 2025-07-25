@@ -3,18 +3,87 @@ return {
 		"neovim/nvim-lspconfig",
 		version = "*",
 		dependencies = {
+			{ "williamboman/mason.nvim", version = "*" },
+			{ "williamboman/mason-lspconfig.nvim", version = "*" },
 			{
-				"williamboman/mason.nvim",
+				"saghen/blink.cmp",
 				version = "*",
+				-- optional: provides snippets for the snippet source
+				optional = true,
+				dependencies = {
+					{"rafamadriz/friendly-snippets", version = "*"},
+					{"saghen/blink.compat", version = "*"},
+					{
+						"Dynge/gitmoji.nvim",
+            version = "*",
+						dependencies = {
+							-- Switch from nvim-cmp to Blink
+							-- "hrsh7th/nvim-cmp", -- for nvim-cmp completion
+							"Saghen/blink.cmp", -- for Blink completion
+						},
+						opts = {
+							filetypes = { "gitcommit" },
+							completion = {
+								append_space = false,
+								complete_as = "emoji",
+							},
+						},
+						ft = "gitcommit",
+					},
+					{
+						"allaman/emoji.nvim",
+            dependencies = {
+              {"nvim-telescope/telescope.nvim", version = "*"},
+            },
+						verrsion = "*",
+						opts = {
+							-- default is false, also needed for blink.cmp integration!
+							enable_cmp_integration = true,
+							-- -- optional if your plugin installation directory
+							-- -- is not vim.fn.stdpath("data") .. "/lazy/
+							-- plugin_path = vim.fn.expand("$HOME/plugins/"),
+						},
+						config = function(_, opts)
+							require("emoji").setup(opts)
+							-- optional for telescope integration
+							local ts = require("telescope").load_extension("emoji")
+							vim.keymap.set("n", "<leader>se", ts.emoji, { desc = "[S]earch [E]moji" })
+						end,
+					},
+				},
+				opts = {
+					keymap = { preset = "default" },
+					appearance = { nerd_font_variant = "mono" },
+					completion = { documentation = { auto_show = false } },
+					sources = {
+						default = { "lsp", "path", "snippets", "buffer", "emoji", "gitmoji" },
+						-- configure Gitmoji provider for Blink
+						providers = {
+							gitmoji = {
+								name = "gitmoji",
+								module = "gitmoji.blink",
+								opts = {
+									filetypes = { "gitcommit" },
+								},
+							},
+							emoji = {
+								name = "emoji",
+								module = "blink.compat.source",
+								-- overwrite kind of suggestion
+								transform_items = function(ctx, items)
+									local kind = require("blink.cmp.types").CompletionItemKind.Text
+									for i = 1, #items do
+										items[i].kind = kind
+									end
+									return items
+								end,
+							},
+						},
+					},
+					fuzzy = { implementation = "prefer_rust_with_warning" },
+				},
+				opts_extend = { "sources.default" },
 			},
-			{
-				"williamboman/mason-lspconfig.nvim",
-				version = "*",
-			},
-			"hrsh7th/cmp-nvim-lsp",
-			"hrsh7th/nvim-cmp",
-			"hrsh7th/cmp-buffer",
-			"hrsh7th/cmp-path",
 		},
 
 		config = function()
@@ -27,7 +96,7 @@ return {
 				"jsonls",
 				"bashls",
 				"pyright",
-        "jdtls",
+				"jdtls",
 			}
 
 			local not_install_nix = {
@@ -39,15 +108,15 @@ return {
 				vim.list_extend(ensure_installed, not_install_nix)
 			end
 
-      local mason_lspconfig = require("mason-lspconfig")
+			local mason_lspconfig = require("mason-lspconfig")
 
 			require("mason").setup()
 			mason_lspconfig.setup({
 				automatic_enable = {
-          exclude = {
-            "jdtls",
-          }
-        },
+					exclude = {
+						"jdtls",
+					},
+				},
 				-- Whether servers that are set up (via lspconfig) should be automatically installed if they're not already installed.
 				-- This setting has no relation with the `ensure_installed` setting.
 				-- Can either be:
@@ -63,42 +132,38 @@ return {
 				ensure_installed = ensure_installed,
 				-- See `:h mason-lspconfig.setup_handlers()`
 				---@type table<string, fun(server_name: string)>?
-        ---TODO: I think this handlers are obsulete
+				---TODO: I think this handlers are obsulete
 				handlers = {
 					function(server_name)
-            print("🔥 Server Name: ", server_name)
+						print("🔥 Server Name: ", server_name)
 						if IsNixos then
 							-- NixOS-specific setup
 							if server_name == "lua_ls" then
-                -- where Mason put lombok.jar alongside jdtls
+								-- where Mason put lombok.jar alongside jdtls
 								require("lspconfig").lua_ls.setup({
 
 									cmd = { "lua-language-server" }, -- Ensure Nix-installed binary is used
 								})
-                return
+								return
 							elseif vim.tbl_contains(not_install_nix, server_name) then
 								require("lspconfig")[server_name].setup({
 									cmd = { server_name },
 								})
-                return
+								return
 							end
-            end
-            -- Default setup for all servers on non-NixOS systems
-            require("lspconfig")[server_name].setup({})
+						end
+						-- Default setup for all servers on non-NixOS systems
+						require("lspconfig")[server_name].setup({})
 					end,
 				},
 			})
 
 			local lspconfig = require("lspconfig")
-
-			-- Add cmp_nvim_lsp capabilities settings to lspconfig
-			-- This should be executed before you configure any language server
-			local lspconfig_defaults = lspconfig.util.default_config
-			lspconfig_defaults.capabilities = vim.tbl_deep_extend(
-				"force",
-				lspconfig_defaults.capabilities,
-				require("cmp_nvim_lsp").default_capabilities()
-			)
+			-- Merge Blink completion capabilities into LSP defaults
+			local blink_cmp = require("blink.cmp")
+			local capabilities = blink_cmp.get_lsp_capabilities()
+			lspconfig.util.default_config.capabilities =
+				vim.tbl_deep_extend("force", lspconfig.util.default_config.capabilities or {}, capabilities)
 
 			lspconfig.lua_ls.setup({
 				settings = {
@@ -114,41 +179,43 @@ return {
 				lspconfig.marksman.setup({})
 			end
 
-      -- TODO: add a callback function so every time I enter a java file it
-      -- works well
-      local util = lspconfig.util
+			-- TODO: add a callback function so every time I enter a java file it
+			-- works well
+			local util = lspconfig.util
 
-      -- helper to find the git root using vim.fs
-      local function find_git_root(startpath)
-        local git_dir = vim.fs.find(".git", { path = startpath, upward = true })[1]
-        return git_dir and vim.fs.dirname(git_dir)
-      end
+			-- helper to find the git root using vim.fs
+			local function find_git_root(startpath)
+				local git_dir = vim.fs.find(".git", { path = startpath, upward = true })[1]
+				return git_dir and vim.fs.dirname(git_dir)
+			end
 
-      -- in your handler:
-      local fname = vim.api.nvim_buf_get_name(0)
+			-- in your handler:
+			local fname = vim.api.nvim_buf_get_name(0)
 
-      local root_dir = util.root_pattern("pom.xml", "build.gradle")(fname)
-      or find_git_root(fname)
-      or vim.loop.cwd()
+			local root_dir = util.root_pattern("pom.xml", "build.gradle")(fname)
+				or find_git_root(fname)
+				or vim.loop.cwd()
 
-      local lombok_path = vim.fn.stdpath('data') .. '/mason/packages/jdtls/lombok.jar'
-      lspconfig.jdtls.setup({
-        cmd = {
-          vim.fn.exepath("jdtls"),
-          "--jvm-arg=-javaagent:" .. lombok_path,
-          "-configuration", vim.fn.stdpath("cache") .. "/jdtls/" .. vim.fs.basename(root_dir) .. "/config",
-          "-data",          vim.fn.stdpath("cache") .. "/jdtls/" .. vim.fs.basename(root_dir) .. "/workspace",
-        },
-        settings  = {
-          java = {
-            inlayHints = { parameterNames = { enabled = "all" } },
-          },
-        },
-        init_options = {
-          bundles = {},  -- add your debug/test bundles here if you need them
-        },
-        capabilities = vim.lsp.protocol.make_client_capabilities(),
-      })
+			local lombok_path = vim.fn.stdpath("data") .. "/mason/packages/jdtls/lombok.jar"
+			lspconfig.jdtls.setup({
+				cmd = {
+					vim.fn.exepath("jdtls"),
+					"--jvm-arg=-javaagent:" .. lombok_path,
+					"-configuration",
+					vim.fn.stdpath("cache") .. "/jdtls/" .. vim.fs.basename(root_dir) .. "/config",
+					"-data",
+					vim.fn.stdpath("cache") .. "/jdtls/" .. vim.fs.basename(root_dir) .. "/workspace",
+				},
+				settings = {
+					java = {
+						inlayHints = { parameterNames = { enabled = "all" } },
+					},
+				},
+				init_options = {
+					bundles = {}, -- add your debug/test bundles here if you need them
+				},
+				capabilities = require("blink.cmp").get_lsp_capabilities(vim.lsp.protocol.make_client_capabilities()),
+			})
 
 			-- Reserve a space in the gutter
 			-- This will avoid an annoying layout shift in the screen
@@ -281,60 +348,7 @@ return {
 				{ "gq", desc = "Format the file" },
 			})
 
-			local cmp = require("cmp")
-
-			cmp.setup({
-				preselect = "item",
-				completion = {
-					-- autocomplete = false,
-					completeopt = "menu,menuone,noinsert",
-				},
-				window = {
-					completion = cmp.config.window.bordered(),
-					documentation = cmp.config.window.bordered(),
-				},
-				sources = {
-					{ name = "nvim_lsp" },
-					{ name = "buffer" },
-					{ name = "path" },
-				},
-				mapping = cmp.mapping.preset.insert({
-					-- Navigate between completion items
-					["<C-p>"] = cmp.mapping.select_prev_item({ behavior = "select" }),
-					["<C-n>"] = cmp.mapping.select_next_item({ behavior = "select" }),
-					-- Simple tab complete
-					["<Tab>"] = cmp.mapping(function(fallback)
-						local col = vim.fn.col(".") - 1
-
-						if cmp.visible() then
-							cmp.select_next_item({ behavior = "select" })
-						elseif col == 0 or vim.fn.getline("."):sub(col, col):match("%s") then
-							fallback()
-						else
-							cmp.complete()
-						end
-					end, { "i", "s" }),
-
-					-- Go to previous item
-					["<S-Tab>"] = cmp.mapping.select_prev_item({ behavior = "select" }),
-
-					-- `Enter` key to confirm completion
-					-- ['<CR>'] = cmp.mapping.confirm({ select = false }),
-					["<C-y>"] = cmp.mapping.confirm({ select = true }),
-
-					-- Ctrl+Space to trigger completion menu
-					["<C-Space>"] = cmp.mapping.complete(),
-
-					-- Scroll up and down in the completion documentation
-					["<C-u>"] = cmp.mapping.scroll_docs(-4),
-					["<C-d>"] = cmp.mapping.scroll_docs(4),
-				}),
-				snippet = {
-					expand = function(args)
-						vim.snippet.expand(args.body)
-					end,
-				},
-			})
+			-- Inline Blink `cmp.setup()` removed; Blink is configured via its plugin spec `opts`
 
 			vim.diagnostic.config({
 				signs = {
@@ -361,17 +375,6 @@ return {
 				{ path = "telescope.nvim", words = { "telescope" } },
 			},
 		},
-	},
-	{ -- optional cmp completion source for require statements and module annotations
-		"hrsh7th/nvim-cmp",
-		version = "*",
-		opts = function(_, opts)
-			opts.sources = opts.sources or {}
-			table.insert(opts.sources, {
-				name = "lazydev",
-				group_index = 0, -- set group index to 0 to skip loading LuaLS completions
-			})
-		end,
 	},
 	{
 		"nvimtools/none-ls.nvim", -- configure formatters & linters
@@ -447,7 +450,7 @@ return {
 					formatting.isort,
 					formatting.black,
 					formatting.shfmt,
-          formatting.xmllint,
+					formatting.xmllint,
 				},
 				-- configure format on save
 				-- on_attach = function(current_client, bufnr)
