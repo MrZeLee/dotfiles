@@ -11,11 +11,11 @@ return {
 				-- optional: provides snippets for the snippet source
 				optional = true,
 				dependencies = {
-					{"rafamadriz/friendly-snippets", version = "*"},
-					{"saghen/blink.compat", version = "*"},
+					{ "rafamadriz/friendly-snippets", version = "*" },
+					{ "saghen/blink.compat", version = "*" },
 					{
 						"Dynge/gitmoji.nvim",
-            version = "*",
+						version = "*",
 						dependencies = {
 							-- Switch from nvim-cmp to Blink
 							-- "hrsh7th/nvim-cmp", -- for nvim-cmp completion
@@ -32,9 +32,9 @@ return {
 					},
 					{
 						"allaman/emoji.nvim",
-            dependencies = {
-              {"nvim-telescope/telescope.nvim", version = "*"},
-            },
+						dependencies = {
+							{ "nvim-telescope/telescope.nvim", version = "*" },
+						},
 						verrsion = "*",
 						opts = {
 							-- default is false, also needed for blink.cmp integration!
@@ -102,6 +102,7 @@ return {
 			local not_install_nix = {
 				"lua_ls",
 				"marksman",
+				"ruff",
 			}
 
 			if not IsNixos then
@@ -178,6 +179,16 @@ return {
 			if IsNixos then
 				lspconfig.marksman.setup({})
 			end
+
+			vim.lsp.config("ruff", {
+				init_options = {
+					settings = {
+						-- Ruff language server settings go here
+					},
+				},
+			})
+
+			vim.lsp.enable("ruff")
 
 			-- TODO: add a callback function so every time I enter a java file it
 			-- works well
@@ -378,6 +389,7 @@ return {
 	},
 	{
 		"nvimtools/none-ls.nvim", -- configure formatters & linters
+		version = "*",
 		lazy = true,
 		event = { "BufReadPre", "BufNewFile" }, -- to enable uncomment this
 		dependencies = {
@@ -389,14 +401,13 @@ return {
 			local null_ls_utils = require("null-ls.utils")
 
 			local ensure_installed = {
-				-- "prettierd", -- prettierd formatter
 				"prettier",
-				"black", -- python formatter
 				"shfmt", -- sh formatter
 			}
 
 			local not_install_nix = {
 				"stylua",
+				"ruff",
 			}
 
 			local not_install_darwin = {
@@ -447,8 +458,8 @@ return {
 					-- 	disabled_filetypes = { "markdown" },
 					-- }),
 					formatting.stylua, -- lua formatter
-					formatting.isort,
-					formatting.black,
+					-- formatting.isort,
+					-- formatting.black,
 					formatting.shfmt,
 					formatting.xmllint,
 				},
