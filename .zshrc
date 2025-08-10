@@ -239,6 +239,12 @@ if api_key=$(pass show api-key/gemini 2>/dev/null); then
   export GEMINI_API_KEY="$api_key"
   export OCO_API_KEY="$api_key"
 fi
+if env_var=$(pass show personal/email 2>/dev/null); then
+  export EMAIL="$env_var"
+fi
+if env_var=$(pass show personal/name 2>/dev/null); then
+  export NAME="$env_var"
+fi
 
 if command -v zoxide &> /dev/null; then
   eval "$(zoxide init zsh)"
