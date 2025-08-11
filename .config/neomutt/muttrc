@@ -1,0 +1,23 @@
+set nm_db_limit = 5000
+set nm_default_url = "notmuch:///$HOME/Mail"
+set mbox_type = Maildir
+set spoolfile = "Inbox"
+set real_name="$NAME" ; ignore x-
+
+virtual-mailboxes "Inbox"      "notmuch://?query=(tag:inbox -tag:promotions -tag:social) OR (tag:inbox and tag:flagged)"
+virtual-mailboxes "Archive"    "notmuch://?query=not tag:inbox and not tag:spam"
+virtual-mailboxes "Personal"   "notmuch://?query=tag:personal"
+virtual-mailboxes "Flagged"    "notmuch://?query=tag:flagged"
+virtual-mailboxes "Promotions" "notmuch://?query=tag:promotions"
+virtual-mailboxes "Social"     "notmuch://?query=tag:social"
+virtual-mailboxes "Sent"       "notmuch://?query=tag:sent"
+
+set sendmail = "gmi send -t -C $HOME/Mail"
+
+macro index o "<shell-escape>cd ~/Mail; gmi sync<enter>" "sync email"
+macro index \Cf "<vfolder-from-query>" "search mail"
+set index_format='%4C %Z %<[y?%<[m?%<[d?%[%l:%M%p ]&%[%a %d ]>&%[%b %d ]>&%[%m/%y ]> %-15.15L %s %g'
+
+set charset="utf-8"
+set send_charset="utf-8"
+set assumed_charset="utf-8"
