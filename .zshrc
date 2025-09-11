@@ -156,7 +156,6 @@ fi
 # TMUX
 export XDG_CONFIG_HOME="$HOME/.config"
 
-alias cd='z'
 alias copy='$COPY'
 alias vimdiff='nvim -d'
 
@@ -247,12 +246,15 @@ if env_var=$(pass show personal/name 2>/dev/null); then
 fi
 
 if command -v zoxide &> /dev/null; then
-  eval "$(zoxide init zsh)"
+  # [ -z "$DISABLE_ZOXIDE" ] && eval "$(zoxide init --cmd cd zsh)"
+  [ -z "$DISABLE_ZOXIDE" ] && eval "$(zoxide init zsh)" && alias cd='z'
 fi
 
 if command -v warp-cli &> /dev/null; then
   eval "$(warp-cli generate-completions zsh)"
 fi
+
+[ -z "$DISABLE_ZOXIDE" ] && eval "$(zoxide init --cmd cd zsh)"
 
 # [ -f $HOME/.bindkey.zsh ] && source $HOME/.bindkey.zsh
 
