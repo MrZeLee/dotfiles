@@ -180,15 +180,14 @@ return {
 				lspconfig.marksman.setup({})
 			end
 
-			vim.lsp.config("ruff", {
+			lspconfig.ruff.setup({
 				init_options = {
 					settings = {
-						-- Ruff language server settings go here
+						-- Any specific Ruff language server settings
+						logLevel = "error",
 					},
 				},
 			})
-
-			vim.lsp.enable("ruff")
 
 			-- TODO: add a callback function so every time I enter a java file it
 			-- works well
