@@ -1,0 +1,9 @@
+[opener]
+edit = [
+  { run = 'okular "$@"', orphan = true, for = "unix", desc = "Okular"},
+]
+
+[open]
+prepend_rules = [
+  { name = "*.pdf", use = "edit" },
+]
