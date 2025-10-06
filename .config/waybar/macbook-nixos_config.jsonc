@@ -80,6 +80,8 @@
       "class<librewolf>": "",
       "class<librewolf> title<.*github.*>": "",
       "class<vesktop> title<(?!.*Discord).+>": "",
+      "class<teams-for-linux>": "󰊻",
+      "class<chromium-browser>": "󰊯",
       "class<vesktop>": "",
       "class<Spotify>": "",
       "title<spotify_player>": "",
