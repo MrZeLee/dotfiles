@@ -465,7 +465,6 @@ return {
 					formatting.xmllint,
 					-- Linters
 					diagnostics.pylint, -- python linter
-					diagnostics.shellcheck, -- shell script linter
 				},
 				-- configure format on save
 				-- on_attach = function(current_client, bufnr)
