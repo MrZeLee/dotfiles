@@ -402,6 +402,8 @@ return {
 			local ensure_installed = {
 				"prettier",
 				"shfmt", -- sh formatter
+				"pylint", -- python linter
+				"shellcheck", -- shell script linter
 			}
 
 			local not_install_nix = {
@@ -461,6 +463,9 @@ return {
 					-- formatting.black,
 					formatting.shfmt,
 					formatting.xmllint,
+					-- Linters
+					diagnostics.pylint, -- python linter
+					diagnostics.shellcheck, -- shell script linter
 				},
 				-- configure format on save
 				-- on_attach = function(current_client, bufnr)
