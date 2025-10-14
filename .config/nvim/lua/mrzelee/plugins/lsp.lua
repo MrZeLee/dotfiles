@@ -95,7 +95,6 @@ return {
 				"nil_ls",
 				"jsonls",
 				"bashls",
-				"pyright",
 				"jdtls",
 			}
 
@@ -166,6 +165,24 @@ return {
 			lspconfig.util.default_config.capabilities =
 				vim.tbl_deep_extend("force", lspconfig.util.default_config.capabilities or {}, capabilities)
 
+			-- Override pyright default settings
+			local pyright_config = lspconfig.pyright
+			pyright_config.setup({
+				capabilities = vim.tbl_deep_extend("force", 
+					capabilities,
+					{ offsetEncoding = { "utf-8", "utf-16" } }
+				),
+				settings = {
+					python = {
+						analysis = {
+							autoSearchPaths = true,
+							useLibraryCodeForTypes = true,
+							diagnosticMode = "workspace",
+						},
+					},
+				},
+			})
+
 			lspconfig.lua_ls.setup({
 				settings = {
 					Lua = {
@@ -179,6 +196,7 @@ return {
 			if IsNixos then
 				lspconfig.marksman.setup({})
 			end
+
 
 			lspconfig.ruff.setup({
 				init_options = {
@@ -402,7 +420,6 @@ return {
 			local ensure_installed = {
 				"prettier",
 				"shfmt", -- sh formatter
-				"pylint", -- python linter
 				"shellcheck", -- shell script linter
 			}
 
@@ -463,8 +480,6 @@ return {
 					-- formatting.black,
 					formatting.shfmt,
 					formatting.xmllint,
-					-- Linters
-					diagnostics.pylint, -- python linter
 				},
 				-- configure format on save
 				-- on_attach = function(current_client, bufnr)
