@@ -5,7 +5,7 @@
 	required = true
 [user]
 	name = MrZeLee
-	email = mrzelee404@gmail.com
+	email = mrzelee@proton.me
 	signingkey = BA821035CA0D67B353D1D4429D3433B849AC5CD1
 [commit]
 	gpgsign = true
