@@ -7,6 +7,7 @@
   "cellular-automaton.nvim": { "branch": "main", "commit": "1606e9d5d04ff254023c3f3c62842d065708d6d3" },
   "cloak.nvim": { "branch": "main", "commit": "648aca6d33ec011dc3166e7af3b38820d01a71e4" },
   "codecompanion.nvim": { "branch": "main", "commit": "9edf22cb71711cd7fab7671a25ed5424011a379d" },
+  "diffview.nvim": { "branch": "main", "commit": "4516612fe98ff56ae0415a259ff6361a89419b0a" },
   "editorconfig-vim": { "branch": "master", "commit": "6a58b7c11f79c0e1d0f20533b3f42f2a11490cf8" },
   "emoji.nvim": { "branch": "main", "commit": "e7cf4eb8567d7eb6718d78d15b309faf54dcae56" },
   "fidget.nvim": { "branch": "main", "commit": "b61e8af9b8b68ee0ec7da5fb7a8c203aae854f2e" },
