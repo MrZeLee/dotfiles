@@ -15,3 +15,5 @@
   cmd = nvim -d "$LOCAL" "$REMOTE"
 [pull]
   rebase = true
+[init]
+	defaultBranch = main
