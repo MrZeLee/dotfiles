@@ -115,6 +115,7 @@ return {
 				automatic_enable = {
 					exclude = {
 						"jdtls",
+						"pyright",
 					},
 				},
 				-- Whether servers that are set up (via lspconfig) should be automatically installed if they're not already installed.
@@ -136,6 +137,10 @@ return {
 				handlers = {
 					function(server_name)
 						print("🔥 Server Name: ", server_name)
+						-- Skip pyright as it has custom configuration below
+						if server_name == "pyright" then
+							return
+						end
 						if IsNixos then
 							-- NixOS-specific setup
 							if server_name == "lua_ls" then
