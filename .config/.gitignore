@@ -37,6 +37,8 @@
 !waybar/**
 !wezterm/
 !wezterm/**
+!wireplumber/
+!wireplumber/**
 !xkb/
 !xkb/**
 !zsh/
