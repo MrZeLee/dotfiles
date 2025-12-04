@@ -17,7 +17,7 @@ StartLimitBurst=0
 
 [Service]
 Type=notify
-Environment="PATH=/run/wrappers/bin:/etc/profiles/per-user/%u/bin:/run/current-system/sw/bin:/bin:/usr/bin"
+Environment="PATH=/run/wrappers/bin:/etc/profiles/per-user/%u/bin:/run/current-system/sw/bin:%h/.nix-profile/bin:/bin:/usr/bin"
 ExecStartPre=/bin/sh -c 'mkdir -p %h/%i'
 ExecStart= \
 /bin/sh -c 'rclone mount \

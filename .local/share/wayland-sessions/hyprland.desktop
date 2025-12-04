@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Hyprland
+Comment=A dynamic tiling Wayland compositor
+Exec=env HYPRLAND_HOST="pop-os" HYPRLAND_HY3="/home/jmoura/.nix-profile" /home/jmoura/.nix-profile/bin/hyprland
+Type=Application
+DesktopNames=Hyprland

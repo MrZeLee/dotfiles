@@ -6,12 +6,12 @@ while [[ -z "$HYPRLAND_INSTANCE_SIGNATURE" ]]; do
   sleep 1
 done
 
-if pgrep -fx "$WAYBAR_CMD" >/dev/null; then
+if pgrep -fx ".*$WAYBAR_CMD" >/dev/null; then
   # Waybar is running, so kill it
   if [[ $# -gt 0 && "$1" == "set" ]]; then
     :
   else
-    pkill -fx "$WAYBAR_CMD"
+    pkill -fx ".*$WAYBAR_CMD"
   fi
 else
   # Waybar is not running, so launch it
