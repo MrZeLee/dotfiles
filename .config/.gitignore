@@ -21,6 +21,8 @@
 !mpv/**
 !nix/
 !nix/**
+!nvim.bak/
+!nvim.bak/**
 !nvim/
 !nvim/**
 !sway/
