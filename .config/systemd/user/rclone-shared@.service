@@ -18,22 +18,23 @@ StartLimitBurst=0
 [Service]
 Type=notify
 Environment="PATH=/run/wrappers/bin:/etc/profiles/per-user/%u/bin:/run/current-system/sw/bin:%h/.nix-profile/bin:/bin:/usr/bin"
-ExecStartPre=/bin/sh -c 'fusermount -uz %h/%i/My\ Drive 2>/dev/null || true'
+ExecStartPre=/bin/sh -c 'fusermount -uz %h/%i/Shared\ With\ Me 2>/dev/null || true'
 ExecStartPre=/bin/sh -c 'mkdir -p %h/%i'
-ExecStartPre=/bin/sh -c 'mkdir -p %h/%i/My\ Drive'
+ExecStartPre=/bin/sh -c 'mkdir -p %h/%i/Shared\ With\ Me'
 ExecStart= \
 /bin/sh -c 'exec rclone mount \
 --config=%h/.config/rclone/rclone.conf \
+--drive-shared-with-me \
 --dir-cache-time 168h \
 --attr-timeout 168h \
 --vfs-cache-max-age 168h \
 --vfs-cache-max-size 10G \
 --vfs-cache-mode full \
 --log-level INFO \
---log-file /tmp/rclone-%i-My-Drive.log \
+--log-file /tmp/rclone-%i-Shared-With-Me.log \
 --umask 022 \
-%i: %h/%i/My\ Drive'
-ExecStop=/bin/sh -c 'fusermount -u %h/%i/My\ Drive || true'
+%i: %h/%i/Shared\ With\ Me'
+ExecStop=/bin/sh -c 'fusermount -u %h/%i/Shared\ With\ Me || true'
 
 Restart=always
 RestartSec=10
