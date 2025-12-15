@@ -1,42 +1,50 @@
 #!/usr/bin/env bash
 
-# Get waypaper list
-waypaper_list=$(waypaper --list)
-if [ -z "$waypaper_list" ]; then
-  echo "No wallpaper list found."
-  exit 1
-fi
+# Set library path for locally built hyprlock and dependencies
+export LD_LIBRARY_PATH="/usr/local/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 
-# Parse wallpaper assignments from waypaper
-assigned_monitors=()
-declare -A wallpapers
-all_wallpaper=""
+# Hyprlock configuration using cached wallpapers from hyprpaper
+# Wallpapers are stored as symlinks in ~/.cache/hyprpaper/MONITOR_NAME
 
-while read -r elem; do
-  monitor=$(echo "$elem" | jq -r '.monitor')
-  wallpaper=$(echo "$elem" | jq -r '.wallpaper')
-  wallpapers["$monitor"]="$wallpaper"
-  assigned_monitors+=("$monitor")
-
-  # Save "All" wallpaper if exists
-  if [[ "$monitor" == "All" ]]; then
-    all_wallpaper="$wallpaper"
-  fi
-done < <(echo "$waypaper_list" | jq -c '.[]')
+CACHE_DIR="$HOME/.cache/hyprpaper"
+BASE_CONFIG="$HOME/.config/hypr/hyprlock.conf"
+TEMP_CONFIG="/tmp/hyprlock-$$.conf"
 
 # Get current active monitors
 active_monitors=($(hyprctl monitors -j | jq -r '.[].name'))
 
-# Initialize the swaylock command
-swaylock_cmd="swaylock -f -e -s stretch -c 000000"
+# Start with the base config (contains general, input-field, labels)
+cp "$BASE_CONFIG" "$TEMP_CONFIG"
 
-# Loop over active monitors
+# Generate background sections for each monitor
 for mon in "${active_monitors[@]}"; do
-  wp="${wallpapers[$mon]:-$all_wallpaper}"
-  if [ -n "$wp" ]; then
-    swaylock_cmd+=" -i \"$mon:$wp\""
+  wallpaper_link="$CACHE_DIR/$mon"
+
+  if [ -L "$wallpaper_link" ]; then
+    # Resolve symlink to get actual wallpaper path
+    wallpaper=$(readlink -f "$wallpaper_link")
+
+    if [ -f "$wallpaper" ]; then
+      cat >> "$TEMP_CONFIG" << EOF
+
+background {
+  monitor = $mon
+  path = $wallpaper
+  blur_passes = 3
+  blur_size = 8
+  noise = 0.0117
+  contrast = 0.8916
+  brightness = 0.8172
+  vibrancy = 0.1696
+  vibrancy_darkness = 0.0
+}
+EOF
+    fi
   fi
 done
 
-# Run the command
-eval "$swaylock_cmd"
+# Run hyprlock with the generated config
+hyprlock -c "$TEMP_CONFIG"
+
+# Cleanup
+rm -f "$TEMP_CONFIG"

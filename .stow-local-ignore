@@ -20,3 +20,4 @@ hosts
 generate_icons.sh
 bookmarks.json
 .local/share/wayland-sessions
+install
