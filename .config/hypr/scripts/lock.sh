@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+pgrep -x hyprlock && exit 0
+
 # Set library path for locally built hyprlock and dependencies
 export LD_LIBRARY_PATH="/usr/local/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 
@@ -25,7 +27,7 @@ for mon in "${active_monitors[@]}"; do
     wallpaper=$(readlink -f "$wallpaper_link")
 
     if [ -f "$wallpaper" ]; then
-      cat >> "$TEMP_CONFIG" << EOF
+      cat >>"$TEMP_CONFIG" <<EOF
 
 background {
   monitor = $mon
