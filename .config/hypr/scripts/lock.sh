@@ -12,25 +12,22 @@ CACHE_DIR="$HOME/.cache/hyprpaper"
 BASE_CONFIG="$HOME/.config/hypr/hyprlock.conf"
 TEMP_CONFIG="/tmp/hyprlock-$$.conf"
 
-# Get current active monitors
-active_monitors=($(hyprctl monitors -j | jq -r '.[].name'))
-
 # Start with the base config (contains general, input-field, labels)
 cp "$BASE_CONFIG" "$TEMP_CONFIG"
 
 # Generate background sections for each monitor
-for mon in "${active_monitors[@]}"; do
-  wallpaper_link="$CACHE_DIR/$mon"
+hyprctl monitors -j | jq -c '.[]' | while read -r monitor; do
+  monitor_description=$(echo "$monitor" | jq -r '.description')
+  monitor_name=$(echo "$monitor" | jq -r '.name')
+  wallpaper_link="$CACHE_DIR/$monitor_description"
 
-  if [ -L "$wallpaper_link" ]; then
-    # Resolve symlink to get actual wallpaper path
+  if [ -L "$wallpaper_link" ] && [ -e "$wallpaper_link" ]; then
     wallpaper=$(readlink -f "$wallpaper_link")
 
-    if [ -f "$wallpaper" ]; then
-      cat >>"$TEMP_CONFIG" <<EOF
+    cat >>"$TEMP_CONFIG" <<EOF
 
 background {
-  monitor = $mon
+  monitor = $monitor_name
   path = $wallpaper
   blur_passes = 3
   blur_size = 8
@@ -41,7 +38,6 @@ background {
   vibrancy_darkness = 0.0
 }
 EOF
-    fi
   fi
 done
 
