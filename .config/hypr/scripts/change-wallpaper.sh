@@ -37,8 +37,9 @@ if [ -z "$wallpaper" ]; then
   exit 1
 fi
 
+monitor_description=$(echo "$monitor_info" | jq -r '.description')
 # Save wallpaper as symlink in cache
-ln -sf "$wallpaper" "$CACHE_DIR/$activemonitor"
+ln -sf "$wallpaper" "$CACHE_DIR/$monitor_description"
 
 # Preload and set wallpaper via hyprpaper IPC
 hyprctl hyprpaper preload "$wallpaper"
