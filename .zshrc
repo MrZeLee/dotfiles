@@ -11,7 +11,12 @@ OS_TYPE=$(uname)
 
 # Check if the OS is Linux or macOS
 if [[ "$OS_TYPE" == "Linux" ]]; then
-  export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/keyring/ssh"
+  # Check for SSH agent socket and set SSH_AUTH_SOCK
+  if [[ -S "$XDG_RUNTIME_DIR/keyring/ssh" ]]; then
+    export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/keyring/ssh"
+  elif [[ -S "$XDG_RUNTIME_DIR/gcr/ssh" ]]; then
+    export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/gcr/ssh"
+  fi
   export OPEN="xdg-open"
   function open() {
     nohup xdg-open "$@" >/dev/null 2>&1 &!
