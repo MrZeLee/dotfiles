@@ -19,7 +19,7 @@ cp "$BASE_CONFIG" "$TEMP_CONFIG"
 hyprctl monitors -j | jq -c '.[]' | while read -r monitor; do
   monitor_description=$(echo "$monitor" | jq -r '.description')
   monitor_name=$(echo "$monitor" | jq -r '.name')
-  wallpaper_link="$CACHE_DIR/$monitor_description"
+  wallpaper_link="$CACHE_DIR/${monitor_description}-monitor"
 
   if [ -L "$wallpaper_link" ] && [ -e "$wallpaper_link" ]; then
     wallpaper=$(readlink -f "$wallpaper_link")

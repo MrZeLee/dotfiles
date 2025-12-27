@@ -13,7 +13,7 @@ set_wallpaper_for_monitor() {
   sleep 1
 
   # Check if there's a cached wallpaper for this monitor (using description as cache key)
-  cache_file="$CACHE_DIR/$monitor_desc"
+  cache_file="$CACHE_DIR/${monitor_desc}-monitor"
   if [ -L "$cache_file" ] && [ -e "$cache_file" ]; then
     wallpaper=$(readlink -f "$cache_file")
     hyprctl hyprpaper preload "$wallpaper"
@@ -51,7 +51,7 @@ set_wallpaper_for_monitor() {
   fi
 
   # Cache the wallpaper selection (using description as cache key)
-  ln -sf "$wallpaper" "$CACHE_DIR/$monitor_desc"
+  ln -sf "$wallpaper" "$CACHE_DIR/${monitor_desc}-monitor"
 
   # Set the wallpaper
   hyprctl hyprpaper preload "$wallpaper"
