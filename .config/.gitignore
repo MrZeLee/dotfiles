@@ -9,6 +9,8 @@
 !btop/**
 !git/
 !git/**
+!ghostty/
+!ghostty/**
 !gtk-3.0/
 !gtk-3.0/**
 !hypr/
