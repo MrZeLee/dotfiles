@@ -2,6 +2,7 @@
 OS_TYPE=$(uname)
 
 if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+if [ -e $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh ]; then . $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh; fi
 
 # Check if the OS is Linux or macOS
 if [[ "$OS_TYPE" == "Linux" ]]; then
