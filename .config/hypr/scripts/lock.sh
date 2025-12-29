@@ -2,9 +2,6 @@
 
 pgrep -x hyprlock && exit 0
 
-# Set library path for locally built hyprlock and dependencies
-export LD_LIBRARY_PATH="/usr/local/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
-
 # Hyprlock configuration using cached wallpapers from hyprpaper
 # Wallpapers are stored as symlinks in ~/.cache/hyprpaper/MONITOR_NAME
 
@@ -42,7 +39,16 @@ EOF
 done
 
 # Run hyprlock with the generated config
-hyprlock -c "$TEMP_CONFIG"
+if [ -f /etc/NIXOS ]; then
+  # NixOS: hyprlock installed via nix with proper dependencies
+  # LD_LIBRARY_PATH="/usr/local/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}" \
+  hyprlock -c "$TEMP_CONFIG"
+else
+  # Non-NixOS with Nix installed: force system EGL/Mesa to avoid conflicts
+  __EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_vendor.d/50_mesa.json \
+    LD_LIBRARY_PATH="/usr/lib/x86_64-linux-gnu:/lib/x86_64-linux-gnu:/usr/local/lib" \
+    hyprlock -c "$TEMP_CONFIG"
+fi
 
 # Cleanup
 rm -f "$TEMP_CONFIG"

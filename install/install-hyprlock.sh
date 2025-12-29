@@ -128,8 +128,8 @@ sudo ldconfig
 cd "$BUILD_DIR"
 
 # Build and install hyprlock v0.8.2
-echo "Building hyprlock v0.8.2..."
-git clone --depth 1 --branch v0.8.2 https://github.com/hyprwm/hyprlock.git
+echo "Building hyprlock v0.9.2..."
+git clone --depth 1 --branch v0.9.2 https://github.com/hyprwm/hyprlock.git
 cd hyprlock
 
 # Use only locally built libraries
@@ -184,4 +184,3 @@ echo "  - PAM config -> /etc/pam.d/hyprlock"
 echo ""
 echo "Make sure /usr/local/lib is in your LD_LIBRARY_PATH or add it to /etc/ld.so.conf.d/"
 echo "Run: echo '/usr/local/lib' | sudo tee /etc/ld.so.conf.d/local.conf && sudo ldconfig"
-
