@@ -232,34 +232,38 @@ _fzf_complete_pass() {
   )
 }
 
-# Check if the `pass` command successfully retrieves the API key
-if api_key=$(pass show api-key/anthropic 2>/dev/null); then
-  export ANTHROPIC_API_KEY="$api_key"
+# Load secrets from pass with caching (runs once per login session)
+# Cache is stored in XDG_RUNTIME_DIR (RAM-based, cleared on logout)
+_pass_cache="${XDG_RUNTIME_DIR:-/tmp}/pass_env_cache"
+if [[ -f "$_pass_cache" ]]; then
+  source "$_pass_cache"
+else
+  _val=""
+  for _entry in api-key/anthropic:ANTHROPIC_API_KEY \
+                api-key/open:OPENAI_API_KEY \
+                api-key/gemini:GEMINI_API_KEY \
+                api-key/gemini:OCO_API_KEY \
+                personal/email:EMAIL \
+                personal/name:NAME; do
+    _pass_path="${_entry%:*}"
+    _var_name="${_entry#*:}"
+    if _val=$(pass show "$_pass_path" 2>/dev/null); then
+      export "$_var_name"="$_val"
+      echo "export $_var_name='$_val'" >> "$_pass_cache"
+    fi
+  done
+  [[ -f "$_pass_cache" ]] && chmod 600 "$_pass_cache"
+  unset _val _entry _pass_path _var_name
 fi
-if api_key=$(pass show api-key/open 2>/dev/null); then
-  export OPENAI_API_KEY="$api_key"
-fi
-if api_key=$(pass show api-key/gemini 2>/dev/null); then
-  export GEMINI_API_KEY="$api_key"
-  export OCO_API_KEY="$api_key"
-fi
-if env_var=$(pass show personal/email 2>/dev/null); then
-  export EMAIL="$env_var"
-fi
-if env_var=$(pass show personal/name 2>/dev/null); then
-  export NAME="$env_var"
-fi
+unset _pass_cache
 
 if command -v zoxide &> /dev/null; then
-  # [ -z "$DISABLE_ZOXIDE" ] && eval "$(zoxide init --cmd cd zsh)"
-  [ -z "$DISABLE_ZOXIDE" ] && eval "$(zoxide init zsh)" && alias cd='z'
+  [ -z "$DISABLE_ZOXIDE" ] && eval "$(zoxide init --cmd cd zsh)"
 fi
 
 if command -v warp-cli &> /dev/null; then
   eval "$(warp-cli generate-completions zsh)"
 fi
-
-[ -z "$DISABLE_ZOXIDE" ] && eval "$(zoxide init --cmd cd zsh)"
 
 # [ -f $HOME/.bindkey.zsh ] && source $HOME/.bindkey.zsh
 
