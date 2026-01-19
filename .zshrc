@@ -258,7 +258,9 @@ fi
 unset _pass_cache
 
 if command -v zoxide &> /dev/null; then
-  [ -z "$DISABLE_ZOXIDE" ] && eval "$(zoxide init --cmd cd zsh)"
+  if [[ $- == *i* ]]; then
+    [ -z "$DISABLE_ZOXIDE" ] && eval "$(zoxide init --cmd cd zsh)"
+  fi
 fi
 
 if command -v warp-cli &> /dev/null; then
