@@ -6,17 +6,17 @@ return {
     },
     opts = {
       events = {
-        render_buffer = { "InsertLeave", "BufWinEnter", "TextChanged" },
+        render_buffer = {},
         clear_buffer = { "BufLeave" },
       },
       renderer_options = {
         mermaid = {
           background = nil,
           theme = dark,
-          scale = 1,
-          width = nil,
+          scale = 2,
+          width = 1920,
           height = nil,
-          cli_args = nil,
+          cli_args = { "--no-sandbox" },
         },
         plantuml = {
           charset = nil,
@@ -36,6 +36,17 @@ return {
           theme = nil,
           cli_args = nil,
         },
+      },
+    },
+    keys = {
+      {
+        "<localleader>K", -- or any key you prefer
+        function()
+          require("diagram").show_diagram_hover()
+        end,
+        mode = "n",
+        ft = { "markdown", "norg" }, -- Only in these filetypes
+        desc = "Show diagram in new tab",
       },
     },
   },
