@@ -170,7 +170,7 @@
     "interval": 0,
   },
   "custom/icon-nixos": {
-    "format": "'",
+    "format": "",
     "interval": 0,
     "tooltip": false,
   },
