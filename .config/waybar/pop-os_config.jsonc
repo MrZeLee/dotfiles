@@ -4,13 +4,9 @@
     "group/group-power",
     "custom/icon-split-left",
     "hyprland/workspaces",
-    "custom/icon-right-outer"
+    "custom/icon-right-outer",
   ],
-  "modules-center": [
-    "custom/icon-left",
-    "clock",
-    "custom/icon-right"
-  ],
+  "modules-center": ["custom/icon-left", "clock", "custom/icon-right"],
   "modules-right": [
     "custom/icon-left",
     "idle_inhibitor",
@@ -26,14 +22,14 @@
     "battery",
     "custom/icon-split",
     "wireplumber",
-    "custom/icon-right-outer"
+    "custom/icon-right-outer",
   ],
   "custom/toggle_notifications": {
     "exec-if": "command -v makoctl",
     "exec": "( makoctl mode | grep do-not-disturb >/dev/null && echo '\nDND active\nnone' ) || echo '\nDND not active\nnone' ",
     "format": "{}",
     "on-click": "makoctl mode -t do-not-disturb",
-    "interval": 3
+    "interval": 3,
   },
   "idle_inhibitor": {
     "format": "{icon}",
@@ -41,8 +37,8 @@
     "tooltip": true,
     "format-icons": {
       "activated": "",
-      "deactivated": ""
-    }
+      "deactivated": "",
+    },
   },
   "clock": {
     "interval": 5,
@@ -50,7 +46,7 @@
     "rotate": 0,
     "format": "{:%H:%M}",
     "max-length": 25,
-    "locale": "en_US.UTF-8",
+    "locale": "en_GB.UTF-8",
     "tooltip-format": "<tt><small>{calendar}</small></tt>",
     "calendar": {
       "mode": "month",
@@ -59,14 +55,14 @@
         "months": "<span color='#ffead3'><b>{}</b></span>",
         "days": "<span color='#ecc6d9'><b>{}</b></span>",
         "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
-        "today": "<span color='#ff6699'><b><u>{}</u></b></span>"
-      }
+        "today": "<span color='#ff6699'><b><u>{}</u></b></span>",
+      },
     },
     "actions": {
       "on-click-right": "mode",
       "on-scroll-up": "shift_up",
-      "on-scroll-down": "shift_down"
-    }
+      "on-scroll-down": "shift_down",
+    },
   },
   "hyprland/workspaces": {
     "format": "{icon} {windows}",
@@ -89,6 +85,7 @@
       "class<chromium-browser>": "󰊯",
       "kitty": "",
       "wezterm": "",
+      "ghostty": "",
       "code": "󰨞",
       "class<mpv>": "",
       "class<org.gnome.Nautilus>": "",
@@ -99,35 +96,24 @@
       "class<Caprine>": "",
       "class<org.telegram.desktop>": "",
       "class<steam>": "󰓓",
-      "class<gamescope>": "󰊖"
-    }
+      "class<gamescope>": "󰊖",
+    },
   },
   "battery": {
     "bat": "BAT0",
     "interval": 10,
     "states": {
       "warning": 30,
-      "critical": 15
+      "critical": 15,
     },
     "format": "{capacity}% {icon}",
     "format-charging": "{capacity}% 󰂄",
-    "format-icons": [
-      "󰁺",
-      "󰁻",
-      "󰁼",
-      "󰁽",
-      "󰁾",
-      "󰁿",
-      "󰂀",
-      "󰂁",
-      "󰂂",
-      "󰁹"
-    ],
-    "max-length": 25
+    "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+    "max-length": 25,
   },
   "wireplumber": {
     "format": "󰕿 {volume}%",
-    "on-click": "pavucontrol"
+    "on-click": "pavucontrol",
   },
   "cpu": {
     "interval": 5,
@@ -140,12 +126,12 @@
       "<span color='#ffffa5'>▅</span>",
       "<span color='#ffffa5'>▆</span>",
       "<span color='#ff9977'>▇</span>",
-      "<span color='#dd532e'>█</span>"
-    ]
+      "<span color='#dd532e'>█</span>",
+    ],
   },
   "memory": {
     "interval": 30,
-    "format": "{used:0.1f}GB/{total:0.1f}GB"
+    "format": "{used:0.1f}GB/{total:0.1f}GB",
   },
   "network": {
     "format": "{ifname}",
@@ -156,75 +142,75 @@
     "tooltip-format-wifi": "{ipaddr} ",
     "tooltip-format-ethernet": "{ifname} ({ipaddr}) 󰈀",
     "tooltip-format-disconnected": "Disconnected",
-    "max-length": 50
+    "max-length": 50,
   },
   "image": {
     "path": "image.png",
     "size": 20,
     "exec": "./hover_image.sh",
     "interval": 0,
-    "tooltip": true
+    "tooltip": true,
   },
   "group/group-power": {
     "orientation": "inherit",
     "drawer": {
       "transition-duration": 500,
       "children-class": "not-power",
-      "transition-left-to-right": true
+      "transition-left-to-right": true,
     },
     "modules": [
       "custom/icon-nixos",
       "custom/lock",
       "custom/reboot",
-      "custom/power"
-    ]
+      "custom/power",
+    ],
   },
   "custom/icon-arch": {
     "exec": "echo '󰣇'",
-    "interval": 0
+    "interval": 0,
   },
   "custom/icon-nixos": {
     "format": "'",
     "interval": 0,
-    "tooltip": false
+    "tooltip": false,
   },
   "custom/icon-left": {
     "exec": "echo '✦'",
-    "interval": 0
+    "interval": 0,
   },
   "custom/icon-left-outer": {
     "exec": "echo '✦'",
-    "interval": 0
+    "interval": 0,
   },
   "custom/icon-split": {
     "exec": "echo '|'",
-    "interval": 0
+    "interval": 0,
   },
   "custom/icon-split-left": {
     "exec": "echo '|'",
-    "interval": 0
+    "interval": 0,
   },
   "custom/icon-right": {
     "exec": "echo '✦'",
-    "interval": 0
+    "interval": 0,
   },
   "custom/icon-right-outer": {
     "exec": "echo '✦'",
-    "interval": 0
+    "interval": 0,
   },
   "custom/lock": {
     "format": "󰍁",
     "tooltip": false,
-    "on-click": "$HOME/.config/hypr/scripts/lock.sh"
+    "on-click": "$HOME/.config/hypr/scripts/lock.sh",
   },
   "custom/reboot": {
     "format": "󰜉",
     "tooltip": false,
-    "on-click": "reboot"
+    "on-click": "reboot",
   },
   "custom/power": {
     "format": "󰐥",
     "tooltip": false,
-    "on-click": "shutdown now"
-  }
+    "on-click": "shutdown now",
+  },
 }

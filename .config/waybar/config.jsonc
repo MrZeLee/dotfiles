@@ -1,12 +1,10 @@
-// CREATED BY KITTENZEXE
-
 {
   "modules-left": [
     "custom/icon-left-outer",
     "group/group-power",
     "custom/icon-split-left",
     "hyprland/workspaces",
-    "custom/icon-right"
+    "custom/icon-right-outer"
   ],
   "modules-center": [
     "custom/icon-left",
@@ -17,43 +15,59 @@
     "custom/icon-left",
     "idle_inhibitor",
     "custom/icon-split",
+    "custom/toggle_notifications",
+    "custom/icon-split",
     "network",
     "custom/icon-split",
     "memory",
     "custom/icon-split",
     "cpu",
     "custom/icon-split",
-    // "battery",
-    // "custom/icon-split",
     "wireplumber",
     "custom/icon-right-outer"
   ],
-
+  "custom/toggle_notifications": {
+    "exec-if": "command -v makoctl",
+    "exec": "( makoctl mode | grep do-not-disturb >/dev/null && echo '\nDND active\nnone' ) || echo '\nDND not active\nnone' ",
+    "format": "{}",
+    "on-click": "makoctl mode -t do-not-disturb",
+    "interval": 3
+  },
   "idle_inhibitor": {
     "format": "{icon}",
-    "interval": 1,
+    "interval": 5,
     "tooltip": true,
     "format-icons": {
       "activated": "",
       "deactivated": ""
     }
   },
-
   "clock": {
-    "interval": 1,
+    "interval": 5,
     "tooltip": true,
-    "format": "{:%H:%M:%S}",
+    "rotate": 0,
+    "format": "{:%H:%M}",
     "max-length": 25,
-    "tooltip-format": "{:%Y-%m-%d}"
+    "locale": "en_US.UTF-8",
+    "tooltip-format": "<tt><small>{calendar}</small></tt>",
+    "calendar": {
+      "mode": "month",
+      "mode-mon-col": 4,
+      "format": {
+        "months": "<span color='#ffead3'><b>{}</b></span>",
+        "days": "<span color='#ecc6d9'><b>{}</b></span>",
+        "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+        "today": "<span color='#ff6699'><b><u>{}</u></b></span>"
+      }
+    },
+    "actions": {
+      "on-click-right": "mode",
+      "on-scroll-up": "shift_up",
+      "on-scroll-down": "shift_down"
+    }
   },
-  // "window": {
-  //   "format": "{title}",
-  //   "max-length": 50,
-  //   "default": "No Title",   // Fallback when no window title is available
-  //   "ignore": ["windowtitle>>"]
-  // },
   "hyprland/workspaces": {
-  "format": "{icon} {windows}",
+    "format": "{icon} {windows}",
     "window-rewrite-default": "",
     "window-rewrite": {
       "class<swayimg>": "",
@@ -61,10 +75,14 @@
       "title<.*youtube.*>": "",
       "class<firefox>": "",
       "class<firefox> title<.*github.*>": "",
+      "class<librewolf>": "",
+      "class<librewolf> title<.*github.*>": "",
       "class<vesktop> title<(?!.*Discord).+>": "",
       "class<vesktop>": "",
       "class<Spotify>": "",
+      "title<spotify_player>": "",
       "class<waypaper>": "󰸉",
+      "class<com.stremio.stremio": "",
       "class<teams-for-linux>": "󰊻",
       "class<chromium-browser>": "󰊯",
       "kitty": "",
@@ -77,7 +95,9 @@
       "class<whatsapp-for-linux>": "",
       "class<Signal>": "",
       "class<Caprine>": "",
-      "class<org.telegram.desktop>": ""
+      "class<org.telegram.desktop>": "",
+      "class<steam>": "󰓓",
+      "class<gamescope>": "󰊖"
     }
   },
   "battery": {
@@ -89,7 +109,18 @@
     },
     "format": "{capacity}% {icon}",
     "format-charging": "{capacity}% 󰂄",
-    "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+    "format-icons": [
+      "󰁺",
+      "󰁻",
+      "󰁼",
+      "󰁽",
+      "󰁾",
+      "󰁿",
+      "󰂀",
+      "󰂁",
+      "󰂂",
+      "󰁹"
+    ],
     "max-length": 25
   },
   "wireplumber": {
@@ -97,8 +128,7 @@
     "on-click": "pavucontrol"
   },
   "cpu": {
-    "interval": 1,
-    // "format": "CPU {icon0}{icon1}{icon2}{icon3}{icon4}{icon5}{icon6}{icon7}",
+    "interval": 5,
     "format": "CPU {icon}",
     "format-icons": [
       "<span color='#69ff94'>▁</span>",
@@ -108,7 +138,7 @@
       "<span color='#ffffa5'>▅</span>",
       "<span color='#ffffa5'>▆</span>",
       "<span color='#ff9977'>▇</span>",
-      "<span color='#dd532e'>█</span>"  
+      "<span color='#dd532e'>█</span>"
     ]
   },
   "memory": {
@@ -126,15 +156,13 @@
     "tooltip-format-disconnected": "Disconnected",
     "max-length": 50
   },
-
   "image": {
-    "path": "/home/amelia/Photos/Sticker_PPG_20_The_Herta_04.png",
+    "path": "image.png",
     "size": 20,
     "exec": "./hover_image.sh",
     "interval": 0,
     "tooltip": true
   },
-
   "group/group-power": {
     "orientation": "inherit",
     "drawer": {
@@ -149,15 +177,14 @@
       "custom/power"
     ]
   },
-
   "custom/icon-arch": {
-    "exec":"echo '󰣇'",
+    "exec": "echo '󰣇'",
     "interval": 0
   },
   "custom/icon-nixos": {
-    "format":"'",
-    "interval":0,
-    "tooltip": false,
+    "format": "'",
+    "interval": 0,
+    "tooltip": false
   },
   "custom/icon-left": {
     "exec": "echo '✦'",
@@ -183,7 +210,6 @@
     "exec": "echo '✦'",
     "interval": 0
   },
-
   "custom/lock": {
     "format": "󰍁",
     "tooltip": false,
@@ -195,9 +221,8 @@
     "on-click": "reboot"
   },
   "custom/power": {
-    "format": "",
+    "format": "󰐥",
     "tooltip": false,
     "on-click": "shutdown now"
   }
 }
-
