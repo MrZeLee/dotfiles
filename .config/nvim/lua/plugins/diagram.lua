@@ -16,7 +16,7 @@ return {
           scale = 2,
           width = 1920,
           height = nil,
-          cli_args = { "--no-sandbox" },
+          cli_args = nil,
         },
         plantuml = {
           charset = nil,

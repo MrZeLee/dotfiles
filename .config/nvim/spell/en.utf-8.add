@@ -5,3 +5,5 @@ Django
 Postgresql
 postgresql
 markdownlint-disable-line
+postgres
+reportIncompatibleMethodOverride
