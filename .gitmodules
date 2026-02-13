@@ -5,3 +5,6 @@
     path = .password-store
     url = git@github.com:MrZeLee/pwd-store
     branch = main
+[submodule ".local/share/nvim-wl-anywhere"]
+	path = .local/share/nvim-wl-anywhere
+	url = https://github.com/abdullah-albanna/nvim-wl-anywhere.git
