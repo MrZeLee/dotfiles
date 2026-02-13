@@ -7,4 +7,4 @@
     branch = main
 [submodule ".local/share/nvim-wl-anywhere"]
 	path = .local/share/nvim-wl-anywhere
-	url = https://github.com/abdullah-albanna/nvim-wl-anywhere.git
+	url = git@github.com:MrZeLee/nvim-wl-anywhere.git
