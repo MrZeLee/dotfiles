@@ -1,3 +1,4 @@
 *
 !.gitignore
 !bin/**
+!share/nvim-wl-anywhere
