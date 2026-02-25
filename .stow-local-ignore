@@ -21,3 +21,4 @@ generate_icons.sh
 bookmarks.json
 .local/share/wayland-sessions
 install
+.opencommit-commitlint
