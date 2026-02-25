@@ -17,6 +17,11 @@ gemini)
   model=gemini-2.5-flash-lite
   url=undefined
   ;;
+gemini-plus)
+  provider=gemini
+  model=gemni-2.5-flash
+  url=undefined
+  ;;
 *)
   echo "Usage: ocom [qwen|tav|gemini] [oco args...]"
   exit 1
