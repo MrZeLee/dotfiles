@@ -5,7 +5,8 @@
     "BASH_MAX_TIMEOUT_MS": "7200000"
   },
   "enabledPlugins": {
-    "lua-lsp@claude-plugins-official": true
+    "lua-lsp@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true
   },
   "alwaysThinkingEnabled": true
 }
