@@ -22,7 +22,7 @@ gemini)
   ;;
 gemini-plus)
   provider=gemini
-  model=gemni-2.5-flash
+  model=gemini-2.5-flash
   url=undefined
   api_key=undefined
   ;;
