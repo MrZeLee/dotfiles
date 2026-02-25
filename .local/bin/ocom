@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+provider= model= url=
+case "$1" in
+qwen)
+  provider=ollama
+  model=qwen2.5-coder:3b
+  url=http://localhost:11434/api/chat
+  ;;
+tav)
+  provider=ollama
+  model=hf.co/Tavernari/git-commit-message
+  url=http://localhost:11434/api/chat
+  ;;
+gemini)
+  provider=gemini
+  model=gemini-2.5-flash-lite
+  url=undefined
+  ;;
+*)
+  echo "Usage: ocom [qwen|tav|gemini] [oco args...]"
+  exit 1
+  ;;
+esac
+shift
+
+oco config set OCO_AI_PROVIDER=$provider >/dev/null 2>&1 &&
+  oco config set OCO_MODEL=$model >/dev/null 2>&1 &&
+  oco config set OCO_API_URL=$url >/dev/null 2>&1 &&
+  oco "$@"
