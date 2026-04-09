@@ -6,7 +6,12 @@
   },
   "enabledPlugins": {
     "lua-lsp@claude-plugins-official": true,
-    "typescript-lsp@claude-plugins-official": true
+    "typescript-lsp@claude-plugins-official": true,
+    "pyright-lsp@claude-plugins-official": true
   },
-  "alwaysThinkingEnabled": true
+  "alwaysThinkingEnabled": true,
+  "allowedTools": [
+    "Bash(wl-copy:*)",
+    "Bash(echo *| wl-copy)"
+  ]
 }
