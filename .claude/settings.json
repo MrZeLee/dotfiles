@@ -10,8 +10,10 @@
     "pyright-lsp@claude-plugins-official": true
   },
   "alwaysThinkingEnabled": true,
+  "editorMode": "vim",
   "allowedTools": [
     "Bash(wl-copy:*)",
     "Bash(echo *| wl-copy)"
-  ]
+  ],
+  "skipAutoPermissionPrompt": true
 }
