@@ -4,16 +4,20 @@
     "BASH_DEFAULT_TIMEOUT_MS": "1800000",
     "BASH_MAX_TIMEOUT_MS": "7200000"
   },
+  "includeCoAuthoredBy": false,
   "enabledPlugins": {
     "lua-lsp@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true,
     "pyright-lsp@claude-plugins-official": true
   },
   "alwaysThinkingEnabled": true,
+  "effortLevel": "xhigh",
   "editorMode": "vim",
+  "skipAutoPermissionPrompt": true,
+  "gitAttribution": false,
   "allowedTools": [
     "Bash(wl-copy:*)",
     "Bash(echo *| wl-copy)"
   ],
-  "skipAutoPermissionPrompt": true
+  "agentPushNotifEnabled": true
 }
