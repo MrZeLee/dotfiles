@@ -45,7 +45,7 @@ return {
           require("diagram").show_diagram_hover()
         end,
         mode = "n",
-        ft = { "markdown", "norg" }, -- Only in these filetypes
+        ft = { "markdown" }, -- Only in these filetypes
         desc = "Show diagram in new tab",
       },
     },
