@@ -1,4 +1,8 @@
 {
+  "statusLine": {
+    "type": "command",
+    "command": "bash $HOME/.claude/statusline-command.sh"
+  },
   "env": {
     "DISABLE_ZOXIDE": "1",
     "BASH_DEFAULT_TIMEOUT_MS": "1800000",
@@ -13,11 +17,9 @@
   "alwaysThinkingEnabled": true,
   "effortLevel": "xhigh",
   "editorMode": "vim",
+  "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
   "gitAttribution": false,
-  "allowedTools": [
-    "Bash(wl-copy:*)",
-    "Bash(echo *| wl-copy)"
-  ],
-  "agentPushNotifEnabled": true
+  "allowedTools": ["Bash(wl-copy:*)", "Bash(echo *| wl-copy)"],
+  "model": "sonnet"
 }
