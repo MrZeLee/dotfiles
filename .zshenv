@@ -1,5 +1,7 @@
 setopt no_global_rcs
 
+export TODO_DIR="$HOME/.config/todo"
+
 if [ -z "$TMUX" ]; then
 
   # Function to add a directory to an environment variable if it isn't already included

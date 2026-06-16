@@ -39,6 +39,8 @@
 !systemd/**
 !tmux/
 !tmux/**
+!todo/
+!todo/**
 !waypaper/
 !waypaper/**
 !waybar/

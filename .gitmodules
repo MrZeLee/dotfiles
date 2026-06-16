@@ -8,3 +8,6 @@
 [submodule ".local/share/nvim-wl-anywhere"]
 	path = .local/share/nvim-wl-anywhere
 	url = git@github.com:MrZeLee/nvim-wl-anywhere.git
+[submodule ".config/todo"]
+	path = .config/todo
+	url = git@github.com:MrZeLee/todo.git
