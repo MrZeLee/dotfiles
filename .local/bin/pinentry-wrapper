@@ -1,0 +1,14 @@
+#!/bin/sh
+for p in \
+    /run/current-system/sw/bin/pinentry \
+    /usr/local/bin/pinentry-mac \
+    /opt/homebrew/bin/pinentry-mac \
+    /opt/homebrew/bin/pinentry \
+    /usr/bin/pinentry-gnome3 \
+    /usr/bin/pinentry-gtk-2 \
+    /usr/bin/pinentry-curses \
+    /usr/bin/pinentry \
+    /usr/local/bin/pinentry; do
+    [ -x "$p" ] && exec "$p" "$@"
+done
+exec pinentry "$@"
