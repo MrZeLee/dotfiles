@@ -6,8 +6,9 @@ return {
     { "<leader>td", "<cmd>Tuxedo<cr>", desc = "Open Tuxedo (TODO)" },
   },
   opts = {
-    create_todo_file = true,
+    create_todo_file = false,
     width_ratio = 0.95,
     height_ratio = 0.80,
   },
 }
+
