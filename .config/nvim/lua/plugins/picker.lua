@@ -27,11 +27,13 @@ return {
               list = {
                 keys = {
                   ["<C-f>"] = { "tmux_sessionizer", mode = { "n", "i" } },
+                  ["<a-u>"] = { "toggle_hidden", mode = { "n", "i" } },
                 },
               },
               input = {
                 keys = {
                   ["<C-f>"] = { "tmux_sessionizer", mode = { "n", "i" } },
+                  ["<a-u>"] = { "toggle_hidden", mode = { "n", "i" } },
                 },
               },
             },
