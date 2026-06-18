@@ -1,5 +1,16 @@
 return {
   {
+    "ibhagwan/fzf-lua",
+    opts = {
+      actions = {
+        files = {
+          ["alt-h"] = false,
+          ["alt-u"] = { fn = require("fzf-lua").actions.toggle_hidden, reuse = true, header = false },
+        },
+      },
+    },
+  },
+  {
     "folke/snacks.nvim",
     opts = {
       picker = {
