@@ -2,3 +2,7 @@
 !.gitignore
 !settings.json
 !CLAUDE.md
+!agents/
+!agents/**
+!hooks/
+!hooks/*
