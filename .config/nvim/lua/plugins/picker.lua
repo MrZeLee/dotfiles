@@ -4,6 +4,7 @@ return {
     opts = {
       actions = {
         files = {
+          true, -- inherit fzf-lua's default file actions (enter, ctrl-s/v/t, ...)
           ["alt-h"] = false,
           ["alt-u"] = { fn = require("fzf-lua").actions.toggle_hidden, reuse = true, header = false },
         },
