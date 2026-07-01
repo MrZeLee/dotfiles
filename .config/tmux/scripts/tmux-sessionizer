@@ -94,7 +94,21 @@ if [[ -z "$selected" ]]; then
 
   fi
 
-  selected=$(echo -e "$local_dirs\n$drive_dirs" | awk '!seen[$0]++' | grep -E '.+' | fzf -i)
+  # Directories with an already-open tmux session float to the top.
+  # Session names are basename(dir) with dots turned into underscores (see below).
+  open_sessions=$(tmux list-sessions -F '#{session_name}' 2>/dev/null)
+
+  selected=$(echo -e "$local_dirs\n$drive_dirs" | awk '!seen[$0]++' | grep -E '.+' \
+    | awk -v sessions="$open_sessions" '
+        BEGIN { n = split(sessions, a, "\n"); for (i = 1; i <= n; i++) open[a[i]] = 1 }
+        {
+          name = $0
+          sub(/\/+$/, "", name)
+          sub(/.*\//, "", name)
+          gsub(/\./, "_", name)
+          print ((name in open) ? "0\t" : "1\t") $0
+        }' \
+    | sort -s -k1,1 -t $'\t' | cut -f2- | fzf -i)
 fi
 
 if [[ -z $selected ]]; then
