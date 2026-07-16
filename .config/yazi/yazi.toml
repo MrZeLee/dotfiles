@@ -5,5 +5,5 @@ edit = [
 
 [open]
 prepend_rules = [
-  { name = "*.pdf", use = "edit" },
+  { url = "*.pdf", use = "edit" },
 ]
