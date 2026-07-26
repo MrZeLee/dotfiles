@@ -47,5 +47,6 @@
     "sessionUrl": false
   },
   "gitAttribution": false,
-  "allowedTools": ["Bash(wl-copy:*)", "Bash(echo *| wl-copy)"]
+  "allowedTools": ["Bash(wl-copy:*)", "Bash(echo *| wl-copy)"],
+  "skipWorkflowUsageWarning": true
 }
