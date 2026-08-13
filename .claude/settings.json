@@ -44,7 +44,8 @@
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
   "attribution": {
-    "sessionUrl": false
+    "commit": "",
+    "pr": ""
   },
   "gitAttribution": false,
   "allowedTools": ["Bash(wl-copy:*)", "Bash(echo *| wl-copy)"],
