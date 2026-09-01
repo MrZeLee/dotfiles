@@ -4,8 +4,13 @@
     "BASH_DEFAULT_TIMEOUT_MS": "1800000",
     "BASH_MAX_TIMEOUT_MS": "7200000"
   },
+  "attribution": {
+    "sessionUrl": false,
+    "commit": "",
+    "pr": ""
+  },
   "includeCoAuthoredBy": false,
-  "model": "claude-fable-5[1m]",
+  "model": "claude-opus-5[1m]",
   "hooks": {
     "PreToolUse": [
       {
@@ -40,14 +45,10 @@
   "alwaysThinkingEnabled": true,
   "effortLevel": "xhigh",
   "tui": "fullscreen",
+  "skipWorkflowUsageWarning": true,
   "editorMode": "vim",
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
-  "attribution": {
-    "commit": "",
-    "pr": ""
-  },
   "gitAttribution": false,
-  "allowedTools": ["Bash(wl-copy:*)", "Bash(echo *| wl-copy)"],
-  "skipWorkflowUsageWarning": true
+  "allowedTools": ["Bash(wl-copy:*)", "Bash(echo *| wl-copy)"]
 }
