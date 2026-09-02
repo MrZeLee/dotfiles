@@ -166,8 +166,7 @@
     ],
   },
   "custom/icon-arch": {
-    "exec": "echo '󰣇'",
-    "interval": 0,
+    "format": "󰣇",
   },
   "custom/icon-nixos": {
     "format": "'",
@@ -175,28 +174,22 @@
     "tooltip": false,
   },
   "custom/icon-left": {
-    "exec": "echo '✦'",
-    "interval": 0,
+    "format": "✦",
   },
   "custom/icon-left-outer": {
-    "exec": "echo '✦'",
-    "interval": 0,
+    "format": "✦",
   },
   "custom/icon-split": {
-    "exec": "echo '|'",
-    "interval": 0,
+    "format": "|",
   },
   "custom/icon-split-left": {
-    "exec": "echo '|'",
-    "interval": 0,
+    "format": "|",
   },
   "custom/icon-right": {
-    "exec": "echo '✦'",
-    "interval": 0,
+    "format": "✦",
   },
   "custom/icon-right-outer": {
-    "exec": "echo '✦'",
-    "interval": 0,
+    "format": "✦",
   },
   "custom/lock": {
     "format": "󰍁",
