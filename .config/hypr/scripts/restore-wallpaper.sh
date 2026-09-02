@@ -9,7 +9,7 @@ ATTEMPT=0
 while [ $ATTEMPT -lt $MAX_ATTEMPTS ]; do
   if pgrep -x hyprpaper >/dev/null 2>&1; then
     # Process exists, check if socket is responsive
-    if hyprctl hyprpaper listloaded >/dev/null 2>&1; then
+    if hyprctl hyprpaper listactive >/dev/null 2>&1; then
       echo "hyprpaper is ready"
       break
     fi
@@ -33,7 +33,6 @@ hyprctl monitors -j | jq -c '.[]' | while read -r monitor; do
   cache_file="$CACHE_DIR/${monitor_description}-monitor"
   if [ -L "$cache_file" ] && [ -e "$cache_file" ]; then
     wallpaper=$(readlink -f "$cache_file")
-    hyprctl hyprpaper preload "$wallpaper"
     hyprctl hyprpaper wallpaper "$monitor_name,$wallpaper"
   fi
 done
