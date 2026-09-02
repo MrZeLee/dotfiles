@@ -1,0 +1,20 @@
+# wl-kbptr, vim flavour: no labels, just hjkl halving the area each press.
+# Bound to `v` in the Hyprland cursor submap.
+#
+#   h / j / k / l   halve left / down / up / right
+#   ;               back to the full area, pointer centred
+#   backspace       undo one halving
+#   a, space, enter accept, move the pointer, no click
+#   s / d / f       accept and left / middle / right click
+#   escape          cancel
+#
+# `;` and `a` come from pkgs/wl-kbptr/vim-keys.patch in nixos-config; the rest
+# is stock.
+
+[general]
+# 8 bisect area keys (inert here), then left, right, middle click. `find_str`
+# returns the first match, so s/d/f must stay out of the leading 8 or they
+# would never reach the click branch.
+home_row_keys=qwertyuisfd
+
+modes=split

@@ -1,0 +1,27 @@
+# wl-kbptr — see `wl-kbptr --help-config` for all options and defaults.
+# Driven by ~/.config/hypr/scripts/kbptr.sh, which pipes in the grid.
+
+[general]
+# 8 bisect area keys, then left, right, middle click -- s / f / d, matching
+# the Hyprland cursor submap. `find_str` returns the first match, so s/d/f
+# must stay out of the leading 8 or they would never reach the click branch.
+# The leading 8 are inert in split mode.
+home_row_keys=qwertyuisfd
+
+# `floating` reads its cells from stdin, so one key covers the whole screen
+# instead of tile mode's forced 27x25 grid (which needs two). `split` then
+# halves that cell with hjkl -- same keys as ~/.config/wl-kbptr/config-vim.
+modes=floating,split
+
+[mode_floating]
+source=stdin
+# 40 cells, 40 symbols -> single-key labels, in keyboard reading order:
+#   1 2 3 4 5 6 7 8 9 0
+#   q w e r t y u i o p
+#   a s d f g h j k l ;
+#   z x c v b n m , . /
+# The trailing `-` is a spare: wl-kbptr computes label length with
+# `while (n > 0) { len++; n /= num_symbols; }`, so 40 symbols for 40 cells
+# rounds up to two chars. 41 symbols keeps it at one. `-` maps to no cell.
+label_symbols=1234567890qwertyuiopasdfghjkl;zxcvbnm,./-
+label_font_size=24 50% 100

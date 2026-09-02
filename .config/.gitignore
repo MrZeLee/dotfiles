@@ -49,6 +49,8 @@
 !wezterm/**
 !wireplumber/
 !wireplumber/**
+!wl-kbptr/
+!wl-kbptr/**
 !xkb/
 !xkb/**
 !zsh/

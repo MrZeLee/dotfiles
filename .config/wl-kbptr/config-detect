@@ -1,0 +1,22 @@
+# wl-kbptr, auto-detect flavour: OpenCV finds the clickable-looking regions on
+# screen and labels them, instead of a fixed grid. Bound to `c` in the Hyprland
+# cursor submap. Needs an OpenCV build -- `wl-kbptr -v` must print "(opencv)".
+#
+# One keypress lands the cursor on the target; click with s/d/f back in the
+# cursor submap. Append `,split` to modes for an hjkl refinement step when a
+# detected box is too coarse.
+
+[general]
+home_row_keys=asdfjkl;gnb
+modes=floating
+
+[mode_floating]
+source=detect
+# Letters only -- no number row, no punctuation -- in keyboard reading order.
+# 26 symbols, so labels stay one char up to 25 detected regions and grow to
+# two beyond that; that is the tool's doing, not a misconfiguration.
+label_symbols=qwertyuiopasdfghjklzxcvbnm
+# `min pct% max`, pct being a share of the detected box height. The min is
+# what matters here -- most detected boxes are short, so they were pinned to
+# the old floor of 10.
+label_font_size=20 50% 40
