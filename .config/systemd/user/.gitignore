@@ -2,3 +2,4 @@
 
 !rclone@.service
 !rclone-shared@.service
+!hyprland-session.target
