@@ -166,6 +166,9 @@ alias vimdiff='nvim -d'
 
 alias rclone_config='rclone config reconnect GDrive: --auto-confirm; systemctl --user restart rclone@GDrive.service'
 
+# Discard freed blocks on all mounted SSDs (fstrim.timer does this weekly anyway)
+alias trim='sudo fstrim -av'
+
 alias vimv='vimv -e nvim'
 # Finished adapting your PATH environment variable for use with MacPorts.
 
