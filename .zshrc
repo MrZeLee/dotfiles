@@ -273,3 +273,19 @@ fi
 # [ -f $HOME/.bindkey.zsh ] && source $HOME/.bindkey.zsh
 
 zvm_after_init_commands+=('[ -f $HOME/.bindkey.zsh ] && source $HOME/.bindkey.zsh')
+
+# Voice capture: the nixpkgs claude-code wrapper prepends its own alsa-lib to
+# LD_LIBRARY_PATH on every launch, and that build ships no plugin dir, so ALSA
+# cannot load libasound_module_pcm_pipewire.so. Stripping the entry here does
+# not help - the wrapper re-adds it after we are done. Point ALSA at a
+# nix-built pipewire plugin instead (the system one needs system glibc and this
+# is a nix binary), and put its lib dir on the path so libpipewire resolves.
+claude() {
+  local nix_pipewire=/nix/store/286ik0x6mpmc8d7jj1vxnyc2fh2dixv0-pipewire-1.4.9
+  if [[ -d "$nix_pipewire/lib/alsa-lib" ]]; then
+    ALSA_PLUGIN_DIR="$nix_pipewire/lib/alsa-lib" \
+      LD_LIBRARY_PATH="$nix_pipewire/lib:$LD_LIBRARY_PATH" command claude "$@"
+  else
+    command claude "$@"
+  fi
+}
