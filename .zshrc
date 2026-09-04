@@ -281,7 +281,7 @@ zvm_after_init_commands+=('[ -f $HOME/.bindkey.zsh ] && source $HOME/.bindkey.zs
 # nix-built pipewire plugin instead (the system one needs system glibc and this
 # is a nix binary), and put its lib dir on the path so libpipewire resolves.
 claude() {
-  local nix_pipewire=/nix/store/286ik0x6mpmc8d7jj1vxnyc2fh2dixv0-pipewire-1.4.9
+  local nix_pipewire="$HOME/.local/state/nix/gcroots/pipewire-alsa"
   if [[ -d "$nix_pipewire/lib/alsa-lib" ]]; then
     ALSA_PLUGIN_DIR="$nix_pipewire/lib/alsa-lib" \
       LD_LIBRARY_PATH="$nix_pipewire/lib:$LD_LIBRARY_PATH" command claude "$@"
