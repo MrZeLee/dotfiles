@@ -5,6 +5,11 @@ return {
   "folke/which-key.nvim",
   url = "https://github.com/MrZeLee/which-key.nvim.git",
   branch = "main",
+  opts = {
+    spec = {
+      { "<leader>p", group = "Pi", icon = " " },
+    },
+  },
   keys = {
     {
       "<leader>sk",
