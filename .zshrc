@@ -245,7 +245,7 @@ else
   for _entry in api-key/anthropic:ANTHROPIC_API_KEY \
                 api-key/open:OPENAI_API_KEY \
                 api-key/gemini:GEMINI_API_KEY \
-                api-key/gemini:OCO_API_KEY \
+                api-key/openrouter:OCO_API_KEY \
                 api-key/openrouter:OPENROUTER_API_KEY \
                 personal/email:EMAIL \
                 personal/name:NAME; do
