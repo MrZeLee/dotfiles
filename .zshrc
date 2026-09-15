@@ -290,3 +290,14 @@ claude() {
     command claude "$@"
   fi
 }
+
+# lowfi: same nix alsa-lib problem as claude above.
+lowfi() {
+  local nix_pipewire="$HOME/.local/state/nix/gcroots/pipewire-alsa"
+  if [[ -d "$nix_pipewire/lib/alsa-lib" ]]; then
+    ALSA_PLUGIN_DIR="$nix_pipewire/lib/alsa-lib" \
+      LD_LIBRARY_PATH="$nix_pipewire/lib:$LD_LIBRARY_PATH" command lowfi "$@"
+  else
+    command lowfi "$@"
+  fi
+}
