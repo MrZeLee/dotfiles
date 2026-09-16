@@ -91,7 +91,7 @@ keybindings:
       name: code review
       command: >
         tmux new-window -n "PR-{{.PrNumber}}" 
-        'tuicr pr {{.PrNumber}}'
+        'zsh -ic "tuicr pr {{.PrNumber}}"'
   issues:
     - key: g
       name: lazygit
