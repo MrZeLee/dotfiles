@@ -82,18 +82,25 @@ defaults:
         hidden: true
   refetchIntervalMinutes: 30
 keybindings:
-  universal:
+  prs:
     - key: g
       name: lazygit
       command: >
         cd {{.RepoPath}}; lazygit
-  prs:
     - key: C
       name: code review
       command: >
         tmux new-window -n "PR-{{.PrNumber}}" 
         'tuicr pr {{.PrNumber}}'
-repoPaths: {}
+  issues:
+    - key: g
+      name: lazygit
+      command: >
+        cd {{.RepoPath}}; lazygit
+repoPaths:
+  MrZeLee/dotfiles: ~/.dotfiles
+  MrZeLee/*: ~/Documents/01-Git/*
+  omniumai/*: ~/Documents/01-Git/*
 theme:
   ui:
     sectionsShowCount: true
