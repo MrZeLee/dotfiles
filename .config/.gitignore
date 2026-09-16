@@ -11,6 +11,8 @@
 !git/**
 !ghostty/
 !ghostty/**
+!gh-dash/
+!gh-dash/**
 !gtk-3.0/
 !gtk-3.0/**
 !hypr/
@@ -41,6 +43,8 @@
 !tmux/**
 !todo/
 !todo/**
+!vesktop/
+!vesktop/**
 !waypaper/
 !waypaper/**
 !waybar/
