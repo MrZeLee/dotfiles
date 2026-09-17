@@ -85,3 +85,9 @@ echo "text" | wl-copy
 ```
 
 Never just print the text and ask me to copy it manually — use wl-copy directly.
+
+## Git attribution
+
+Never write `Co-Authored-By: Claude` trailers in commit messages or
+`Generated with Claude Code` footers in PR bodies. Attribution is disabled in
+`~/.claude/settings.json`; do not hand-write it.
