@@ -11,8 +11,6 @@
     "custom/icon-left",
     "idle_inhibitor",
     "custom/icon-split",
-    "tray",
-    "custom/icon-split",
     "custom/toggle_notifications",
     "custom/icon-split",
     "network",
@@ -26,10 +24,6 @@
     "wireplumber",
     "custom/icon-right-outer",
   ],
-  "tray": {
-    "spacing": 10,
-    "icon-size": 14,
-  },
   "custom/toggle_notifications": {
     "exec-if": "command -v makoctl",
     "exec": "( makoctl mode | grep do-not-disturb >/dev/null && echo '\nDND active\nnone' ) || echo '\nDND not active\nnone' ",
@@ -172,7 +166,8 @@
     ],
   },
   "custom/icon-arch": {
-    "format": "󰣇",
+    "exec": "echo '󰣇'",
+    "interval": 0,
   },
   "custom/icon-nixos": {
     "format": "'",
@@ -180,22 +175,28 @@
     "tooltip": false,
   },
   "custom/icon-left": {
-    "format": "✦",
+    "exec": "echo '✦'",
+    "interval": 0,
   },
   "custom/icon-left-outer": {
-    "format": "✦",
+    "exec": "echo '✦'",
+    "interval": 0,
   },
   "custom/icon-split": {
-    "format": "|",
+    "exec": "echo '|'",
+    "interval": 0,
   },
   "custom/icon-split-left": {
-    "format": "|",
+    "exec": "echo '|'",
+    "interval": 0,
   },
   "custom/icon-right": {
-    "format": "✦",
+    "exec": "echo '✦'",
+    "interval": 0,
   },
   "custom/icon-right-outer": {
-    "format": "✦",
+    "exec": "echo '✦'",
+    "interval": 0,
   },
   "custom/lock": {
     "format": "󰍁",
