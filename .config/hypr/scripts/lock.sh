@@ -44,10 +44,14 @@ if [ -f /etc/NIXOS ]; then
   # LD_LIBRARY_PATH="/usr/local/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}" \
   hyprlock -c "$TEMP_CONFIG"
 else
-  # Non-NixOS with Nix installed: force system EGL/Mesa to avoid conflicts
-  __EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_vendor.d/50_mesa.json \
+  # Non-NixOS with Nix installed: same nixGL mesa leak _nixfree handles, but
+  # keep LD_LIBRARY_PATH pointed at /usr/local/lib for hyprlock's own deps.
+  # Absolute path: the session PATH has no /usr/local/bin, so a bare `hyprlock`
+  # is command-not-found and the screen silently never locks.
+  env -u LIBGL_DRIVERS_PATH -u GBM_BACKENDS_PATH -u LIBVA_DRIVERS_PATH \
+    __EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_vendor.d/50_mesa.json \
     LD_LIBRARY_PATH="/usr/lib/x86_64-linux-gnu:/lib/x86_64-linux-gnu:/usr/local/lib" \
-    hyprlock -c "$TEMP_CONFIG"
+    /usr/local/bin/hyprlock -c "$TEMP_CONFIG"
 fi
 
 # Cleanup

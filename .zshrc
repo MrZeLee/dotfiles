@@ -166,6 +166,9 @@ alias vimdiff='nvim -d'
 
 alias rclone_config='rclone config reconnect GDrive: --auto-confirm; systemctl --user restart rclone@GDrive.service'
 
+# Discard freed blocks on all mounted SSDs (fstrim.timer does this weekly anyway)
+alias trim='sudo fstrim -av'
+
 alias vimv='vimv -e nvim'
 # Finished adapting your PATH environment variable for use with MacPorts.
 
@@ -242,7 +245,8 @@ else
   for _entry in api-key/anthropic:ANTHROPIC_API_KEY \
                 api-key/open:OPENAI_API_KEY \
                 api-key/gemini:GEMINI_API_KEY \
-                api-key/gemini:OCO_API_KEY \
+                api-key/openrouter:OCO_API_KEY \
+                api-key/openrouter:OPENROUTER_API_KEY \
                 personal/email:EMAIL \
                 personal/name:NAME; do
     _pass_path="${_entry%:*}"
@@ -270,3 +274,30 @@ fi
 # [ -f $HOME/.bindkey.zsh ] && source $HOME/.bindkey.zsh
 
 zvm_after_init_commands+=('[ -f $HOME/.bindkey.zsh ] && source $HOME/.bindkey.zsh')
+
+# Voice capture: the nixpkgs claude-code wrapper prepends its own alsa-lib to
+# LD_LIBRARY_PATH on every launch, and that build ships no plugin dir, so ALSA
+# cannot load libasound_module_pcm_pipewire.so. Stripping the entry here does
+# not help - the wrapper re-adds it after we are done. Point ALSA at a
+# nix-built pipewire plugin instead (the system one needs system glibc and this
+# is a nix binary), and put its lib dir on the path so libpipewire resolves.
+claude() {
+  local nix_pipewire="$HOME/.local/state/nix/gcroots/pipewire-alsa"
+  if [[ -d "$nix_pipewire/lib/alsa-lib" ]]; then
+    ALSA_PLUGIN_DIR="$nix_pipewire/lib/alsa-lib" \
+      LD_LIBRARY_PATH="$nix_pipewire/lib:$LD_LIBRARY_PATH" command claude "$@"
+  else
+    command claude "$@"
+  fi
+}
+
+# lowfi: same nix alsa-lib problem as claude above.
+lowfi() {
+  local nix_pipewire="$HOME/.local/state/nix/gcroots/pipewire-alsa"
+  if [[ -d "$nix_pipewire/lib/alsa-lib" ]]; then
+    ALSA_PLUGIN_DIR="$nix_pipewire/lib/alsa-lib" \
+      LD_LIBRARY_PATH="$nix_pipewire/lib:$LD_LIBRARY_PATH" command lowfi "$@"
+  else
+    command lowfi "$@"
+  fi
+}

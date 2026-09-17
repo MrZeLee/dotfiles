@@ -1,0 +1,56 @@
+#!/bin/sh
+# nix Hyprland exports its own mesa via LD_LIBRARY_PATH and friends; every child
+# inherits them, so deb-built libcosmic apps load nix EGL instead of the system
+# one and panic at wgpu-hal gles/egl.rs:854. Strip those vars for the /usr binary.
+#
+# Dispatches on $0: symlinked as an app name it wraps that app.
+# Run under its own name it (re)creates the symlinks in ~/.local/bin.
+
+app=${0##*/}
+
+if [ "$app" != _nixfree ]; then
+    exec env -u LD_LIBRARY_PATH -u __EGL_VENDOR_LIBRARY_FILENAMES \
+             -u LIBGL_DRIVERS_PATH -u GBM_BACKENDS_PATH -u LIBVA_DRIVERS_PATH \
+         "/usr/bin/$app" "$@"
+fi
+
+bin=$HOME/.local/bin
+made=0 pruned=0
+
+for f in /usr/bin/cosmic-*; do
+    link=$bin/${f##*/}
+    if [ -e "$link" ] && [ ! -L "$link" ]; then
+        echo "skip ${f##*/}: exists and is not a symlink" >&2
+        continue
+    fi
+    ln -sfn _nixfree "$link" && made=$((made + 1))
+done
+
+# drop links whose /usr/bin target is gone (package removed)
+for link in "$bin"/cosmic-*; do
+    [ -L "$link" ] || continue
+    [ "$(readlink "$link")" = _nixfree ] || continue
+    [ -e "/usr/bin/${link##*/}" ] || { rm "$link" && pruned=$((pruned + 1)); }
+done
+
+# .desktop overrides: launchers (fuzzel etc.) resolve Exec= via the session PATH,
+# which has no ~/.local/bin, so they would bypass the symlinks above.
+apps=$HOME/.local/share/applications
+mkdir -p "$apps"
+desk=0
+for f in /usr/share/applications/*.desktop; do
+    grep -qE "^Exec=cosmic-" "$f" || continue
+    sed "s|^Exec=cosmic-|Exec=$bin/cosmic-|" "$f" > "$apps/${f##*/}"
+    desk=$((desk + 1))
+done
+
+# drop overrides whose upstream .desktop is gone
+for f in "$apps"/*.desktop; do
+    [ -e "$f" ] || continue
+    grep -q "^Exec=$bin/cosmic-" "$f" 2>/dev/null || continue
+    [ -e "/usr/share/applications/${f##*/}" ] || { rm "$f" && pruned=$((pruned + 1)); }
+done
+
+command -v update-desktop-database >/dev/null && update-desktop-database "$apps" 2>/dev/null
+
+echo "_nixfree: $made linked, $desk desktop overrides, $pruned pruned"

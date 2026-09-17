@@ -41,8 +41,7 @@ monitor_description=$(echo "$monitor_info" | jq -r '.description')
 # Save wallpaper as symlink in cache
 ln -sf "$wallpaper" "$CACHE_DIR/${monitor_description}-monitor"
 
-# Preload and set wallpaper via hyprpaper IPC
-hyprctl hyprpaper preload "$wallpaper"
+# Set wallpaper via hyprpaper IPC
 hyprctl hyprpaper wallpaper "$activemonitor,$wallpaper"
 
 # If there's only one monitor connected, also apply to all monitors
