@@ -247,6 +247,7 @@ else
                 api-key/gemini:GEMINI_API_KEY \
                 api-key/openrouter:OCO_API_KEY \
                 api-key/openrouter:OPENROUTER_API_KEY \
+                forgejo/domain:TEA_DASH_URL \
                 personal/email:EMAIL \
                 personal/name:NAME; do
     _pass_path="${_entry%:*}"

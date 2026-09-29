@@ -39,6 +39,8 @@
 !swayimg/**
 !systemd/
 !systemd/**
+!tea-dash/
+!tea-dash/**
 !tmux/
 !tmux/**
 !todo/

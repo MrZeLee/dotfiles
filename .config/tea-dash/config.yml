@@ -1,0 +1,2 @@
+instance:
+  tokenCommand: "pass show forgejo/token"
