@@ -176,7 +176,6 @@
   },
   "custom/icon-nixos": {
     "format": "",
-    "interval": 0,
     "tooltip": false,
   },
   "custom/icon-left": {
