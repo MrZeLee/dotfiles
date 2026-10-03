@@ -1,6 +1,8 @@
 setopt no_global_rcs
 
 export TODO_DIR="$HOME/.config/todo"
+# animated title spams compositor title events (waybar re-renders each one)
+export CLAUDE_CODE_DISABLE_TERMINAL_TITLE=1
 
 if [ -z "$TMUX" ]; then
 
