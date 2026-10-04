@@ -4,9 +4,9 @@
 # workspace it already had (Hyprland would otherwise focus the one moved over
 # from eDP-1).
 #   lid.sh on   -> lid closed
-#   lid.sh off  -> lid opened
+#   lid.sh off [rule]  -> lid opened, restore eDP-1 with the host's monitor rule
 
-EDP_RULE="eDP-1,2560x1600@119.93Hz,0x0,1"
+EDP_RULE="${2:-eDP-1,2560x1600@119.93Hz,0x0,1}"
 
 case "$1" in
 on)
