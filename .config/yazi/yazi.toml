@@ -1,9 +1,5 @@
 [opener]
-edit = [
-  { run = 'okular "$@"', orphan = true, for = "unix", desc = "Okular"},
-]
+edit = [{ run = 'okular "$@"', orphan = true, for = "unix", desc = "Okular" }]
 
 [open]
-prepend_rules = [
-  { url = "*.pdf", use = "edit" },
-]
+prepend_rules = [{ url = "*.pdf", use = "edit" }]

@@ -1,0 +1,14 @@
+[[mgr.prepend_keymap]]
+on = ["R", "r"]
+run = '''shell --block -- s=; while [ -z "$s" ]; do read -rp "Resize (50%, 1920x, 800x600): " s || exit; done; for f in "$@"; do magick "$f" -resize "$s" "${f%.*}-resized.${f##*.}"; done'''
+desc = "Resize selected images"
+
+[[mgr.prepend_keymap]]
+on = "?"
+run = "help"
+desc = "Open help"
+
+[[help.prepend_keymap]]
+on = "/"
+run = "filter"
+desc = "Filter help items"

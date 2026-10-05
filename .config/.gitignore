@@ -61,6 +61,8 @@
 !wl-kbptr/**
 !xkb/
 !xkb/**
+!yazi/
+!yazi/**
 !zsh/
 !zsh/**
 !.gitignore
