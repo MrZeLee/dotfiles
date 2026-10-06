@@ -2,3 +2,5 @@
 
 !.gitignore
 !binds.conf
+!aerc.conf
+!save-contacts

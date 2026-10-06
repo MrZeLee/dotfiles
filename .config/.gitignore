@@ -23,6 +23,8 @@
 !karabiner/**
 !karabiner/
 !karabiner/**
+!khard/
+!khard/**
 !latexmk/
 !latexmk/**
 !mako/

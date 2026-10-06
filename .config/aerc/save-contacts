@@ -1,0 +1,73 @@
+#!/usr/bin/env python3
+# aerc mail-sent hook: add To/Cc recipients that aren't in the account's
+# CardDAV address book yet. Reads the same accounts.conf keys as carddav-query:
+# carddav-source (https://USER@HOST/PATH/TO/BOOK/) and carddav-source-cred-cmd,
+# falling back to source-cred-cmd. Accounts without carddav-source are skipped.
+import base64, configparser, os, re, subprocess, sys, uuid
+from email.header import decode_header, make_header
+from email.utils import getaddresses
+from urllib import parse, request
+from xml.sax.saxutils import escape
+
+cfg = configparser.RawConfigParser(strict=False)
+cfg.read(os.path.join(os.environ.get("XDG_CONFIG_HOME", os.path.expanduser("~/.config")), "aerc/accounts.conf"))
+acct = os.environ["AERC_ACCOUNT"]
+source = cfg.get(acct, "carddav-source", fallback=None)
+if not source:
+    sys.exit(0)
+
+u = parse.urlparse(source)
+cred_cmd = cfg.get(acct, "carddav-source-cred-cmd", fallback=None) or cfg.get(acct, "source-cred-cmd")
+pw = parse.unquote(u.password or "") or subprocess.check_output(cred_cmd, shell=True, text=True).strip()
+auth = "Basic " + base64.b64encode(f"{parse.unquote(u.username)}:{pw}".encode()).decode()
+book = f"{u.scheme}://{u.hostname}{f':{u.port}' if u.port else ''}{u.path.rstrip('/')}/"
+
+
+def http(method, url, body, **headers):
+    req = request.Request(url, body.encode(), method=method, headers={"Authorization": auth, **headers})
+    return request.urlopen(req, timeout=15).read().decode()
+
+
+def known(addr):
+    query = (
+        '<C:addressbook-query xmlns:C="urn:ietf:params:xml:ns:carddav" xmlns:D="DAV:">'
+        "<D:prop><D:getetag/></D:prop><C:filter><C:prop-filter name=\"EMAIL\">"
+        f'<C:text-match match-type="equals">{escape(addr)}</C:text-match>'
+        "</C:prop-filter></C:filter></C:addressbook-query>"
+    )
+    resp = http("REPORT", book, query, Depth="1", **{"Content-Type": "application/xml"})
+    return re.search(r"<(\w+:)?href>", resp) is not None
+
+
+def vesc(s):
+    return re.sub(r"([\\,;])", r"\\\1", s)
+
+
+me = os.environ.get("AERC_FROM_ADDRESS", "").lower()
+seen = set()
+for name, addr in getaddresses([os.environ.get("AERC_TO", ""), os.environ.get("AERC_CC", "")]):
+    if not addr or addr.lower() in seen | {me}:
+        continue
+    seen.add(addr.lower())
+    if known(addr):
+        continue
+    name = str(make_header(decode_header(name)))  # aerc passes RFC 2047 encoded names
+    if "," in name:  # "Surname, Given"
+        family, _, given = name.partition(",")
+    else:
+        given, _, family = name.rpartition(" ")
+        if not given:
+            given, family = family, ""
+    given, family = given.strip(), family.strip()
+    uid = str(uuid.uuid4())
+    card = "\r\n".join([
+        "BEGIN:VCARD",
+        "VERSION:3.0",
+        f"UID:{uid}",
+        f"FN:{vesc(name or addr)}",
+        f"N:{vesc(family)};{vesc(given)};;;",
+        f"EMAIL;TYPE=INTERNET:{addr}",
+        "END:VCARD",
+        "",
+    ])
+    http("PUT", f"{book}{uid}.vcf", card, **{"Content-Type": "text/vcard; charset=utf-8", "If-None-Match": "*"})

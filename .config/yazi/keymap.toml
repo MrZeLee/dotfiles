@@ -4,6 +4,11 @@ run = '''shell --block -- s=; while [ -z "$s" ]; do read -rp "Resize (50%, 1920x
 desc = "Resize selected images"
 
 [[mgr.prepend_keymap]]
+on = "M"
+run = '''shell -- [ -S "$XDG_RUNTIME_DIR/aerc.sock" ] || { notify-send yazi "aerc is not running"; exit 1; }; aerc :compose && for f in "$@"; do aerc :attach "$f"; done'''
+desc = "Email selected files (aerc)"
+
+[[mgr.prepend_keymap]]
 on = "?"
 run = "help"
 desc = "Open help"
