@@ -116,7 +116,6 @@ if [[ -z $selected ]]; then
 fi
 
 selected_name=$(basename "$selected" | tr . _)
-tmux_running=$(pgrep tmux)
 
 # Problems with rclone
 # if [[ ! -d "$selected" ]]; then
@@ -127,13 +126,12 @@ if command -v zoxide &>/dev/null; then
   zoxide add "$selected"
 fi
 
-if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
-  tmux new-session -s "$selected_name" -c "$selected" &>/dev/null
-  exit 0
-fi
-
 if ! tmux has-session -t="$selected_name" 2>/dev/null; then
   tmux new-session -ds "$selected_name" -c "$selected" &>/dev/null
+  # Per-project setup: run ./tmux.sh inside the new session's first pane
+  if [[ -x "$selected/tmux.sh" ]]; then
+    tmux send-keys -t "=$selected_name:" "./tmux.sh" C-m
+  fi
 fi
 
 tmux switch-client -t "$selected_name" &>/dev/null
