@@ -1,6 +1,8 @@
 *
 
 !mimeapps.list
+!aerc/
+!aerc/**
 !aerospace/
 !aerospace/**
 !alacritty/
