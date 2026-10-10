@@ -1,5 +1,6 @@
 #!/bin/sh
 for p in \
+    /run/current-system/sw/bin/pinentry-gnome3 \
     /run/current-system/sw/bin/pinentry \
     /usr/local/bin/pinentry-mac \
     /opt/homebrew/bin/pinentry-mac \
