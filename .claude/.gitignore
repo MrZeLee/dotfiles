@@ -2,6 +2,7 @@
 !.gitignore
 !settings.json
 !CLAUDE.md
+!statusline-command.sh
 !agents/
 !agents/**
 !hooks/

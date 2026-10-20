@@ -42,3 +42,6 @@ if [ -z "$TMUX" ]; then
   [ -d /opt/local/share/man ] && add_to_env_var MANPATH "/opt/local/share/man"
 
 fi
+
+# Work machine only: ~/.claude-work exists there and is the default Claude Code account
+if [ -d "$HOME/.claude-work" ]; then export CLAUDE_CONFIG_DIR="$HOME/.claude-work"; fi

@@ -103,6 +103,9 @@ bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
 
+# Completions shipped by nix packages (docker, gh, kubectl, ...); nix's zsh doesn't add this itself
+fpath=(~/.nix-profile/share/zsh/site-functions(N) $fpath)
+
 # Download zimfw plugin manager if missing.
 if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
   curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh \
