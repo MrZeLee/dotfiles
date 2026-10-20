@@ -209,6 +209,9 @@ alias passc='pass edit'
 
 alias ga='git commit --amend'
 
+# Personal account = no CLAUDE_CONFIG_DIR (~/.claude + ~/.claude.json); unset only for this run.
+alias claude-personal='env -u CLAUDE_CONFIG_DIR claude'
+
 alias dump_all='find . -type d -name .git -prune -o -type f -print | while read file; do echo "== $file =="; cat "$file"; echo ""; done'
 function dump_files() {
   for file in "$@"; do
