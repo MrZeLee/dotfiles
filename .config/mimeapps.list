@@ -23,6 +23,8 @@ x-scheme-handler/discord=vesktop.desktop
 x-scheme-handler/msteams=teams-for-linux.desktop
 x-scheme-handler/mailto=librewolf.desktop
 x-scheme-handler/claude-cli=claude-code-url-handler.desktop
+application/x-mswinurl=netmojo.omdrop-links.desktop
+application/x-webloc=netmojo.omdrop-links.desktop
 
 [Added Associations]
 application/octet-stream=org.keepassxc.KeePassXC.desktop;

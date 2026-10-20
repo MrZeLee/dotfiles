@@ -96,6 +96,18 @@ tooltip {
   padding-right: 10px;
 }
 
+#custom-omdrop {
+  background-color: #000000;
+  color: #6c7086;
+  font-size: 12px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#custom-omdrop.on {
+  color: #2aa9ff;
+}
+
 #network {
   background-color: #000000;
   color: #ffffff;
