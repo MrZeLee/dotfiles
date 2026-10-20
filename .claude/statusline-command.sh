@@ -42,3 +42,4 @@ printf "${BOLD}${CYAN}%s${RESET}" "$short_cwd"
 [ -n "$git_seg" ] && printf "  ${GREEN}%s${RESET}" "$git_seg"
 printf "  ${DIM}${BLUE}%s${RESET}" "$model"
 [ -n "$ctx_seg" ] && printf "  ${DIM}${YELLOW}%s${RESET}" "$ctx_seg"
+exit 0

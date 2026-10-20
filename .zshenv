@@ -43,5 +43,9 @@ if [ -z "$TMUX" ]; then
 
 fi
 
-# Work machine only: ~/.claude-work exists there and is the default Claude Code account
-if [ -d "$HOME/.claude-work" ]; then export CLAUDE_CONFIG_DIR="$HOME/.claude-work"; fi
+# Work machine only: ~/.claude-work exists there and is the default Claude Code account.
+# Outermost shell only: nested shells (nvim :terminal, claudecode.nvim) must inherit the
+# parent's value, or they re-set it after direnv unset it (direnv won't re-apply in the child).
+if [ -d "$HOME/.claude-work" ] && [ -z "$CLAUDE_CONFIG_DIR_DEFAULTED" ]; then
+  export CLAUDE_CONFIG_DIR="$HOME/.claude-work" CLAUDE_CONFIG_DIR_DEFAULTED=1
+fi
