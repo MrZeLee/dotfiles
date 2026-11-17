@@ -11,6 +11,8 @@ EDP_RULE="${2:-eDP-1,2560x1600@119.93Hz,0x0,1}"
 case "$1" in
 on)
   ws=$(hyprctl monitors -j | jq '[.[] | select(.name != "eDP-1")][0].activeWorkspace.id')
+  # no external monitor: leave eDP-1 alone, the system just suspends
+  [ "$ws" = null ] && exit 0
   hyprctl keyword monitor "eDP-1,disable"
   # keyword is applied on the next compositor tick; wait for eDP-1 to be gone
   for _ in $(seq 20); do
